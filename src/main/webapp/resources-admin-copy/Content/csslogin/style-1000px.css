@@ -1,0 +1,247 @@
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body
+	{
+		font-size: 9.5pt;
+		line-height: 1.75em;
+	}
+
+	hr
+	{
+		margin: 1em 0 1em 0;
+	}
+
+	#main-wrapper hr
+	{
+		margin: 3em 0 3em 0;
+	}
+
+	.feature-title
+	{
+	}
+	
+		.feature-title h2
+		{
+			font-size: 2.5em;
+			line-height: 1.2em;
+			letter-spacing: -1.5px;
+			margin-bottom: 0.5em;
+		}
+		
+		.feature-title p
+		{
+			font-size: 1.6em;
+			line-height: 1.5em;
+			margin-bottom: 1em;
+			color: #525252;
+		}
+
+	.button-big
+	{
+		font-size: 1.65em;
+		height: 64px;
+		line-height: 62px;
+		padding: 0 48px 0 48px;
+	}
+
+		.button-big:after
+		{
+			right: -20px;
+			border-left-width: 20px;
+			border-top-width: 32px;
+			border-bottom-width: 32px;
+		}
+
+	ul.style2
+	{
+	}
+	
+		ul.style2 li:first-child
+		{
+		}
+			
+			ul.style2 li:after
+			{
+				bottom: 6px;
+			}
+
+            
+    .csslogin
+	{
+		font-size: large;
+        color:#616165;
+        text-align:right;
+        vertical-align:central;
+        font-style:normal;
+        padding:0px 0px 10px 0px;
+        padding-top:2cm;
+	}
+
+    
+.botao01{
+     background: -webkit-linear-gradient(bottom, #E0E0E0, #F9F9F9 70%);
+     background: -moz-linear-gradient(bottom, #E0E0E0, #F9F9F9 70%);
+     background: -o-linear-gradient(bottom, #E0E0E0, #F9F9F9 70%);
+     background: -ms-linear-gradient(bottom, #E0E0E0, #F9F9F9 70%);
+     background: linear-gradient(bottom, #E0E0E0, #F9F9F9 70%);
+     border: 1px solid #CCCCCE;
+     border-radius: 3px;
+     box-shadow: 0 3px 0 rgba(0, 0, 0, .3),
+                   0 2px 7px rgba(0, 0, 0, 0.2);
+     color: #616165;
+     font-family: "Trebuchet MS";
+     font-size: 14px;
+     font-weight: bold;
+     line-height: 25px;
+     text-align: center;
+     text-decoration: none;
+     text-transform: uppercase;
+     text-shadow:1px 1px 0 #FFF;
+     padding: 5px 15px;
+     width: 80px;
+     cursor:pointer;
+    }
+
+	
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+	.logout-wrapper
+	{
+        width:30px;
+        font-size:medium;
+	}
+  
+ 	.logo-wrapper
+	{
+        width:200px;
+	}
+
+	#header-wrapper
+	{
+		height: 450px;
+	}
+
+		.subpage #header-wrapper
+		{
+			height: 200px;
+			background-position: top center;
+		}
+
+    #header-wrappercadastro
+	{
+		height: 450px;
+	}
+
+		.subpage #header-wrappercadastro
+		{
+			height: 200px;
+			background-position: top center;
+		}
+
+	
+	#intro-wrapper
+	{
+		padding: 3.25em 0 3.25em 0;
+	}
+
+	#main-wrapper
+	{
+		padding: 4em 0 2em 0;
+	}
+
+	#footer-wrapper
+	{
+		padding: 5em 0 0 0;
+	}
+	
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+	#page-header
+	{
+	}
+
+		#page-header h1
+		{
+			margin-bottom: 4em;
+		}
+
+		#page-header .captions
+		{
+			padding: 2em 0 2em 0;
+		}
+
+			#page-header .captions h2
+			{
+				font-size: 2.5em;
+				margin: 0 0 0.4em 0;
+			}
+		
+			#page-header .captions p
+			{
+				font-size: 2em;
+			}
+
+/*********************************************************************************/
+/* Intro                                                                        */
+/*********************************************************************************/
+
+	#intro
+	{
+		position: relative;
+	}
+
+		#intro h2
+		{
+			font-size: 2.85em;
+			line-height: 1.25em;
+			letter-spacing: -2px;
+			padding: 0 2em 0 2em;
+		}
+		
+		#intro hr
+		{
+			margin: 2.25em 0 2.75em 0;
+		}
+		
+		#intro p
+		{
+			font-size: 1em;
+			margin: 0 30em 0 2.5em;
+		}
+
+		#intro a
+		{
+			width: 13em;
+		}
+
+            
+.txtinput{
+    font-family: Arial, Verdana;
+    font-size: 15px;
+    padding: 5px;
+    border: 1px solid #b9bdc1;
+    width: 250px;
+    color: #797979;
+    }
+
+          
+textarea{
+    font-family: Arial, Verdana;
+    font-size: 15px;
+    padding: 5px;
+    border: 1px solid #b9bdc1;
+    width: 280px;
+    color: #797979;
+    }
+
+.tableform{
+    width:33%;
+    margin-left:33%;
+    padding:10px 10px 10px 10px;
+}
+
