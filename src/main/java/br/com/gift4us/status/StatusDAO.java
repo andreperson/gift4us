@@ -96,6 +96,17 @@ public class StatusDAO {
 
 		return query.getResultList();
 	}
+	
+	public List<StatusModel> buscaPorNomeExato(String nome) {
+
+		String jpql = "SELECT s FROM " + TABELA + " s WHERE s.nome = :nome ";
+
+		TypedQuery<StatusModel> query = manager.createQuery(jpql, StatusModel.class);
+
+		query.setParameter("nome", nome);
+
+		return query.getResultList();
+	}
 
 	public List<StatusModel> buscaPorDataIncl(Calendar dataIncl) {
 

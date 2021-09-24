@@ -28,7 +28,7 @@
 
 									<h3 class="mb-0">${mensagens.get('AnuncianteListaTituloDaPagina').valor}
 
-										<sec:authorize access="hasRole('ROLE_ADMIN')">
+										<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 											<a class="btn btn-warning btn-sm" title="Incluir" href="${url}"><i
 												class="fa fa-plus"></i></a>
 										</sec:authorize>
@@ -70,13 +70,12 @@
 															<td>${anunciante.anuncianteTipo.nome}</td>
 															<td class="text-center text-nowrap"><c:url var="url"
 																	value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_ANUNCIANTE%>" />
-																<sec:authorize
-																	access="hasRole('ROLE_ANUNCIANTE_ALTERAR')">
+																<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																	<a class="btn btn-primary btn-sm"
 																		href="${url}/${anunciante.id}"><i
 																		class="fas fa-pencil-alt"></i></a>
-																</sec:authorize> <sec:authorize
-																	access="hasRole('ROLE_ANUNCIANTE_EXCLUIR')">
+																</sec:authorize> 
+																<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																	<a
 																		class="btn btn-danger text-white btn-sm modal-excluir-link"
 																		href="#" data-id="${anunciante.id}"
@@ -97,7 +96,7 @@
 			</div>
 		</div>
 		<br>
-	<sec:authorize access="hasRole('ROLE_ANUNCIANTE_EXCLUIR')">
+	<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_ANUNCIANTE%>" />
 		<my:modal-excluir url="${url}"  name="id" />
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

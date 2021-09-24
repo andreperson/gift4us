@@ -27,6 +27,7 @@ import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
+import br.com.gift4us.subcategoria.SubCategoriaModel;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
 import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
 
@@ -48,20 +49,20 @@ public class AnuncianteTipoController {
 	@Autowired
 	private GerenciadorDeHistorico historico;
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.LISTA_DE_ANUNCIANTETIPO, method = RequestMethod.GET)
 	public String lista(Model model) {
 		model.addAttribute("listaDeAnuncianteTipo", anuncianteTipoDAO.listaTudo());
 		return "administracao/anunciantetipo/lista";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_ANUNCIANTETIPO, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
 		return "administracao/anunciantetipo/formulario";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_EDICAO_DE_ANUNCIANTETIPO + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaEdicao(@PathVariable Long id, Model model) {
 		AnuncianteTipoModel anuncianteTipo = anuncianteTipoDAO.buscaPorId(id);
@@ -69,35 +70,12 @@ public class AnuncianteTipoController {
 		return "administracao/anunciantetipo/formulario";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_ANUNCIANTETIPO, method = RequestMethod.POST)
-	public String insere(@Valid AnuncianteTipoModel anuncianteTipo, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String insere(@Valid AnuncianteTipoModel anuncianteTipo, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
-			model.addAttribute("anuncianteTipo", anuncianteTipo);
-			erros.setRedirectOrModel(model);
-			List<ObjectError> allErrors = bindingResult.getAllErrors();
-			for (ObjectError objectError : allErrors) {
-				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
-			}
-			return "administracao/anuncianteTipo/formulario";
-		}
-
-		anuncianteTipo.setDataAlt(Calendar.getInstance());
-		anuncianteTipo.setDataIncl(Calendar.getInstance());
-		
-		anuncianteTipoDAO.insere(anuncianteTipo);
-		AnuncianteTipoModel encontrado = anuncianteTipoDAO.buscaPorId(anuncianteTipo.getId());
-		historico.inserir(encontrado, "AnuncianteTipo");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
-	}
-
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
-	@RequestMapping(value = ListaDeURLs.EDICAO_DE_ANUNCIANTETIPO, method = RequestMethod.POST)
-	public String altera(@Valid AnuncianteTipoModel anuncianteTipo, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("anuncianteTipo", anuncianteTipo);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -107,30 +85,83 @@ public class AnuncianteTipoController {
 			return "administracao/anunciantetipo/formulario";
 		}
 
-		AnuncianteTipoModel anterior = anuncianteTipoDAO.buscaPorIdClonando(anuncianteTipo.getId());
+		// verifica se ja existe uma subcategoria nesta categoria com esse nome
+		List<AnuncianteTipoModel> lst = anuncianteTipoDAO.buscaPorNomeExato(anuncianteTipo.getNome());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
 
+			model.addAttribute("anuncianteTipo", anuncianteTipo);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/anunciantetipo/formulario";
+		}
+
+		anuncianteTipo.setDataAlt(Calendar.getInstance());
+		anuncianteTipo.setDataIncl(Calendar.getInstance());
+
+		anuncianteTipoDAO.insere(anuncianteTipo);
+		AnuncianteTipoModel encontrado = anuncianteTipoDAO.buscaPorId(anuncianteTipo.getId());
+		historico.inserir(encontrado, "AnuncianteTipo");
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
+	}
+
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
+	@RequestMapping(value = ListaDeURLs.EDICAO_DE_ANUNCIANTETIPO, method = RequestMethod.POST)
+	public String altera(@Valid AnuncianteTipoModel anuncianteTipo, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("anuncianteTipo", anuncianteTipo);
+			erros.setRedirectOrModel(model);
+			List<ObjectError> allErrors = bindingResult.getAllErrors();
+			for (ObjectError objectError : allErrors) {
+				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
+			}
+			return "administracao/anunciantetipo/formulario";
+		}
+
+		// verifica se ja existe uma subcategoria nesta categoria com esse nome
+		List<AnuncianteTipoModel> lst = anuncianteTipoDAO.buscaPorNomeExato(anuncianteTipo.getNome());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("anuncianteTipo", anuncianteTipo);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/anunciantetipo/formulario";
+		}
+
+		AnuncianteTipoModel anterior = anuncianteTipoDAO.buscaPorIdClonando(anuncianteTipo.getId());
+		anuncianteTipo.setDataAlt(Calendar.getInstance());
+		anuncianteTipo.setDataIncl(anterior.getDataIncl());
 		anuncianteTipoDAO.altera(anuncianteTipo);
 		AnuncianteTipoModel atual = anuncianteTipoDAO.buscaPorIdClonando(anuncianteTipo.getId());
 		historico.alterar(anterior, atual, "AnuncianteTipo");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_ANUNCIANTETIPO, method = RequestMethod.POST)
-	public String exclui(@Valid AnuncianteTipoModel anuncianteTipo, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String exclui(@Valid AnuncianteTipoModel anuncianteTipo, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		AnuncianteTipoModel encontrado = anuncianteTipoDAO.buscaPorIdClonando(anuncianteTipo.getId());
 		try {
 			anuncianteTipoDAO.exclui(encontrado);
 		} catch (Exception e) {
 			erros.setRedirectOrModel(redirectAttributes);
-			erros.adiciona("Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
-			return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
+			erros.adiciona(
+					"Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
+			return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
 		}
 		historico.excluir(encontrado, "AnuncianteTipo");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTETIPO;
 	}
 
 }

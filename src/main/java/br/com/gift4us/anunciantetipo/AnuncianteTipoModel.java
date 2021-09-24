@@ -43,12 +43,10 @@ public class AnuncianteTipoModel implements Serializable  {
 	@Column(length = 255)
 	private String nome;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioAnuncianteTipoDataIncl")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataIncl;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioAnuncianteTipoDataAlt")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataAlt;
