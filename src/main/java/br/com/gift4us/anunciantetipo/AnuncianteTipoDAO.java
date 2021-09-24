@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.categoria.CategoriaModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -97,6 +100,22 @@ public class AnuncianteTipoDAO {
 		return query.getResultList();
 	}
 
+	
+	
+	public List<AnuncianteTipoModel> buscaPorNomeExato(String nome) {
+
+		String jpql = "SELECT a FROM " + TABELA + " a WHERE a.nome LIKE  :nome ";
+
+
+		TypedQuery<AnuncianteTipoModel> query = manager.createQuery(jpql, AnuncianteTipoModel.class);
+
+		query.setParameter("nome", nome);
+
+		return query.getResultList();
+	}
+	
+	
+	
 	public List<AnuncianteTipoModel> buscaPorDataIncl(Calendar dataIncl) {
 
 		String jpql = "SELECT a FROM " + TABELA + " a WHERE a.dataIncl =  :dataIncl ";

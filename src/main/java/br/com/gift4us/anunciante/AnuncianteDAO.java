@@ -16,6 +16,11 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.anunciantetipo.AnuncianteTipoModel;
+import br.com.gift4us.categoria.CategoriaModel;
+import br.com.gift4us.subcategoria.SubCategoriaModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -96,6 +101,19 @@ public class AnuncianteDAO {
 
 		return query.getResultList();
 	}
+	
+	public List<AnuncianteModel> buscaPorRazaosocialExato(String razaosocial) {
+
+		String jpql = "SELECT a FROM " + TABELA + " a WHERE a.razaosocial = :razaosocial";
+
+		TypedQuery<AnuncianteModel> query = manager.createQuery(jpql, AnuncianteModel.class);
+
+		query.setParameter("razaosocial", razaosocial);
+
+		return query.getResultList();
+	}
+	
+	
 
 	public List<AnuncianteModel> buscaPorFantasia(String fantasia) {
 

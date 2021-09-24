@@ -24,7 +24,7 @@
 
 							<div class="col-8">
 								<h3 class="mb-0">${mensagens.get('StatusListaTituloDaPagina').valor}
-									<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 										<a class="btn btn-warning btn-sm" title="Incluir"
 											href="${url}"><i class="fa fa-plus"></i></a>
 									</sec:authorize>
@@ -63,11 +63,12 @@
 																value="${status.dataAlt.time}" var="data" />${data}</td>
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_STATUS%>" />
-															<sec:authorize access="hasRole('ROLE_STATUS_ALTERAR')">
+															<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${status.id}"><i
 																	class="fas fa-pencil-alt"></i></a>
-															</sec:authorize> <sec:authorize access="hasRole('ROLE_STATUS_EXCLUIR')">
+															</sec:authorize> 
+															<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${status.id}"
@@ -89,7 +90,7 @@
 		</div>
 	</div>
 	<br>
-	<sec:authorize access="hasRole('ROLE_STATUS_EXCLUIR')">
+	<sec:authorize access="hasAnyRole('ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_STATUS%>" />
 		<my:modal-excluir url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"

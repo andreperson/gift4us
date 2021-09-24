@@ -24,6 +24,7 @@ import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.UploadDeArquivo;
+import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
@@ -48,20 +49,20 @@ public class AnuncianteController {
 	@Autowired
 	private GerenciadorDeHistorico historico;
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.LISTA_DE_ANUNCIANTE, method = RequestMethod.GET)
 	public String lista(Model model) {
 		model.addAttribute("listaDeAnunciante", anuncianteDAO.listaTudo());
 		return "administracao/anunciante/lista";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_ANUNCIANTE, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
 		return "administracao/anunciante/formulario";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_EDICAO_DE_ANUNCIANTE + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaEdicao(@PathVariable Long id, Model model) {
 		AnuncianteModel anunciante = anuncianteDAO.buscaPorId(id);
@@ -69,11 +70,12 @@ public class AnuncianteController {
 		return "administracao/anunciante/formulario";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_ANUNCIANTE, method = RequestMethod.POST)
-	public String insere(@Valid AnuncianteModel anunciante, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String insere(@Valid AnuncianteModel anunciante, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("anunciante", anunciante);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -82,26 +84,51 @@ public class AnuncianteController {
 			}
 			return "administracao/anunciante/formulario";
 		}
+
+		// verifica se ja existe uma categoria com esse nome
+		List<AnuncianteModel> lst = anuncianteDAO.buscaPorRazaosocialExato(anunciante.getRazaosocial());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("anunciante", anunciante);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/anunciante/formulario";
+		}
+
 		anunciante.setDataAlt(Calendar.getInstance());
 		anunciante.setDataIncl(Calendar.getInstance());
 		anuncianteDAO.insere(anunciante);
 		AnuncianteModel encontrado = anuncianteDAO.buscaPorId(anunciante.getId());
 		historico.inserir(encontrado, "Anunciante");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTE;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTE;
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_ANUNCIANTE, method = RequestMethod.POST)
-	public String altera(@Valid AnuncianteModel anunciante, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String altera(@Valid AnuncianteModel anunciante, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("anunciante", anunciante);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			for (ObjectError objectError : allErrors) {
 				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
 			}
+			return "administracao/anunciante/formulario";
+		}
+
+		// verifica se ja existe uma categoria com esse nome
+		List<AnuncianteModel> lst = anuncianteDAO.buscaPorRazaosocialExato(anunciante.getRazaosocial());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("anunciante", anunciante);
+			model.addAttribute("alertademsg", msg);
+
 			return "administracao/anunciante/formulario";
 		}
 
@@ -111,25 +138,29 @@ public class AnuncianteController {
 		anuncianteDAO.altera(anunciante);
 		AnuncianteModel atual = anuncianteDAO.buscaPorIdClonando(anunciante.getId());
 		historico.alterar(anterior, atual, "Anunciante");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTE;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTE;
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_ANUNCIANTE, method = RequestMethod.POST)
-	public String exclui(@Valid AnuncianteModel anunciante, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String exclui(@Valid AnuncianteModel anunciante, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		AnuncianteModel encontrado = anuncianteDAO.buscaPorIdClonando(anunciante.getId());
 		try {
 			anuncianteDAO.exclui(encontrado);
 		} catch (Exception e) {
 			erros.setRedirectOrModel(redirectAttributes);
-			erros.adiciona("Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
-			return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTE;
+			erros.adiciona(
+					"Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
+			return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTE;
 		}
 		historico.excluir(encontrado, "Anunciante");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_ANUNCIANTE;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_ANUNCIANTE;
 	}
 
 }

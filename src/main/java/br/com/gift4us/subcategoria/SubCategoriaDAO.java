@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.categoria.CategoriaModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -97,6 +100,21 @@ public class SubCategoriaDAO {
 		return query.getResultList();
 	}
 
+	
+	public List<SubCategoriaModel> buscaPorNomeExato(String nome, CategoriaModel categoria) {
+
+		String jpql = "SELECT c FROM " + TABELA + " c WHERE c.nome = :nome and c.categoria = :categoria";
+
+		TypedQuery<SubCategoriaModel> query = manager.createQuery(jpql, SubCategoriaModel.class);
+
+		query.setParameter("nome", nome);
+		query.setParameter("categoria", categoria);
+
+		return query.getResultList();
+	}
+	
+	
+	
 	public List<SubCategoriaModel> buscaPorDataIncl(Calendar dataIncl) {
 
 		String jpql = "SELECT s FROM " + TABELA + " s WHERE s.dataIncl =  :dataIncl ";

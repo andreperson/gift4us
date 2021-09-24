@@ -49,22 +49,6 @@
 									data-msbc-required="Campo obrigatório"
 									data-msbc-maxlength="255|O campo deve ter no máximo {value} caracteres" />
 							</div>
-							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label text-right" for="dataIncl">${mensagens.get('AnuncianteTipoFormularioDataIncl').valor}:</label>
-								<fmt:formatDate pattern="dd/MM/yyyy"
-									value="${anuncianteTipo.dataIncl.time}" var="data" />
-								<input class="form-control data msbc-validator" type="text"
-									name="dataIncl" id="dataIncl" value="${data}"
-									autocomplete="off" data-msbc-required="Campo obrigatório" />
-							</div>
-							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label text-right" for="dataAlt">${mensagens.get('AnuncianteTipoFormularioDataAlt').valor}:</label>
-								<fmt:formatDate pattern="dd/MM/yyyy"
-									value="${anuncianteTipo.dataAlt.time}" var="data" />
-								<input class="form-control data msbc-validator" type="text"
-									name="dataAlt" id="dataAlt" value="${data}" autocomplete="off"
-									data-msbc-required="Campo obrigatório" />
-							</div>
 							<div class="mb-3">
 								<div class="col-md-4 offset-md-4">
 									<c:if test="${empty anuncianteTipo.id}">

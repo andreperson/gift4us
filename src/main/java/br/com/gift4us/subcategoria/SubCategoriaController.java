@@ -24,6 +24,7 @@ import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.UploadDeArquivo;
+import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
@@ -40,7 +41,7 @@ public class SubCategoriaController {
 	private Sucesso sucesso;
 
 	@Autowired
-	private SubCategoriaDAO subCategoriaDAO;
+	private SubCategoriaDAO subcategoriadao;
 
 	@Autowired
 	private MensagensDoSistemaDAO mensagensDoSistemaDAO;
@@ -48,54 +49,33 @@ public class SubCategoriaController {
 	@Autowired
 	private GerenciadorDeHistorico historico;
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.LISTA_DE_SUBCATEGORIA, method = RequestMethod.GET)
 	public String lista(Model model) {
-		model.addAttribute("listaDeSubCategoria", subCategoriaDAO.listaTudo());
+		model.addAttribute("listaDeSubCategoria", subcategoriadao.listaTudo());
 		return "administracao/subcategoria/lista";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_SUBCATEGORIA, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
 		return "administracao/subcategoria/formulario";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_EDICAO_DE_SUBCATEGORIA + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaEdicao(@PathVariable Long id, Model model) {
-		SubCategoriaModel subCategoria = subCategoriaDAO.buscaPorId(id);
+		SubCategoriaModel subCategoria = subcategoriadao.buscaPorId(id);
 		model.addAttribute("subCategoria", subCategoria);
 		return "administracao/subcategoria/formulario";
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_SUBCATEGORIA, method = RequestMethod.POST)
-	public String insere(@Valid SubCategoriaModel subCategoria, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String insere(@Valid SubCategoriaModel subCategoria, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
-			model.addAttribute("subCategoria", subCategoria);
-			erros.setRedirectOrModel(model);
-			List<ObjectError> allErrors = bindingResult.getAllErrors();
-			for (ObjectError objectError : allErrors) {
-				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
-			}
-			return "administracao/subCategoria/formulario";
-		}
-		subCategoria.setDataIncl(Calendar.getInstance());
-		subCategoria.setDataAlt(Calendar.getInstance());
-		subCategoriaDAO.insere(subCategoria);
-		SubCategoriaModel encontrado = subCategoriaDAO.buscaPorId(subCategoria.getId());
-		historico.inserir(encontrado, "SubCategoria");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_SUBCATEGORIA;
-	}
-
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
-	@RequestMapping(value = ListaDeURLs.EDICAO_DE_SUBCATEGORIA, method = RequestMethod.POST)
-	public String altera(@Valid SubCategoriaModel subCategoria, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("subCategoria", subCategoria);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -105,31 +85,84 @@ public class SubCategoriaController {
 			return "administracao/subcategoria/formulario";
 		}
 
-		SubCategoriaModel anterior = subCategoriaDAO.buscaPorIdClonando(subCategoria.getId());
+		// verifica se ja existe uma subcategoria nesta categoria com esse nome
+		List<SubCategoriaModel> lst = subcategoriadao.buscaPorNomeExato(subCategoria.getNome(),
+				subCategoria.getCategoria());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("subCategoria", subCategoria);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/subcategoria/formulario";
+		}
+
+		subCategoria.setDataIncl(Calendar.getInstance());
 		subCategoria.setDataAlt(Calendar.getInstance());
-		subCategoria.setDataIncl(anterior.getDataIncl());
-		subCategoriaDAO.altera(subCategoria);
-		SubCategoriaModel atual = subCategoriaDAO.buscaPorIdClonando(subCategoria.getId());
-		historico.alterar(anterior, atual, "SubCategoria");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_SUBCATEGORIA;
+		subcategoriadao.insere(subCategoria);
+		SubCategoriaModel encontrado = subcategoriadao.buscaPorId(subCategoria.getId());
+		historico.inserir(encontrado, "SubCategoria");
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_SUBCATEGORIA;
 	}
 
-	@Secured({ "ROLE_CONFIGURACOES","ROLE_ADMIN"})
-	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_SUBCATEGORIA, method = RequestMethod.POST)
-	public String exclui(@Valid SubCategoriaModel subCategoria, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
+	@RequestMapping(value = ListaDeURLs.EDICAO_DE_SUBCATEGORIA, method = RequestMethod.POST)
+	public String altera(@Valid SubCategoriaModel subCategoria, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		SubCategoriaModel encontrado = subCategoriaDAO.buscaPorIdClonando(subCategoria.getId());
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("subCategoria", subCategoria);
+			erros.setRedirectOrModel(model);
+			List<ObjectError> allErrors = bindingResult.getAllErrors();
+			for (ObjectError objectError : allErrors) {
+				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
+			}
+			return "administracao/subcategoria/formulario";
+		}
+
+		// verifica se ja existe uma subcategoria nesta categoria com esse nome
+		List<SubCategoriaModel> lst = subcategoriadao.buscaPorNomeExato(subCategoria.getNome(),
+				subCategoria.getCategoria());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("subCategoria", subCategoria);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/subcategoria/formulario";
+		}
+
+		SubCategoriaModel anterior = subcategoriadao.buscaPorIdClonando(subCategoria.getId());
+		subCategoria.setDataAlt(Calendar.getInstance());
+		subCategoria.setDataIncl(anterior.getDataIncl());
+		subcategoriadao.altera(subCategoria);
+		SubCategoriaModel atual = subcategoriadao.buscaPorIdClonando(subCategoria.getId());
+		historico.alterar(anterior, atual, "SubCategoria");
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_SUBCATEGORIA;
+	}
+
+	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
+	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_SUBCATEGORIA, method = RequestMethod.POST)
+	public String exclui(@Valid SubCategoriaModel subCategoria, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
+
+		SubCategoriaModel encontrado = subcategoriadao.buscaPorIdClonando(subCategoria.getId());
 		try {
-			subCategoriaDAO.exclui(encontrado);
+			subcategoriadao.exclui(encontrado);
 		} catch (Exception e) {
 			erros.setRedirectOrModel(redirectAttributes);
-			erros.adiciona("Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
-			return "redirect:"+ListaDeURLs.LISTA_DE_SUBCATEGORIA;
+			erros.adiciona(
+					"Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
+			return "redirect:" + ListaDeURLs.LISTA_DE_SUBCATEGORIA;
 		}
 		historico.excluir(encontrado, "SubCategoria");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_SUBCATEGORIA;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_SUBCATEGORIA;
 	}
 
 }
