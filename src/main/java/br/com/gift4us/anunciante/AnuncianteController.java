@@ -85,7 +85,7 @@ public class AnuncianteController {
 			return "administracao/anunciante/formulario";
 		}
 
-		// verifica se ja existe uma categoria com esse nome
+		// verifica se ja existe um anunciante com esse nome
 		List<AnuncianteModel> lst = anuncianteDAO.buscaPorRazaosocialExato(anunciante.getRazaosocial());
 		if (lst.size() > 0) {
 			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
@@ -121,7 +121,7 @@ public class AnuncianteController {
 			return "administracao/anunciante/formulario";
 		}
 
-		// verifica se ja existe uma categoria com esse nome
+		// verifica se ja existe um anunciante com esse nome
 		List<AnuncianteModel> lst = anuncianteDAO.buscaPorRazaosocialExato(anunciante.getRazaosocial());
 		if (lst.size() > 0) {
 			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
