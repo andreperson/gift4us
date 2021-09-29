@@ -17,14 +17,15 @@
 				class="fas fa-user-circle" style="margin-top: 3px;"></i>&nbsp;${login}
 		</sec:authorize> <c:url value="<%=ListaDeURLs.LOGOUT%>" var="url" /> 
 			
+			<!-- 
 		<br>
 		<a href="${url}"
 		class="nav-link" title="Logoff" style="color: #fff;"> <i
 			class="fas fa-sign-out-alt"
 			title="${mensagens.get('MenuBotaoSair').valor}"></i>
 			${mensagens.get('MenuBotaoSair').valor}
-			
+			 
 	</a>
-
+-->
 </span>
 </span>

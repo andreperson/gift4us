@@ -79,6 +79,12 @@
 									data-msbc-maxlength="255|O campo deve ter no máximo {value} caracteres" />
 							</div>
 							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="qtdademin">${mensagens.get('ProdutoFormularioEstoque').valor}:</label>
+								<input type="text" id="estoque" name="estoque"
+									class="form-control msbc-validator"
+									value="${produto.qtdademin}" />
+							</div>
+							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="qtdademin">${mensagens.get('ProdutoFormularioQtdademin').valor}:</label>
 								<input type="text" id="qtdademin" name="qtdademin"
 									class="form-control msbc-validator"
@@ -97,6 +103,13 @@
 									name="faixadepreco" id="faixadepreco" rows="5" cols="80"
 									data-msbc-required="Campo obrigatório"
 									data-msbc-maxlength="100|O campo deve ter no máximo {value} caracteres">${produto.faixadepreco}</textarea>
+
+								<select class="form-select" name="faixa-de-preco"
+									id="faixa-de-preco" multiple="multiple" size="5">
+									<option value="">de 1,00 a 50,00</option>
+									</select>
+
+
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="imagem">${mensagens.get('ProdutoFormularioImagem').valor}:</label>
@@ -112,23 +125,6 @@
 									data-msbc-required="Campo obrigatório"
 									data-msbc-maxlength="100|O campo deve ter no máximo {value} caracteres">${produto.urlanunciante}</textarea>
 							</div>
-							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label text-right" for="dataIncl">${mensagens.get('ProdutoFormularioDataIncl').valor}:</label>
-								<fmt:formatDate pattern="dd/MM/yyyy"
-									value="${produto.dataIncl.time}" var="data" />
-								<input class="form-control data msbc-validator" type="text"
-									name="dataIncl" id="dataIncl" value="${data}"
-									autocomplete="off" data-msbc-required="Campo obrigatório" />
-							</div>
-							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label text-right" for="dataAlt">${mensagens.get('ProdutoFormularioDataAlt').valor}:</label>
-								<fmt:formatDate pattern="dd/MM/yyyy"
-									value="${produto.dataAlt.time}" var="data" />
-								<input class="form-control data msbc-validator" type="text"
-									name="dataAlt" id="dataAlt" value="${data}" autocomplete="off"
-									data-msbc-required="Campo obrigatório" />
-							</div>
-
 							<div class="div-msbc-validator mb-3">
 								<div class="row">
 									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">

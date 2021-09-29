@@ -96,6 +96,17 @@ public class GrupoDAO {
 
 		return query.getResultList();
 	}
+	
+	public List<GrupoModel> buscaPorNomeExato(String nome) {
+
+		String jpql = "SELECT g FROM " + TABELA + " g WHERE g.nome = :nome ";
+
+		TypedQuery<GrupoModel> query = manager.createQuery(jpql, GrupoModel.class);
+
+		query.setParameter("nome", nome);
+
+		return query.getResultList();
+	}
 
 
 	@Transactional

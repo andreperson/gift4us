@@ -22,6 +22,7 @@ import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.UploadDeArquivo;
+import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
@@ -69,9 +70,10 @@ public class GrupoController {
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_GRUPO, method = RequestMethod.POST)
-	public String insere(@Valid GrupoModel grupo, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String insere(@Valid GrupoModel grupo, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("grupo", grupo);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -80,25 +82,49 @@ public class GrupoController {
 			}
 			return "administracao/grupo/formulario";
 		}
-		
+
+		// verifica se ja existe um cadastro com esse nome
+		List<GrupoModel> lst = grupoDAO.buscaPorNomeExato(grupo.getNome());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("grupo", grupo);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/grupo/formulario";
+		}
+
 		grupoDAO.insere(grupo);
 		GrupoModel encontrado = grupoDAO.buscaPorId(grupo.getId());
 		historico.inserir(encontrado, "Grupo");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_GRUPO;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_GRUPO;
 	}
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_GRUPO, method = RequestMethod.POST)
-	public String altera(@Valid GrupoModel grupo, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String altera(@Valid GrupoModel grupo, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("grupo", grupo);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
 			for (ObjectError objectError : allErrors) {
 				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
 			}
+			return "administracao/grupo/formulario";
+		}
+
+		// verifica se ja existe um cadastro com esse nome
+		List<GrupoModel> lst = grupoDAO.buscaPorNomeExato(grupo.getNome());
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("grupo", grupo);
+			model.addAttribute("alertademsg", msg);
+
 			return "administracao/grupo/formulario";
 		}
 
@@ -107,25 +133,29 @@ public class GrupoController {
 		grupoDAO.altera(grupo);
 		GrupoModel atual = grupoDAO.buscaPorIdClonando(grupo.getId());
 		historico.alterar(anterior, atual, "Grupo");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_GRUPO;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_GRUPO;
 	}
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_GRUPO, method = RequestMethod.POST)
-	public String exclui(@Valid GrupoModel grupo, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String exclui(@Valid GrupoModel grupo, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		GrupoModel encontrado = grupoDAO.buscaPorIdClonando(grupo.getId());
 		try {
 			grupoDAO.exclui(encontrado);
 		} catch (Exception e) {
 			erros.setRedirectOrModel(redirectAttributes);
-			erros.adiciona("Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
-			return "redirect:"+ListaDeURLs.LISTA_DE_GRUPO;
+			erros.adiciona(
+					"Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
+			return "redirect:" + ListaDeURLs.LISTA_DE_GRUPO;
 		}
 		historico.excluir(encontrado, "Grupo");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_GRUPO;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_GRUPO;
 	}
 
 }

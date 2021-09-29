@@ -42,7 +42,18 @@ public class ListaDeURLs {
 	public final static String SERVICO_DE_CATEGORIA_LOGADO = "/administracao/service/categoria";
 	public final static String ARQUIVOS_DE_CATEGORIA_LOGADO = "/administracao/categoria/arquivo";
 	public final static String ARQUIVOS_DE_CATEGORIA_SITE = "/site/categoria/arquivo";
-
+	
+	public final static String FORMULARIO_INSERCAO_DE_FAIXADEPRECO = "/administracao/faixadepreco/formulario-insercao";
+	public final static String FORMULARIO_EDICAO_DE_FAIXADEPRECO = "/administracao/faixadepreco/formulario-edicao";
+	public final static String LISTA_DE_FAIXADEPRECO = "/administracao/faixadepreco/lista";
+	public final static String INSERCAO_DE_FAIXADEPRECO = "/administracao/faixadepreco/insere";
+	public final static String EDICAO_DE_FAIXADEPRECO = "/administracao/faixadepreco/altera";
+	public final static String EXCLUSAO_DE_FAIXADEPRECO = "/administracao/faixadepreco/exclui";
+	public final static String SERVICO_DE_FAIXADEPRECO = "/service/faixadepreco";
+	public final static String SERVICO_DE_FAIXADEPRECO_LOGADO = "/administracao/service/faixadepreco";
+	public final static String ARQUIVOS_DE_FAIXADEPRECO_LOGADO = "/administracao/faixadepreco/arquivo";
+	public final static String ARQUIVOS_DE_FAIXADEPRECO_SITE = "/site/faixadepreco/arquivo";
+	
 	public final static String FORMULARIO_INSERCAO_DE_ATIVIDADE = "/administracao/atividade/formulario-insercao";
 	public final static String FORMULARIO_EDICAO_DE_ATIVIDADE = "/administracao/atividade/formulario-edicao";
 	public final static String LISTA_DE_ATIVIDADE = "/administracao/atividade/lista";

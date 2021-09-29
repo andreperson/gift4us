@@ -66,13 +66,11 @@
 														<td>${mensagensDoSistema.tela}</td>
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_MENSAGENSDOSISTEMA%>" />
-															<sec:authorize
-																access="hasRole('ROLE_MENSAGENSDOSISTEMA_ALTERAR')">
+															<sec:authorize access="hasRole('ROLE_ADMIN')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${mensagensDoSistema.propriedade}"><i
 																	class="fas fa-pencil-alt"></i></a>
-															</sec:authorize> <sec:authorize
-																access="hasRole('ROLE_MENSAGENSDOSISTEMA_EXCLUIR')">
+															</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${mensagensDoSistema.propriedade}"
@@ -131,12 +129,12 @@
 									<td class="text-center text-nowrap"><c:url var="url"
 											value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_MENSAGENSDOSISTEMA%>" />
 										<sec:authorize
-											access="hasRole('ROLE_MENSAGENSDOSISTEMA_ALTERAR')">
+											access="hasRole('ROLE_ADMIN')">
 											<a class="btn btn-primary btn-sm"
 												href="${url}/${mensagensDoSistema.propriedade}"><i
 												class="fas fa-pencil-alt"></i></a>
 										</sec:authorize> <sec:authorize
-											access="hasRole('ROLE_MENSAGENSDOSISTEMA_EXCLUIR')">
+											access="hasRole('ROLE_ADMIN')">
 											<a
 												class="btn btn-danger text-white btn-sm modal-excluir-link"
 												href="#" data-id="${mensagensDoSistema.propriedade}"
@@ -156,7 +154,7 @@
 		</div>
 	</div>
 	<br>
-	<sec:authorize access="hasRole('ROLE_MENSAGENSDOSISTEMA_EXCLUIR')">
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<c:url var="url"
 			value="<%=ListaDeURLs.EXCLUSAO_DE_MENSAGENSDOSISTEMA%>" />
 		<my:modal-excluir url="${url}" name="propriedade" />
