@@ -102,6 +102,15 @@
 				</sec:authorize>
 				<sec:authorize
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
+					<c:url value="<%=ListaDeURLs.LISTA_DE_FAIXADEPRECO%>" var="url" />
+					<a href="${url}" class="dropdown-item"> <c:url
+							value="${baseURL}/resources/Images/icone/ico-menu-faixa-de-preco.png"
+							var="urllogo" /> <img title="Status" src="${urllogo}"
+						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Faixas de Preço</span>
+					</a>
+				</sec:authorize>
+				<sec:authorize
+					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_STATUS%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
 							value="${baseURL}/resources/Images/icone/ico-menu-status.png"

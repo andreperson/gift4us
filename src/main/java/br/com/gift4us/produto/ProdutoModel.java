@@ -63,6 +63,8 @@ public class ProdutoModel implements Serializable  {
 	@Column(length = 255)
 	private String tag;
 
+	@Column(length = 5)
+	private Integer estoque;
 	
 	@Column(length = 5)
 	private Integer qtdademin;
@@ -83,12 +85,10 @@ public class ProdutoModel implements Serializable  {
 	@Column(length = 100)
 	private String urlanunciante;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoDataIncl")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataIncl;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoDataAlt")
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataAlt;
@@ -188,6 +188,14 @@ public class ProdutoModel implements Serializable  {
 		this.tag = tag;
 	}
 
+	public Integer getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
+	}
+	
 	public Integer getQtdademin() {
 		return qtdademin;
 	}
@@ -275,11 +283,6 @@ public class ProdutoModel implements Serializable  {
 	public void setStatus(StatusModel status) {
 		this.status = status;
 	}
-
-
-
-
-
 
 
 	@Override

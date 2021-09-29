@@ -61,11 +61,11 @@
 														<td>${grupo.nome}</td>
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_GRUPO%>" />
-															<sec:authorize access="hasRole('ROLE_GRUPO_ALTERAR')">
+															<sec:authorize access="hasRole('ROLE_ADMIN')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${grupo.id}"><i
 																	class="fas fa-pencil-alt"></i></a>
-															</sec:authorize> <sec:authorize access="hasRole('ROLE_GRUPO_EXCLUIR')">
+															</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${grupo.id}"
@@ -87,7 +87,7 @@
 		</div>
 	</div>
 	<br>
-	<sec:authorize access="hasRole('ROLE_GRUPO_EXCLUIR')">
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_GRUPO%>" />
 		<my:modal-excluir url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"

@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.grupo.GrupoModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -89,6 +92,18 @@ public class MensagensDoSistemaDAO {
 		return mapa;
 	}
 
+	public List<MensagensDoSistemaModel> buscaPorPropriedadeExata(MensagensDoSistemaModel mensagensdosistema) {
+
+		String jpql = "SELECT g FROM " + TABELA + " g WHERE g.valor = :valor and g.tela = :tela";
+
+		TypedQuery<MensagensDoSistemaModel> query = manager.createQuery(jpql, MensagensDoSistemaModel.class);
+
+		query.setParameter("tela", mensagensdosistema.getTela());
+		query.setParameter("valor", mensagensdosistema.getValor());
+
+		return query.getResultList();
+	}
+	
 	@CacheEvict(value = "cacheMensagensDoSistema")
 	public void limpaCache() {
 		mapa = null;
@@ -194,6 +209,27 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "CategoriaListaTituloDaPagina", "Lista de Categoria", "Lista de Categoria");
 		criaSeNaoExistir(lista, "CategoriaListaAcoes", "Ações", "Lista de Categoria");
 		criaSeNaoExistir(lista, "CategoriaListaSemRegistro", "Não foram encontrados registros para Categoria", "Lista de Categoria");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioId", "Código", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaId", "Código", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioNome", "Descrição", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioPrecoDe", "Preço De", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioPrecoAte", "Preço Até", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaNome", "Descrição", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaPrecoDe", "Preço De", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaPrecoAte", "Preço Até", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioDataIncl", "Data Inclusão", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaDataIncl", "Data Inclusão", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioDataAlt", "Data Alteração", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaDataAlt", "Data Alteração", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoMenuPrincipal", "Faixa de Preço", "Menu");
+		criaSeNaoExistir(lista, "FaixaDePrecoMenuInsere", "Insere", "Menu");
+		criaSeNaoExistir(lista, "FaixaDePrecoMenuLista", "Lista", "Menu");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioBotaoInsere", "Insere", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioBotaoAltera", "Altera", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoFormularioTituloDaPagina", "Cadastro de Faixa de Preço", "Formulário de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaTituloDaPagina", "Lista de Faixa de Preço", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaAcoes", "Ações", "Lista de Faixa de Preço");
+		criaSeNaoExistir(lista, "FaixaDePrecoListaSemRegistro", "Não foram encontrados registros para Faixa de Preço", "Lista de Faixa de Preço");
 		criaSeNaoExistir(lista, "AtividadeFormularioId", "Código", "Formulário de Atividade");
 		criaSeNaoExistir(lista, "AtividadeListaId", "Código", "Lista de Atividade");
 		criaSeNaoExistir(lista, "AtividadeFormularioNome", "Nome", "Formulário de Atividade");
@@ -277,6 +313,8 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "ProdutoListaTag", "Tags", "Lista de Produto");
 		criaSeNaoExistir(lista, "ProdutoFormularioQtdademin", "Quantidade Mínima", "Formulário de Produto");
 		criaSeNaoExistir(lista, "ProdutoListaQtdademin", "Quantidade Mínima", "Lista de Produto");
+		criaSeNaoExistir(lista, "ProdutoFormularioEstoque", "Estoque", "Formulário de Produto");
+		criaSeNaoExistir(lista, "ProdutoListaEstoque", "Estoque", "Lista de Produto");
 		criaSeNaoExistir(lista, "ProdutoFormularioPreco", "Preço", "Formulário de Produto");
 		criaSeNaoExistir(lista, "ProdutoListaPreco", "Preço", "Lista de Produto");
 		criaSeNaoExistir(lista, "ProdutoFormularioFaixadepreco", "Faixa de Preço", "Formulário de Produto");

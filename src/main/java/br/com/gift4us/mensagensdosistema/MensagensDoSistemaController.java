@@ -23,6 +23,7 @@ import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
+import br.com.gift4us.grupo.GrupoModel;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
@@ -65,9 +66,10 @@ public class MensagensDoSistemaController {
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_MENSAGENSDOSISTEMA, method = RequestMethod.POST)
-	public String insere(@Valid MensagensDoSistemaModel mensagensDoSistema, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String insere(@Valid MensagensDoSistemaModel mensagensDoSistema, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("mensagensDoSistema", mensagensDoSistema);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -77,18 +79,33 @@ public class MensagensDoSistemaController {
 			return "administracao/mensagensDoSistema/formulario";
 		}
 
+		// verifica se ja existe um cadastro com esse nome
+		List<MensagensDoSistemaModel> lst = mensagensDoSistemaDAO
+				.buscaPorPropriedadeExata(mensagensDoSistema);
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("mensagensDoSistema", mensagensDoSistema);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/mensagensdosistema/formulario";
+		}
+
 		mensagensDoSistemaDAO.insere(mensagensDoSistema);
-		MensagensDoSistemaModel encontrado = mensagensDoSistemaDAO.buscaPorPropriedade(mensagensDoSistema.getPropriedade());
+		MensagensDoSistemaModel encontrado = mensagensDoSistemaDAO
+				.buscaPorPropriedade(mensagensDoSistema.getPropriedade());
 		historico.inserir(encontrado, "Mensagens do sistema");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
 	}
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_MENSAGENSDOSISTEMA, method = RequestMethod.POST)
-	public String altera(@Valid MensagensDoSistemaModel mensagensDoSistema, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String altera(@Valid MensagensDoSistemaModel mensagensDoSistema, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("mensagensDoSistema", mensagensDoSistema);
 			erros.setRedirectOrModel(model);
 			List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -98,30 +115,49 @@ public class MensagensDoSistemaController {
 			return "administracao/mensagensdosistema/formulario";
 		}
 
-		MensagensDoSistemaModel anterior = mensagensDoSistemaDAO.buscaPorPropriedadeClonando(mensagensDoSistema.getPropriedade());
+		// verifica se ja existe um cadastro com esse nome
+		List<MensagensDoSistemaModel> lst = mensagensDoSistemaDAO
+				.buscaPorPropriedadeExata(mensagensDoSistema);
+		if (lst.size() > 0) {
+			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
+
+			model.addAttribute("mensagensDoSistema", mensagensDoSistema);
+			model.addAttribute("alertademsg", msg);
+
+			return "administracao/mensagensdosistema/formulario";
+		}
+
+		MensagensDoSistemaModel anterior = mensagensDoSistemaDAO
+				.buscaPorPropriedadeClonando(mensagensDoSistema.getPropriedade());
 
 		mensagensDoSistemaDAO.altera(mensagensDoSistema);
-		MensagensDoSistemaModel atual = mensagensDoSistemaDAO.buscaPorPropriedadeClonando(mensagensDoSistema.getPropriedade());
+		MensagensDoSistemaModel atual = mensagensDoSistemaDAO
+				.buscaPorPropriedadeClonando(mensagensDoSistema.getPropriedade());
 		historico.alterar(anterior, atual, "Mensagens do sistema");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
 	}
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_MENSAGENSDOSISTEMA, method = RequestMethod.POST)
-	public String exclui(@Valid MensagensDoSistemaModel mensagensDoSistema, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public String exclui(@Valid MensagensDoSistemaModel mensagensDoSistema, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttributes) {
 
-		MensagensDoSistemaModel encontrado = mensagensDoSistemaDAO.buscaPorPropriedadeClonando(mensagensDoSistema.getPropriedade());
+		MensagensDoSistemaModel encontrado = mensagensDoSistemaDAO
+				.buscaPorPropriedadeClonando(mensagensDoSistema.getPropriedade());
 		try {
 			mensagensDoSistemaDAO.exclui(encontrado);
 		} catch (Exception e) {
 			erros.setRedirectOrModel(redirectAttributes);
-			erros.adiciona("Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
-			return "redirect:"+ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
+			erros.adiciona(
+					"Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
+			return "redirect:" + ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
 		}
 		historico.excluir(encontrado, "Mensagens do sistema");
-		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
-		return "redirect:"+ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA;
 	}
 
 }
