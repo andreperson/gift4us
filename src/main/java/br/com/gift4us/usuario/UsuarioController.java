@@ -3,6 +3,7 @@ package br.com.gift4us.usuario;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.UploadDeArquivo;
+import br.com.gift4us.anunciante.AnuncianteDAO;
+import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
@@ -42,6 +45,9 @@ public class UsuarioController {
 	private UsuarioDAO usuarioDAO;
 
 	@Autowired
+	private AnuncianteDAO anuncianteDAO;
+	
+	@Autowired
 	private MensagensDoSistemaDAO mensagensDoSistemaDAO;
 
 	@Autowired
@@ -58,6 +64,14 @@ public class UsuarioController {
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_USUARIO, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
 		return "administracao/usuario/formulario";
+	}
+	
+	@Secured({ "ROLE_USUARIO_LOGADO" })
+	@RequestMapping(value = ListaDeURLs.USUARIO_PERFIL + "/{id}", method = RequestMethod.GET)
+	public String carregaPerfil(@PathVariable Long id, Model model) {
+		UsuarioModel usuario = usuarioDAO.buscaPorId(id);
+		model.addAttribute("usuario", usuario);
+		return "administracao/usuario/perfil";
 	}
 
 	@Secured({ "ROLE_ADMIN" })
@@ -122,13 +136,52 @@ public class UsuarioController {
 
 		UsuarioModel anterior = usuarioDAO.buscaPorIdClonando(usuario.getId());
 
+		usuario = completaInformacoesDoUsuario(usuarioDoBanco, usuario);
 		usuarioDAO.altera(usuario);
 		UsuarioModel atual = usuarioDAO.buscaPorIdClonando(usuario.getId());
 		historico.alterar(anterior, atual, "Usuário");
 		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
 		return "redirect:"+ListaDeURLs.LISTA_DE_USUARIO;
 	}
+	
+	private UsuarioModel completaInformacoesDoUsuario(List<UsuarioModel> usuariodobanco, UsuarioModel usuariodoform) {
+		
+		for (UsuarioModel ubanco : usuariodobanco) {
+			usuariodoform.setAbout(ubanco.getAbout());
+			usuariodoform.setDddcelular(ubanco.getDddcelular());
+			usuariodoform.setCelular(ubanco.getCelular());
+			usuariodoform.setDddtelefone(ubanco.getDddtelefone());
+			usuariodoform.setTelefone(ubanco.getTelefone());
+		}
+		
+		return usuariodoform;
+	}
+	
+	@Secured({ "ROLE_USUARIO_LOGADO" })
+	@RequestMapping(value = ListaDeURLs.USUARIO_PERFIL_ALTERA, method = RequestMethod.POST)
+	public String perfilaltera(@Valid UsuarioModel usuario, @RequestParam("anuncianteid") Long anuncianteid,BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
+		if(bindingResult.hasErrors()){
+			model.addAttribute("usuario", usuario);
+			erros.setRedirectOrModel(model);
+			List<ObjectError> allErrors = bindingResult.getAllErrors();
+			for (ObjectError objectError : allErrors) {
+				erros.adiciona(mensagensDoSistemaDAO.buscaPorError(objectError));
+			}
+			return "administracao/usuario/perfil";
+		}
+
+		UsuarioModel anterior = usuarioDAO.buscaPorIdClonando(usuario.getId());
+		usuario.setAnunciante(anterior.getAnunciante());
+		usuario.setListaDeGrupo(anterior.getListaDeGrupo());
+		usuarioDAO.altera(usuario);
+		
+		UsuarioModel atual = usuarioDAO.buscaPorIdClonando(usuario.getId());
+		historico.alterar(anterior, atual, "Usuário");
+		//sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
+		return "redirect:"+ListaDeURLs.HOME;
+	}
+	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_USUARIO, method = RequestMethod.POST)
 	public String exclui(@Valid UsuarioModel usuario, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {

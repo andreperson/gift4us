@@ -20,107 +20,38 @@ import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.status.StatusModel;
 
 
-@Entity
-@Table(name = "PRODUTO")
-public class ProdutoModel implements Serializable  {
+public class ProdutoShow {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
-	@Column(length = 19)
 	private Long id;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoCodigo")
-	@Column(length = 50)
 	private String codigo;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoTitulo")
-	@Column(length = 255)
 	private String titulo;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoBrevedescricao")
-	@Column(length = 255)
 	private String brevedescricao;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoDescricaocompleta")
-	@Column(length = 3999)
 	private String descricaocompleta;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoTag")
-	@Column(length = 255)
 	private String tag;
-
-	@Column(length = 5)
 	private Integer estoque;
-	
-	@Column(length = 5)
 	private Integer qtdademin;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoPreco")
-	@Column(precision=11, scale=0)
 	private Double preco;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoImagem")
-	@Column(length = 255)
 	private String imagem;
-
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoUrlanunciante")
-	@Column(length = 100)
 	private String urlanunciante;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataIncl;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataAlt;
 
 	@ManyToOne
-	@JoinColumn(name = "categoria_id")
 	private CategoriaModel categoria;
 	
 	@ManyToOne
-	@JoinColumn(name = "subcategoria_id")
 	private SubCategoriaModel subcategoria;
 	
 	@ManyToOne
-	@JoinColumn(name = "faixadepreco_id")
 	private FaixaDePrecoModel faixadepreco;
 	
 	@ManyToOne
-	@JoinColumn(name = "anunciante_id")
 	private AnuncianteModel anunciante;
 
 	@ManyToOne
-	@JoinColumn(name = "status_id")
 	private StatusModel status;
-
-	public ProdutoModel(){
-		
-	}
-
-	public ProdutoModel(Long id, String codigo, String titulo, String brevedescricao, String descricaocompleta, String tag, Integer qtdademin, Double preco, String imagem, String urlanunciante, Calendar dataIncl, Calendar dataAlt, CategoriaModel categoria, SubCategoriaModel subcategoria, AnuncianteModel anunciante, StatusModel status, FaixaDePrecoModel faixadepreco) {
-		this.id = id;
-		this.codigo = codigo;
-		this.titulo = titulo;
-		this.brevedescricao = brevedescricao;
-		this.descricaocompleta = descricaocompleta;
-		this.tag = tag;
-		this.qtdademin = qtdademin;
-		this.preco = preco;
-		this.faixadepreco = faixadepreco;
-		this.imagem = imagem;
-		this.urlanunciante = urlanunciante;
-		this.dataIncl = dataIncl;
-		this.dataAlt = dataAlt;
-		this.categoria = categoria;
-		this.subcategoria = subcategoria;
-		this.anunciante = anunciante;
-		this.status = status;
-
-	}
 
 	public Long getId() {
 		return id;
@@ -271,4 +202,5 @@ public class ProdutoModel implements Serializable  {
 	public String toString() {
 		return id + " - " + codigo;
 	}
+
 }

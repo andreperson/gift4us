@@ -32,7 +32,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "FAIXA_DE_PRECO")
+@Table(name = "FAIXADEPRECO")
 public class FaixaDePrecoModel implements Serializable  {
 
 	private static final long serialVersionUID = 1L;

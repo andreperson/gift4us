@@ -52,12 +52,8 @@ public class SubCategoriaModel implements Serializable  {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataAlt;
 
-	
-	
 	@ManyToOne
 	private CategoriaModel categoria;
-
-
 
 	public SubCategoriaModel(){
 		

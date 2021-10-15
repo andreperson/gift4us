@@ -6,10 +6,15 @@
 	prefix="sec"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
+
+
+
 <c:set var="cssFiles"
-	value="bootstrap/bootstrap-toggle.min.css,bootstrap/select2.min.css,bootstrap/select2-bootstrap4.min.css,jqte/jquery-te.css" />
+	value="../css/bootstrap/bootstrap-toggle.min.css,../css/bootstrap/select2.min.css,../css/bootstrap/select2-bootstrap4.min.css" />
 <c:set var="jsFiles"
-	value="jquery/bootstrap-toggle.min.js,jquery/select2.min.js,jquery/select2-pt-BR.js,ObjetoIdValor.js,jquery/jquery-te.min.js,ProdutoFormulario.js" />
+	value="/js/ProdutoFormulario.js,/js/jquery/bootstrap-toggle.min.js,js/jquery/select2.min.js,/js/jquery/select2-pt-BR.js" />
+
+
 <my:template fluido="false"
 	title="${mensagens.get('ProdutoFormularioTituloDaPagina').valor}"
 	cssFiles="${cssFiles}" jsFiles="${jsFiles}">
@@ -99,24 +104,18 @@
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="faixadepreco">${mensagens.get('ProdutoFormularioFaixadepreco').valor}:</label>
-								<textarea class="form-control texto-html msbc-validator"
-									name="faixadepreco" id="faixadepreco" rows="5" cols="80"
+								<select class="form-select msbc-validator"
+									name="faixadepreco.id" id="faixadepreco"
+									data-selecionado='${produto.getFaixaDePreco().getId()}'
 									data-msbc-required="Campo obrigatório"
-									data-msbc-maxlength="100|O campo deve ter no máximo {value} caracteres">${produto.faixadepreco}</textarea>
-
-								<select class="form-select" name="faixa-de-preco"
-									id="faixa-de-preco" multiple="multiple" size="5">
-									<option value="">de 1,00 a 50,00</option>
-									</select>
-
-
+									onchange="faixadepreco_click();"></select> <input type="hidden"
+									id="faixadeprecoid" name="faixadeprecoid">
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="imagem">${mensagens.get('ProdutoFormularioImagem').valor}:</label>
-								<textarea class="form-control texto-html msbc-validator"
-									name="imagem" id="imagem" rows="5" cols="80"
-									data-msbc-required="Campo obrigatório"
-									data-msbc-maxlength="255|O campo deve ter no máximo {value} caracteres">${produto.imagem}</textarea>
+								<input class="form-control texto-html"
+									name="imagem" id="imagem" type="file"
+									data-msbc-required="Campo obrigatório">${produto.imagem}
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="urlanunciante">${mensagens.get('ProdutoFormularioUrlanunciante').valor}:</label>
@@ -126,121 +125,22 @@
 									data-msbc-maxlength="100|O campo deve ter no máximo {value} caracteres">${produto.urlanunciante}</textarea>
 							</div>
 							<div class="div-msbc-validator mb-3">
-								<div class="row">
-									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-										<label class="col-form-label text-right"
-											for="categoria-origem-filtro">${mensagens.get("ProdutoFormularioCategoria").valor}:</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-										<select id="categoria-origem-filtro-select"
-											style="display: none;"></select> <input class="form-control "
-											type="text" id="categoria-origem-filtro" /> <select
-											class="form-select" name="origem" id="categoria-origem"
-											multiple="multiple" size="5"></select>
-									</div>
-									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
-										<i id="categoria-envia-todos-para-origem"
-											class="btn w-100 btn-outline-info fas fa-angle-double-left"
-											style="margin-top: 5px"></i><br /> <i
-											id="categoria-envia-selecionados-para-origem"
-											class="btn w-100 btn-outline-info fas fa-angle-left"
-											style="margin-top: 10px"></i><br /> <i
-											id="categoria-envia-selecionados-para-destino"
-											class="btn w-100 btn-outline-info fas fa-angle-right"
-											style="margin-top: 10px"></i><br /> <i
-											id="categoria-envia-todos-para-destino"
-											class="btn w-100 btn-outline-info fas fa-angle-double-right"
-											style="margin-top: 10px"></i>
-									</div>
-									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-										<select id="categoria-destino-filtro-select"
-											style="display: none;"></select> <input class="form-control "
-											type="text" id="categoria-destino-filtro" />
-										<c:set var="selecionado" value="" />
-										<c:forEach items="${produto.listaDeCategoria}" var="categoria">
-											<c:if test="${not empty selecionado}">
-												<c:set var="selecionado"
-													value="${selecionado},${categoria.id}" />
-											</c:if>
-											<c:if test="${empty selecionado}">
-												<c:set var="selecionado" value="${categoria.id}" />
-											</c:if>
-										</c:forEach>
-										<select class="form-select" name="categoria"
-											id="categoria-destino" multiple="multiple" size="5"
-											data-selecionado="${selecionado}"
-											data-name="listaDeCategoria[].id"></select> <span
-											id="categoria-inputs-objetos-selecionados"
-											style="display: none;"></span>
-									</div>
-								</div>
-							</div>
-
-
-							<div class="div-msbc-validator mb-3">
-								<div class="row">
-									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-										<label class="col-form-label text-right"
-											for="subcategoria-origem-filtro">${mensagens.get("ProdutoFormularioSubCategoria").valor}:</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-										<select id="subcategoria-origem-filtro-select"
-											style="display: none;"></select> <input class="form-control "
-											type="text" id="subcategoria-origem-filtro" /> <select
-											class="form-select" name="origem" id="subcategoria-origem"
-											multiple="multiple" size="5"></select>
-									</div>
-									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
-										<i id="subcategoria-envia-todos-para-origem"
-											class="btn w-100 btn-outline-info fas fa-angle-double-left"
-											style="margin-top: 5px"></i><br /> <i
-											id="subcategoria-envia-selecionados-para-origem"
-											class="btn w-100 btn-outline-info fas fa-angle-left"
-											style="margin-top: 10px"></i><br /> <i
-											id="subcategoria-envia-selecionados-para-destino"
-											class="btn w-100 btn-outline-info fas fa-angle-right"
-											style="margin-top: 10px"></i><br /> <i
-											id="subcategoria-envia-todos-para-destino"
-											class="btn w-100 btn-outline-info fas fa-angle-double-right"
-											style="margin-top: 10px"></i>
-									</div>
-									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-										<select id="subcategoria-destino-filtro-select"
-											style="display: none;"></select> <input class="form-control "
-											type="text" id="subcategoria-destino-filtro" />
-										<c:set var="selecionado" value="" />
-										<c:forEach items="${produto.listaDeSubCategoria}"
-											var="subcategoria">
-											<c:if test="${not empty selecionado}">
-												<c:set var="selecionado"
-													value="${selecionado},${subcategoria.id}" />
-											</c:if>
-											<c:if test="${empty selecionado}">
-												<c:set var="selecionado" value="${subcategoria.id}" />
-											</c:if>
-										</c:forEach>
-										<select class="form-select" name="subcategoria"
-											id="subcategoria-destino" multiple="multiple" size="5"
-											data-selecionado="${selecionado}"
-											data-name="listaDeSubCategoria[].id"></select> <span
-											id="subcategoria-inputs-objetos-selecionados"
-											style="display: none;"></span>
-									</div>
-								</div>
-							</div>
-
-
-							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label" for="anunciante">${mensagens.get('ProdutoFormularioAnunciante').valor}:</label>
-								<select class="form-select msbc-validator" name="anunciante.id"
-									id="anunciante" data-selecionado='${produto.anunciante.id}'
+								<label class="col-form-label" for="categoria">${mensagens.get('ProdutoFormularioCategoria').valor}:</label>
+								<select class="form-select msbc-validator" name="categoria.id"
+									id="categoria" data-selecionado='${produto.categoria.id}'
 									data-msbc-required="Campo obrigatório"></select>
 							</div>
 
+
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="subcategoria">${mensagens.get('ProdutoFormularioSubCategoria').valor}:</label>
+								<select class="form-select msbc-validator"
+									name="subcategoria.id" id="subcategoria"
+									data-selecionado='${produto.getSubCategoria().getId()}'
+									data-msbc-required="Campo obrigatório"
+									onchange="subcategoria_click();"></select> <input type="hidden"
+									id="subcategoriaid" name="subcategoriaid">
+							</div>
 
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="status">${mensagens.get('ProdutoFormularioStatus').valor}:</label>
@@ -265,7 +165,6 @@
 									</c:if>
 								</div>
 							</div>
-
 						</form>
 					</div>
 				</div>
