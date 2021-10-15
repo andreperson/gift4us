@@ -9,12 +9,15 @@
 <span style="margin-right: 40px; float: right; font-size: 13px;">
 	 <sec:authentication
 		property="principal.login" var="login" /> <sec:authentication
-		property="principal.id" var="id" /> <span style="color: #707071;">
+		property="principal.id" var="id" /> 
+		<sec:authentication
+		property="principal.apelido" var="apelido" />
+		<span style="color: #707071;">
 		<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 			<c:url value="ListaDeURLs.USUARIOS_EDITAR" var="url" />
 			<a href="${url}?usuarioId=${id}" class="nav-link"
 				title="Editar Usuário" style="color: #fff;"></a><i
-				class="fas fa-user-circle" style="margin-top: 3px;"></i>&nbsp;${login}
+				class="fas fa-user-circle" style="margin-top: 3px;"></i>&nbsp;${apelido != null && apelido != null ? apelido : login}
 		</sec:authorize> <c:url value="<%=ListaDeURLs.LOGOUT%>" var="url" /> 
 			
 			<!-- 

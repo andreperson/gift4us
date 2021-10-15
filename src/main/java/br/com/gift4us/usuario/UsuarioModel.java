@@ -41,7 +41,6 @@ public class UsuarioModel implements Serializable , UserDetails {
 	@Column(length = 19)
 	private Long id;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioUsuarioLogin")
 	@Column(length = 30)
 	private String login;
 
@@ -49,34 +48,56 @@ public class UsuarioModel implements Serializable , UserDetails {
 	@Column(length = 255)
 	private String nome;
 
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioUsuarioApelido")
+	@Column(length = 255)
+	private String apelido;
+	
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioUsuarioEmail")
+	@Column(length = 255)
+	private String email;
 	
 	@Column(length = 255)
 	private String senha;
 
-	
+	@Column(length = 10)
+	private String dddcelular;
+
+	@Column(length = 50)
+	private String celular;
+
+	@Column(length = 10)
+	private String dddtelefone;
+
+	@Column(length = 50)
+	private String telefone;
+
+	@Column(length = 255)
+	private String about;
 	
 	@ManyToMany
 	private List<GrupoModel> listaDeGrupo = new ArrayList<GrupoModel>();
-
-	
 	
 	@ManyToOne
 	private AnuncianteModel anunciante;
-
-
 
 	public UsuarioModel(){
 		
 	}
 
-	public UsuarioModel(Long id, String login, String nome, String senha, List<GrupoModel> listaDeGrupo, AnuncianteModel anunciante) {
+	public UsuarioModel(Long id, String login, String nome, String senha, String email, String apelido, List<GrupoModel> listaDeGrupo, AnuncianteModel anunciante, String dddcelular, String celular, String dddtelefone, String telefone, String about) {
 		this.id = id;
 		this.login = login;
 		this.nome = nome;
+		this.apelido = apelido;
 		this.senha = senha;
+		this.email = email;
 		this.listaDeGrupo = listaDeGrupo;
+		this.dddcelular = dddcelular;
+		this.celular = celular;
+		this.dddtelefone= dddtelefone;
+		this.telefone = telefone;
+		this.about = about;
 		this.anunciante = anunciante;
-
 	}
 
 	public Long getId() {
@@ -102,7 +123,23 @@ public class UsuarioModel implements Serializable , UserDetails {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public String getApelido() {
+		return apelido;
+	}
 
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public String getSenha() {
 		return senha;
 	}
@@ -127,7 +164,45 @@ public class UsuarioModel implements Serializable , UserDetails {
 		this.anunciante = anunciante;
 	}
 
+	public String getDddcelular() {
+		return dddcelular;
+	}
 
+	public void setDddcelular(String dddcelular) {
+		this.dddcelular = dddcelular;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getDddtelefone() {
+		return dddtelefone;
+	}
+
+	public void setDddtelefone(String dddtelefone) {
+		this.dddtelefone = dddtelefone;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

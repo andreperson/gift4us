@@ -37,18 +37,6 @@
 		</a></li>
 	</sec:authorize>
 
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
-		<li class="ms-3 ms-sm-0"><c:url
-				value="<%=ListaDeURLs.LISTA_DE_ORCAMENTO%>" var="url" /> <a
-			href="${url}" class="nav-link"><c:url
-					value="${baseURL}/resources/Images/icone/ico-menu-usuario.png"
-					var="urllogo" /> <img title="Usuários" src="${urllogo}"
-				class="menu-icone"> <span class="menu-texto">&nbsp;Usuários</span>
-		</a></li>
-	</sec:authorize>
-
-
-
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 		<li class="ms-3 ms-sm-0 dropdown"><a href="#"
 			class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
@@ -202,13 +190,16 @@
 
 		<li class="ms-3 ms-sm-0 me-3 ms-xl-auto"><sec:authentication
 				property="principal.login" var="login" /> <sec:authentication
-				property="principal.id" var="id" /> <span style="color: #707071;">
+				property="principal.id" var="id" /> 
+				<sec:authentication
+				property="principal.apelido" var="apelido" />
+				<span style="color: #707071;">
 				<sec:authorize access="hasAnyRole('ROLE_USUARIO_LOGADO')">
-					<c:url value="ListaDeURLs.USUARIOS_EDITAR" var="url" />
-					<a href="${url}?usuarioId=${id}" class="dropdown-item"
+					<c:url value="<%=ListaDeURLs.USUARIO_PERFIL%>" var="url" />
+					<a href="${url}/${id}" class="dropdown-item"
 						title="Editar Usuário" style="color: #337AB7;"><i
 						class="fas fa-user-circle fa" style="margin-top: 3px;"></i>
-						${login}</a>
+						${apelido != null && apelido != null ? apelido : login}</a>
 				</sec:authorize> <c:url value="<%=ListaDeURLs.LOGOUT%>" var="url" /> <a
 				href="${url}" class="dropdown-item" title="Logoff"
 				style="color: #cc0000;"> <i class="fas fa-sign-out-alt fa"

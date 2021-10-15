@@ -460,6 +460,10 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "UsuarioListaLogin", "Login", "Lista de Usuário");
 		criaSeNaoExistir(lista, "UsuarioFormularioNome", "Nome", "Formulário de Usuário");
 		criaSeNaoExistir(lista, "UsuarioListaNome", "Nome", "Lista de Usuário");
+		criaSeNaoExistir(lista, "UsuarioFormularioApelido", "Apelido", "Formulário de Usuário");
+		criaSeNaoExistir(lista, "UsuarioListaApelido", "Apelido", "Lista de Usuário");
+		criaSeNaoExistir(lista, "UsuarioFormularioEmail", "Email", "Formulário de Usuário");
+		criaSeNaoExistir(lista, "UsuarioListaEmail", "Email", "Lista de Usuário");
 		criaSeNaoExistir(lista, "UsuarioFormularioSenha", "Senha", "Formulário de Usuário");
 		criaSeNaoExistir(lista, "UsuarioListaSenha", "Senha", "Lista de Usuário");
 		criaSeNaoExistir(lista, "UsuarioFormularioGrupo", "Grupo", "Formulário de Usuário");
@@ -619,6 +623,8 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioGrupoNome", "O campo Nome deve ser preenchido!", "Formulário de Grupo");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioUsuarioLogin", "O campo Login deve ser preenchido!", "Formulário de Usuario");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioUsuarioNome", "O campo Nome deve ser preenchido!", "Formulário de Usuario");
+		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioUsuarioApelido", "O campo Apelido deve ser preenchido!", "Formulário de Usuario");
+		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioUsuarioEmail", "O campo Email deve ser preenchido!", "Formulário de Usuario");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioUsuarioSenha", "O campo Senha deve ser preenchido!", "Formulário de Usuario");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioHistoricoDoSistemaLogin", "O campo Login deve ser preenchido!", "Formulário de HistoricoDoSistema");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioHistoricoDoSistemaNome", "O campo Nome deve ser preenchido!", "Formulário de HistoricoDoSistema");

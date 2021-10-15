@@ -147,6 +147,8 @@ public class ListaDeURLs {
 	public final static String LISTA_DE_USUARIO = "/administracao/usuario/lista";
 	public final static String INSERCAO_DE_USUARIO = "/administracao/usuario/insere";
 	public final static String EDICAO_DE_USUARIO = "/administracao/usuario/altera";
+	public final static String USUARIO_PERFIL = "/administracao/usuario/perfil";
+	public final static String USUARIO_PERFIL_ALTERA = "/administracao/usuario/perfilaltera";
 	public final static String EXCLUSAO_DE_USUARIO = "/administracao/usuario/exclui";
 	public final static String SERVICO_DE_USUARIO = "/service/usuario";
 	public final static String SERVICO_DE_USUARIO_LOGADO = "/administracao/service/usuario";

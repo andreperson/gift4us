@@ -37,22 +37,22 @@ public class JpaUsuarioDAO implements UsuarioDAO {
 		this.manager = em;
 	}
 
-
 	@Transactional
 	public void criaInsertDeUsuarioAdmin() {
-	List<UsuarioModel> buscaPorLogin = this.buscaPorLogin("admin");
+		List<UsuarioModel> buscaPorLogin = this.buscaPorLogin("admin");
 
-	if (buscaPorLogin != null && buscaPorLogin.size() == 0) {
-		UsuarioModel usuario = new UsuarioModel();
-		usuario.setSenha("admin");
-		usuario.setNome("Admin - Deletar quando criar os proprios usuarios");
-		usuario.setLogin("admin");
-		manager.persist(usuario);
+		if (buscaPorLogin != null && buscaPorLogin.size() == 0) {
+			UsuarioModel usuario = new UsuarioModel();
+			usuario.setSenha("admin");
+			usuario.setNome("Admin - Deletar quando criar os proprios usuarios");
+			usuario.setLogin("admin");
+			usuario.setApelido("Admin");
+			usuario.setEmail("gift4us@gift4us.com.br");
+			manager.persist(usuario);
+		}
+
 	}
 
-	}
-
-	
 	@Transactional
 	public void insere(UsuarioModel usuario) {
 		manager.persist(usuario);
@@ -88,9 +88,9 @@ public class JpaUsuarioDAO implements UsuarioDAO {
 
 		List<UsuarioModel> resultado = query.getResultList();
 
-		if(resultado.size() == 0){
+		if (resultado.size() == 0) {
 			return new UsuarioModel();
-		}else{
+		} else {
 			return resultado.get(0);
 		}
 	}
@@ -118,7 +118,7 @@ public class JpaUsuarioDAO implements UsuarioDAO {
 
 		TypedQuery<UsuarioModel> query = manager.createQuery(jpql, UsuarioModel.class);
 
-		query.setParameter("nome", "%"+nome+"%");
+		query.setParameter("nome", "%" + nome + "%");
 
 		return query.getResultList();
 	}
@@ -129,7 +129,7 @@ public class JpaUsuarioDAO implements UsuarioDAO {
 
 		TypedQuery<UsuarioModel> query = manager.createQuery(jpql, UsuarioModel.class);
 
-		query.setParameter("senha", "%"+senha+"%");
+		query.setParameter("senha", "%" + senha + "%");
 
 		return query.getResultList();
 	}

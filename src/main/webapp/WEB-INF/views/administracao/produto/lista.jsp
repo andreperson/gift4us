@@ -21,7 +21,8 @@
 								value="<%=ListaDeURLs.FORMULARIO_INSERCAO_DE_PRODUTO%>" />
 							<div class="col-8">
 								<h3 class="mb-0">${mensagens.get('ProdutoListaTituloDaPagina').valor}
-									<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL','ROLE_ANUNCIANTE')">
+									<sec:authorize
+										access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL','ROLE_ANUNCIANTE')">
 										<a class="btn btn-warning btn-sm" title="Incluir"
 											href="${url}"><i class="fa fa-plus"></i></a>
 									</sec:authorize>
@@ -45,25 +46,12 @@
 													<th>${mensagens.get('ProdutoListaId').valor}</th>
 													<th>${mensagens.get('ProdutoListaCodigo').valor}</th>
 													<th>${mensagens.get('ProdutoListaTitulo').valor}</th>
-													<th>
-														${mensagens.get('ProdutoListaBrevedescricao').valor}</th>
-													<th>
-														${mensagens.get('ProdutoListaDescricaocompleta').valor}</th>
-													<th>${mensagens.get('ProdutoListaTag').valor}</th>
-													<th>${mensagens.get('ProdutoListaQtdademin').valor}</th>
+													<th>${mensagens.get('ProdutoListaEstoque').valor}</th>
 													<th>${mensagens.get('ProdutoListaPreco').valor}</th>
-													<th>
-														${mensagens.get('ProdutoListaFaixadepreco').valor}</th>
-													<th>${mensagens.get('ProdutoListaImagem').valor}</th>
-													<th>
-														${mensagens.get('ProdutoListaUrlanunciante').valor}</th>
-													<th>${mensagens.get('ProdutoListaDataIncl').valor}</th>
-													<th>${mensagens.get('ProdutoListaDataAlt').valor}</th>
 													<th>${mensagens.get('ProdutoListaCategoria').valor}</th>
-													<th>
-														${mensagens.get('ProdutoListaSubCategoria').valor}</th>
-													<th>${mensagens.get('ProdutoListaAnunciante').valor}</th>
+													<th>${mensagens.get('ProdutoListaSubCategoria').valor}</th>
 													<th>${mensagens.get('ProdutoListaStatus').valor}</th>
+													<th>${mensagens.get('ProdutoListaDataIncl').valor}</th>													
 													<th class="text-center">${mensagens.get('ProdutoListaAcoes').valor}</th>
 												</tr>
 											</thead>
@@ -73,39 +61,25 @@
 														<td>${produto.id}</td>
 														<td>${produto.codigo}</td>
 														<td>${produto.titulo}</td>
-														<td>${produto.brevedescricao}</td>
-														<td>${produto.descricaocompleta}</td>
-														<td>${produto.tag}</td>
-														<td>${produto.qtdademin}</td>
+														<td>${produto.estoque}</td>
 														<td>${produto.preco}</td>
-														<td>${produto.faixadepreco}</td>
-														<td>${produto.imagem}</td>
-														<td>${produto.urlanunciante}</td>
+														<td>${produto.categoria.nome}</td>
+														<td>${produto.getSubCategoria().getNome()}</td>
+														<td>${produto.status.nome}</td>
 														<td><fmt:formatDate pattern="dd/MM/yyyy"
 																value="${produto.dataIncl.time}" var="data" />${data}</td>
-														<td><fmt:formatDate pattern="dd/MM/yyyy"
-																value="${produto.dataAlt.time}" var="data" />${data}</td>
-														<td><c:forEach items="${produto.listaDeCategoria}"
-																var="categoria">
-																<span style="display: block">${categoria.nome}</span>
-															</c:forEach></td>
-														<td><c:forEach items="${produto.listaDeSubCategoria}"
-																var="subCategoria">
-																<span style="display: block">${subCategoria.nome}</span>
-															</c:forEach></td>
-														<td>${produto.anunciante.razaosocial}</td>
-														<td>${produto.status.nome}</td>
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_PRODUTO%>" />
-															<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL','ROLE_ANUNCIANTE')">
+															<sec:authorize access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${produto.id}"><i
 																	class="fas fa-pencil-alt"></i></a>
-															</sec:authorize> <sec:authorize access="hasRole('ROLE_ADMIN')">
+															</sec:authorize> 
+															<sec:authorize access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${produto.id}"
-																	data-descricao="${produto.codigo}"><i
+																	data-descricao="${produto.titulo}"><i
 																	class="fas fa-times"></i></a>
 															</sec:authorize></td>
 													</tr>
@@ -123,7 +97,7 @@
 		</div>
 	</div>
 	<br>
-	<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<sec:authorize access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_PRODUTO%>" />
 		<my:modal-excluir url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"

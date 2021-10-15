@@ -47,6 +47,13 @@ public class HomeController {
 	@Secured({ "ROLE_USUARIO_LOGADO" })
 	@RequestMapping(value = ListaDeURLs.HOME, method = RequestMethod.GET)
 	public String paginaPrincipal(HttpServletResponse response, Model model) {
+		
+		UsuarioModel usuario = usuarioDAO.buscaPorId(usuarioAdaptador.obterUsuarioLogado().getId());
+		
+		if(comparaSenhas(usuario.getSenha())) {
+			return "redirect:" + ListaDeURLs.USUARIO_PERFIL + "/" + usuario.getId();
+		}
+		
 		return "administracao/home/home";
 	}
 	
@@ -96,5 +103,13 @@ public class HomeController {
 	public String carregaFormularioDeAlteracaoDeSenha(){
 		return "administracao/home/alterarSenha";
 	}
-	
+
+	private boolean comparaSenhas(String senhaatual) {
+		Boolean precisamudar = false;
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
+		if (encoder.matches("123456", senhaatual)) {
+			precisamudar=true;
+		}
+			return precisamudar;
+	}
 }

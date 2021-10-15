@@ -63,6 +63,37 @@ public class ProdutoDAO {
 		return query.getResultList();
 	}
 
+	public List<ProdutoShow> ConvertModelToShow(List<ProdutoModel> lstmodel) {
+		List<ProdutoShow> lstShow = new ArrayList<ProdutoShow>();
+		ProdutoShow obj = new ProdutoShow();
+		
+		for (ProdutoModel model : lstmodel) {
+			obj = new ProdutoShow();
+			obj.setAnunciante(model.getAnunciante());
+			obj.setBrevedescricao(model.getBrevedescricao());
+			obj.setCategoria(model.getCategoria());
+			obj.setCodigo(model.getCodigo());
+			obj.setDataAlt(model.getDataAlt());
+			obj.setDataIncl(model.getDataIncl());
+			obj.setDescricaocompleta(model.getDescricaocompleta());
+			obj.setEstoque(model.getEstoque());
+			obj.setFaixaDePreco(model.getFaixaDePreco());
+			obj.setId(model.getId());
+			obj.setImagem(model.getImagem());
+			obj.setPreco(model.getPreco());
+			obj.setQtdademin(model.getQtdademin());
+			obj.setStatus(model.getStatus());
+			obj.setSubCategoria(model.getSubCategoria());
+			obj.setTag(model.getTag());
+			obj.setTitulo(model.getTitulo());
+			obj.setUrlanunciante(model.getUrlanunciante());
+			lstShow.add(obj);
+		}
+		
+		return lstShow;
+	}
+	
+	
 	public ProdutoModel buscaPorId(Long id) {
 
 		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.id = :id ";

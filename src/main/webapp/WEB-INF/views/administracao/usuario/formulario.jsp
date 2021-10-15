@@ -7,9 +7,9 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
 <c:set var="cssFiles"
-	value="bootstrap/bootstrap-toggle.min.css,bootstrap/select2.min.css,bootstrap/select2-bootstrap4.min.css" />
+	value="../css/bootstrap/bootstrap-toggle.min.css,../css/bootstrap/select2.min.css,../css/bootstrap/select2-bootstrap4.min.css" />
 <c:set var="jsFiles"
-	value="jquery/bootstrap-toggle.min.js,jquery/select2.min.js,jquery/select2-pt-BR.js,ObjetoIdValor.js,UsuarioFormulario.js" />
+	value="/js/UsuarioFormulario.js,/js/jquery/bootstrap-toggle.min.js,js/jquery/select2.min.js,/js/jquery/select2-pt-BR.js" />
 <my:template fluido="false"
 	title="${mensagens.get('UsuarioFormularioTituloDaPagina').valor}"
 	cssFiles="${cssFiles}" jsFiles="${jsFiles}">
@@ -43,14 +43,23 @@
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="login">${mensagens.get('UsuarioFormularioLogin').valor}:</label>
 								<input type="text" id="login" name="login"
-									class="form-control msbc-validator" value="${usuario.login}" />
+									class="form-control msbc-validator" data-msbc-required="Campo obrigatório" value="${usuario.login}" />
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="nome">${mensagens.get('UsuarioFormularioNome').valor}:</label>
 								<input type="text" id="nome" name="nome"
-									class="form-control msbc-validator" value="${usuario.nome}" />
+									class="form-control msbc-validator" data-msbc-required="Campo obrigatório" value="${usuario.nome}" />
 							</div>
-
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="apelido">${mensagens.get('UsuarioFormularioApelido').valor}:</label>
+								<input type="text" id="apelido" name="apelido"
+									class="form-control msbc-validator" value="${usuario.apelido}" />
+							</div>
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="email">${mensagens.get('UsuarioFormularioEmail').valor}:</label>
+								<input type="text" id="email" name="email"
+									class="form-control msbc-validator" value="${usuario.email}" />
+							</div>
 							<div class="div-msbc-validator mb-3">
 								<div class="row">
 									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
