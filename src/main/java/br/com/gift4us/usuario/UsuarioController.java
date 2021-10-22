@@ -152,6 +152,7 @@ public class UsuarioController {
 			usuariodoform.setCelular(ubanco.getCelular());
 			usuariodoform.setDddtelefone(ubanco.getDddtelefone());
 			usuariodoform.setTelefone(ubanco.getTelefone());
+			usuariodoform.setSenhaNoCrypt(ubanco.getSenha());
 		}
 		
 		return usuariodoform;

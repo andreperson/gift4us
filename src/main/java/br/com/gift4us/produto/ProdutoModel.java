@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Calendar;
 import javax.validation.constraints.NotNull;
 import br.com.gift4us.categoria.CategoriaModel;
@@ -61,7 +63,6 @@ public class ProdutoModel implements Serializable  {
 	@Column(precision=11, scale=0)
 	private Double preco;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoImagem")
 	@Column(length = 255)
 	private String imagem;
 
@@ -97,6 +98,10 @@ public class ProdutoModel implements Serializable  {
 	@JoinColumn(name = "status_id")
 	private StatusModel status;
 
+	
+	
+
+	
 	public ProdutoModel(){
 		
 	}
