@@ -147,6 +147,10 @@ public class UsuarioModel implements Serializable , UserDetails {
 	public void setSenha(String senha) {
 		this.senha = new BCryptPasswordEncoder().encode(senha);
 	}
+	
+	public void setSenhaNoCrypt(String senha) {
+		this.senha = senha;
+	}
 
 	public List<GrupoModel> getListaDeGrupo() {
 		return listaDeGrupo;

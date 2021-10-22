@@ -2,6 +2,7 @@ package br.com.gift4us.urls;
 
 public class ListaDeURLs {
 
+	public final static String INDEX = "/site/index";
 	public final static String HOME = "/administracao/home";
 	public final static String LOGOUT = "/logout";
 	public final static String LOGIN = "/login";

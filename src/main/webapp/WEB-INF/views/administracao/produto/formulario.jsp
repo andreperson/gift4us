@@ -40,8 +40,11 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<form class="msbc-validator-form" id="formulario-form"
-							name="formulario" action="${url}" method="POST">
+					
+					<form id="ata-cadastro"
+							action="<c:url value="/administracao/produto/insere?${_csrf.parameterName}=${_csrf.token}" />"
+							enctype="multipart/form-data" method="post">
+					
 							<input type="hidden" id="${_csrf.parameterName}"
 								name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<c:if test="${not empty produto.id}">
@@ -112,17 +115,17 @@
 									id="faixadeprecoid" name="faixadeprecoid">
 							</div>
 							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label" for="imagem">${mensagens.get('ProdutoFormularioImagem').valor}:</label>
+								<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor}:</label>
 								<input class="form-control texto-html"
-									name="imagem" id="imagem" type="file"
+									name="arquivo" id="arquivo" type="file"
 									data-msbc-required="Campo obrigatório">${produto.imagem}
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="urlanunciante">${mensagens.get('ProdutoFormularioUrlanunciante').valor}:</label>
-								<textarea class="form-control texto-html msbc-validator"
-									name="urlanunciante" id="urlanunciante" rows="5" cols="80"
+								<input class="form-control texto-html msbc-validator"
+									name="urlanunciante" id="urlanunciante"
 									data-msbc-required="Campo obrigatório"
-									data-msbc-maxlength="100|O campo deve ter no máximo {value} caracteres">${produto.urlanunciante}</textarea>
+									data-msbc-maxlength="100|O campo deve ter no máximo {value} caracteres" value="${produto.urlanunciante}" />
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="categoria">${mensagens.get('ProdutoFormularioCategoria').valor}:</label>

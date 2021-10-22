@@ -37,6 +37,14 @@ public class ProdutoDAO {
 		this.manager = em;
 	}
 
+	@Transactional
+	public Long saveorupdate(ProdutoModel produto) {
+		manager.persist(produto);
+		manager.flush();
+		manager.detach(produto);
+		return produto.getId();
+	}
+	
 	
 	@Transactional
 	public void insere(ProdutoModel produto) {
@@ -58,11 +66,11 @@ public class ProdutoDAO {
 	}
 
 	public List<ProdutoModel> listaTudo() {
-		String jpql = "SELECT p FROM " + TABELA + " p ORDER BY p.id";
+		String jpql = "SELECT p FROM " + TABELA + " p ORDER BY p.id desc";
 		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
 		return query.getResultList();
 	}
-
+	
 	public List<ProdutoShow> ConvertModelToShow(List<ProdutoModel> lstmodel) {
 		List<ProdutoShow> lstShow = new ArrayList<ProdutoShow>();
 		ProdutoShow obj = new ProdutoShow();

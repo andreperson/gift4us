@@ -1,6 +1,7 @@
 package br.com.gift4us.produto;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +9,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
@@ -20,6 +23,7 @@ import org.springframework.ui.Model;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.lang.reflect.Method;
 import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
@@ -27,6 +31,8 @@ import br.com.gift4us.usuario.UsuarioAdaptador;
 import br.com.gift4us.usuario.UsuarioDAO;
 import br.com.gift4us.usuario.UsuarioModel;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
+import br.com.gift4us.util.FileUploader;
+import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.anunciante.AnuncianteDAO;
 import br.com.gift4us.anunciante.AnuncianteModel;
@@ -66,14 +72,19 @@ public class ProdutoController {
 
 	@Autowired
 	private GerenciadorDeHistorico historico;
-	
+
 	@Autowired
 	private UsuarioAdaptador usuarioAdaptador;
 
 	@Autowired
+	private Propriedades propriedades;
+
+	@Autowired
+	FileUploader fileUploader;
+
+	@Autowired
 	private UsuarioDAO usuarioDAO;
 
-	
 	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.LISTA_DE_PRODUTO, method = RequestMethod.GET)
 	public String lista(Model model) {
@@ -96,10 +107,10 @@ public class ProdutoController {
 	}
 
 	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Transactional
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_PRODUTO, method = RequestMethod.POST)
 	public String insere(@RequestParam("subcategoriaid") Long subcategoriaid,
-			@RequestParam("faixadeprecoid") Long faixadeprecoid, @Valid ProdutoModel produto,
-			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			@RequestParam("faixadeprecoid") Long faixadeprecoid, @Valid ProdutoModel produto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartFile arquivo) {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("produto", produto);
@@ -117,9 +128,14 @@ public class ProdutoController {
 		produto.setAnunciante(buscaAnunciantePeloUsuarioLogado());
 		produto.setDataIncl(Calendar.getInstance());
 		produto.setDataAlt(Calendar.getInstance());
-		produtoDAO.insere(produto);
+		Long produtoid = produtoDAO.saveorupdate(produto);
 		ProdutoModel encontrado = produtoDAO.buscaPorId(produto.getId());
 		historico.inserir(encontrado, "Produto");
+		
+		if(arquivo != null) {
+			uploadImagem(bindingResult, produtoid, produto.getAnunciante().getId(), arquivo);	
+		}
+		
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
@@ -174,7 +190,7 @@ public class ProdutoController {
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
 	}
-	
+
 	private AnuncianteModel buscaAnunciantePeloUsuarioLogado() {
 		AnuncianteModel anunciante = new AnuncianteModel();
 		UsuarioModel usuario = usuarioAdaptador.obterUsuarioLogado();
@@ -182,7 +198,14 @@ public class ProdutoController {
 		anunciante = buscaAnunciante(usuario.getAnunciante().getId());
 		return anunciante;
 	}
-	
+
+	private void uploadImagem(BindingResult result, Long produtoid, Long anuncianteid, MultipartFile arquivo) {
+
+		String diretorio = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;
+		fileUploader.grava(arquivo, result, diretorio);
+
+	}
+
 	private AnuncianteModel buscaAnunciante(Long id) {
 		return anuncianteDAO.buscaPorId(id);
 	}
