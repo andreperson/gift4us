@@ -1,0 +1,21 @@
+
+.menu-texto {
+    margin-top: 10px; 
+    font-size: 15px;}
+
+.menu-texto--admin {
+    margin-top: 10px; 
+    font-size: 13px;}
+
+
+
+.menu-icone {
+    width:25px;
+    margin-right: 20px;
+    }
+    
+.menu-icone--admin {
+    width:20px;
+    margin-right: 20px;
+    }
+    
