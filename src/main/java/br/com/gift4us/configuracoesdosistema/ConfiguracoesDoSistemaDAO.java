@@ -39,7 +39,6 @@ public class ConfiguracoesDoSistemaDAO {
 		this.manager = em;
 	}
 
-	
 	@Transactional
 	public void insere(ConfiguracoesDoSistemaModel configuracoesdosistema) {
 		manager.persist(configuracoesdosistema);
@@ -67,7 +66,7 @@ public class ConfiguracoesDoSistemaDAO {
 
 		ConfiguracoesDoSistemaModel retorno = mapa.get(propriedade);
 
-		if(retorno == null){
+		if (retorno == null) {
 			retorno = new ConfiguracoesDoSistemaModel();
 			retorno.setPropriedade("");
 			retorno.setValor("");
@@ -75,6 +74,7 @@ public class ConfiguracoesDoSistemaDAO {
 
 		return retorno;
 	}
+
 	@Cacheable(value = "cacheConfiguracoesDoSistema")
 	public Map<String, ConfiguracoesDoSistemaModel> listaTudoComCache() {
 		String jpql = "SELECT c FROM " + TABELA + " c ORDER BY c.id";
@@ -98,6 +98,7 @@ public class ConfiguracoesDoSistemaDAO {
 		TypedQuery<ConfiguracoesDoSistemaModel> query = manager.createQuery(jpql, ConfiguracoesDoSistemaModel.class);
 		return query.getResultList();
 	}
+
 	public ConfiguracoesDoSistemaModel buscaPorPropriedadeSemCache(String id) {
 
 		String jpql = "SELECT c FROM " + TABELA + " c WHERE c.id = :id ";
@@ -108,9 +109,9 @@ public class ConfiguracoesDoSistemaDAO {
 
 		List<ConfiguracoesDoSistemaModel> resultado = query.getResultList();
 
-		if(resultado.size() == 0){
+		if (resultado.size() == 0) {
 			return new ConfiguracoesDoSistemaModel();
-		}else{
+		} else {
 			return resultado.get(0);
 		}
 	}
@@ -123,22 +124,71 @@ public class ConfiguracoesDoSistemaDAO {
 
 	@Transactional
 	public void insertsParaSeremUtilizadosNoPostConstruct() {
-		ConfiguracoesDoSistemaModel diretorioDosArquivos = buscaPorPropriedadeSemCache("DIRETORIO_DOS_ARQUIVOS");
-		if (diretorioDosArquivos == null || diretorioDosArquivos.getPropriedade() == null) {
-			ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
-			configuracao.setPropriedade("DIRETORIO_DOS_ARQUIVOS");
-			if ("producao".equals(System.getenv("AMBIENTE"))) {
-				configuracao.setValor("/dados/docs/GIFT4US/");
-			} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
-				configuracao.setValor("/dados/docs/GIFT4US/");
-			} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
-				configuracao.setValor("W:/projetos/GIFT4US/");
+		try {
+			ConfiguracoesDoSistemaModel emailenvio = buscaPorPropriedadeSemCache("EMAIL_ENVIO");
+			if (emailenvio == null || emailenvio.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("EMAIL_ENVIO");
+				configuracao.setValor("nao-responda@gift4us.com.br");
+				manager.persist(configuracao);
 			}
-			File file = new File(configuracao.getValor());
-			if (!file.exists()) {
-				file.mkdir();
+			ConfiguracoesDoSistemaModel emailsenha = buscaPorPropriedadeSemCache("EMAIL_SENHA");
+			if (emailsenha == null || emailsenha.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("EMAIL_SENHA");
+				configuracao.setValor("Nao*123");
+				manager.persist(configuracao);
 			}
-			manager.persist(configuracao);
+			ConfiguracoesDoSistemaModel emailassunto = buscaPorPropriedadeSemCache("EMAIL_ASSUNTO");
+			if (emailassunto == null || emailassunto.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("EMAIL_ASSUNTO");
+				configuracao.setValor("Cadastro de Usuário");
+				manager.persist(configuracao);
+			}
+			ConfiguracoesDoSistemaModel emaildominio = buscaPorPropriedadeSemCache("EMAIL_DOMINIO");
+			if (emaildominio == null || emaildominio.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("EMAIL_DOMINIO");
+				configuracao.setValor("gift4us.com.br");
+				manager.persist(configuracao);
+			}
+			ConfiguracoesDoSistemaModel diretorioDosArquivos = buscaPorPropriedadeSemCache("DIRETORIO_DOS_ARQUIVOS");
+			if (diretorioDosArquivos == null || diretorioDosArquivos.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("DIRETORIO_DOS_ARQUIVOS");
+				if ("producao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("/dados/docs/GIFT4US/");
+				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("/dados/docs/GIFT4US/");
+				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("W:/projetos/GIFT4US/");
+				}
+				File file = new File(configuracao.getValor());
+				if (!file.exists()) {
+					file.mkdir();
+				}
+				manager.persist(configuracao);
+			}
+			ConfiguracoesDoSistemaModel diretorioDosProdutos = buscaPorPropriedadeSemCache("DIRETORIO_DOS_PRODUTOS");
+			if (diretorioDosProdutos == null || diretorioDosProdutos.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("DIRETORIO_DOS_PRODUTOS");
+				if ("producao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("/dados/docs/produtos/");
+				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("/dados/docs/produtos/");
+				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("W:/projetos/produtos/");
+				}
+				File file = new File(configuracao.getValor());
+				if (!file.exists()) {
+					file.mkdir();
+				}
+				manager.persist(configuracao);
+			}
+		} catch (Exception e) {
+			System.out.println("insertsParaSeremUtilizadosNoPostConstruct + ConfiguracoesDoSistemaModel: " + e.getMessage());
 		}
 	}
 }

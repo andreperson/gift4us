@@ -16,6 +16,7 @@ import br.com.gift4us.grupo.GrupoModel;
 import br.com.gift4us.usuario.UsuarioDAO;
 import br.com.gift4us.usuario.UsuarioModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
+
 @Component
 public class ExecutePostConstruct {
 
@@ -36,18 +37,19 @@ public class ExecutePostConstruct {
 
 	@PostConstruct
 	public void atualizaBanco() {
-		
-		  mensagensDoSistemaDAO.insertsParaSeremUtilizadosNoPostConstruct();
-		  
-		  configuracoesDoSistemaDAO.insertsParaSeremUtilizadosNoPostConstruct();
-		  
-		  grupoDAO.insertsParaSeremUtilizadosNoPostConstruct();
-		  
-		  usuarioDAO.criaInsertDeUsuarioAdmin();
-		  
-		  inseriGruposSeNecessarioNoUsuarioAdmin();
-		 
+		System.out.println("MSG SIST Post Construct");
+		mensagensDoSistemaDAO.insertsParaSeremUtilizadosNoPostConstruct();
+		System.out.println("Conf Post Construct");
+		configuracoesDoSistemaDAO.insertsParaSeremUtilizadosNoPostConstruct();
+		System.out.println("insert Post Construct");
+		grupoDAO.insertsParaSeremUtilizadosNoPostConstruct();
+		System.out.println("cria Post Construct");
+		usuarioDAO.criaInsertDeUsuarioAdmin();
+		System.out.println("se necess Post Construct");
+		inseriGruposSeNecessarioNoUsuarioAdmin();
+		System.out.println("final Post Construct");
 	}
+
 	@Transactional
 	private void inseriGruposSeNecessarioNoUsuarioAdmin() {
 		UsuarioModel usuario = usuarioDAO.buscaPorLogin("admin").get(0);

@@ -106,7 +106,7 @@
     <dependent-module archiveName="classmate-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/classmate/1.0.0/classmate-1.0.0.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="mysql-connector-java-8.0.26.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/mysql/mysql-connector-java/8.0.26/mysql-connector-java-8.0.26.jar">
+    <dependent-module archiveName="mysql-connector-java-8.0.27.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="protobuf-java-3.11.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar">
@@ -119,6 +119,21 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="itext-2.1.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="bcmail-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="bcprov-jdk14-138.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="bctsp-jdk14-1.38.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="bcprov-jdk14-1.38.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="bcmail-jdk14-1.38.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="jstl-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jstl/1.2/jstl-1.2.jar">
@@ -179,6 +194,15 @@
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <dependent-module archiveName="UserAgentUtils-1.19.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/eu/bitwalker/UserAgentUtils/1.19/UserAgentUtils-1.19.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jaxb-api-2.2.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/xml/bind/jaxb-api/2.2.11/jaxb-api-2.2.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jaxb-core-2.2.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/bind/jaxb-core/2.2.11/jaxb-core-2.2.11.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jaxb-impl-2.2.11.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.11/jaxb-impl-2.2.11.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
