@@ -1,0 +1,9 @@
+<Resource name="jdbc/gift4us" auth="Container"
+		type="javax.sql.DataSource"
+		username="root"
+		password="Person123"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/gift4us_dev"
+		maxActive="15"
+		maxIdle="3" >
+	</Resource>

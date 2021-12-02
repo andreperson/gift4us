@@ -23,8 +23,13 @@ public class Propriedades {
 	}
 
 	public Propriedades() {
+		System.out.println("Antes da sysvar");
+		String ambiente = System.getProperty("AMBIENTE") ;
 		sysvar = System.getenv("AMBIENTE");
+		System.out.println("ambiente string: " + ambiente);
+		System.out.println("ambiente sysvar: " + sysvar);
 		init();
+		System.out.println("Depois do INIT");
 	}
 
 	private void init() {
@@ -33,10 +38,10 @@ public class Propriedades {
 			InputStream in = null;
 
 			if (sysvar.toUpperCase().contains("PRODUCAO")) {
-				System.out.println("Carregando produção");
+				System.out.println("Carregando producao");
 				in = getClass().getResourceAsStream(this.producao);
 			} else if (sysvar.toUpperCase().contains("HOMOLOGACAO")) {
-				System.out.println("Carregando homologação");
+				System.out.println("Carregando homologacao");
 				in = getClass().getResourceAsStream(this.homologacao);
 			} else if (sysvar.toUpperCase().contains("DESENVOLVIMENTO")) {
 				System.out.println("Carregando desenvolvimento");
