@@ -32,6 +32,7 @@ import br.com.gift4us.usuario.UsuarioDAO;
 import br.com.gift4us.usuario.UsuarioModel;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.FileUploader;
+import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.anunciante.AnuncianteDAO;
 import br.com.gift4us.anunciante.AnuncianteModel;
@@ -48,6 +49,9 @@ import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
 @Controller
 public class ProdutoController {
 
+	@Autowired
+	private Propriedades propriedades;
+	
 	@Autowired
 	private Erros erros;
 
@@ -197,8 +201,8 @@ public class ProdutoController {
 
 	private void uploadImagem(BindingResult result, Long produtoid, Long anuncianteid, MultipartFile arquivo) {
 
-		//String diretorio = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;
-		//fileUploader.grava(arquivo, result, diretorio);
+		String diretorio = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;
+		fileUploader.grava(arquivo, result, diretorio);
 
 	}
 
