@@ -6,18 +6,18 @@
 	prefix="sec"%>
 <%@ taglib tagdir="/WEB-INF/tags/tag-site" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
-<c:url value="${baseURL}/resources/image" var="urlimg" />
+<c:url value="C://" var="urlimg" />
 
 <my:template title="${mensagens.get('NomeDoProjeto').valor}"
 	fluido="false">
 <div id="container" style="padding-top: 180px;">
-    <div class="container">
+    <div class="container"><img src="${urlimg}_temp/produtos/celular.jpg">
       <div class="row">
         <!--Middle Part Start-->
         <div id="content" class="col-xs-12">
           <!-- Slideshow Start-->
           <div class="slideshow single-slider owl-carousel">
-          
+			          
           
             <div class="item"> <a href="#"><img class="img-responsive" src="${urlimg}/slider/banner-1.jpg"/></a> </div>
             <div class="item"> <a href="#"><img class="img-responsive" src="${urlimg}/slider/banner-2.jpg"/></a> </div>
