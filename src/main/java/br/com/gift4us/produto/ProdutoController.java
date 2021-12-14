@@ -200,10 +200,17 @@ public class ProdutoController {
 	}
 
 	private void uploadImagem(BindingResult result, Long produtoid, Long anuncianteid, MultipartFile arquivo) {
-
-		String diretorio = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;
-		fileUploader.grava(arquivo, result, diretorio);
-
+		try {
+			String diretorio = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;
+			System.out.println("antes de gravar o arquivo:" + diretorio);
+			fileUploader.grava(arquivo, result, diretorio);
+			System.out.println("depois de gravar o arquivo:" + diretorio);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Erro ao gravar arquivo: " + e.getMessage());
+		}
+		
 	}
 
 	private AnuncianteModel buscaAnunciante(Long id) {

@@ -6,30 +6,28 @@
 	prefix="sec"%>
 <%@ taglib tagdir="/WEB-INF/tags/tag-site" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
-<c:url value="/docs/produtos" var="urlproduto" />
+<c:url value="docs/produtos" var="urlproduto" />
 
 <my:template title="${mensagens.get('NomeDoProjeto').valor}"
 	fluido="false">
 <div id="container" style="padding-top: 180px;">
-    <div class="container"><img src="${urlproduto}_temp/produtos/celular.jpg">
+    <div class="container">
       <div class="row">
         <!--Middle Part Start-->
         <div id="content" class="col-xs-12">
           <!-- Slideshow Start-->
           <div class="slideshow single-slider owl-carousel">
-			          
-          
-            <div class="item"> <a href="#"><img class="img-responsive" src="${urlproduto}/slider/banner-1.jpg"/></a> </div>
-            <div class="item"> <a href="#"><img class="img-responsive" src="${urlproduto}/slider/banner-2.jpg"/></a> </div>
+            <div class="item"> <a href="#"><img class="img-responsive" src="/${urlproduto}/slider/banner-1.jpg"/></a> </div>
+            <div class="item"> <a href="#"><img class="img-responsive" src="/${urlproduto}/slider/banner-2.jpg"/></a> </div>
           </div>
           <!-- Slideshow End-->
           <!-- Banner Start-->
           <div class="marketshop-banner">
             <div class="row">
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="${urlproduto}/banner/banner-300-1.jpg" alt="Sample Banner 1" title="Sample Banner 1" /></a></div>
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="${urlproduto}/banner/banner-300-2.jpg" alt="Sample Banner 2" title="Sample Banner 2" /></a></div>
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="${urlproduto}/banner/banner-300-3.jpg" alt="Sample Banner 3" title="Sample Banner 3" /></a></div>
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="${urlproduto}/banner/banner-300-4.jpg" alt="Sample Banner 4" title="Sample Banner 4" /></a></div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/${urlproduto}/banner/banner-300-1.jpg" alt="Sample Banner 1" title="Sample Banner 1" /></a></div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/${urlproduto}/banner/banner-300-2.jpg" alt="Sample Banner 2" title="Sample Banner 2" /></a></div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/${urlproduto}/banner/banner-300-3.jpg" alt="Sample Banner 3" title="Sample Banner 3" /></a></div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><a href="#"><img src="/${urlproduto}/banner/banner-300-4.jpg" alt="Sample Banner 4" title="Sample Banner 4" /></a></div>
             </div>
           </div>
           <!-- Banner End-->
@@ -39,11 +37,9 @@
     <li><a href="#tab-latest">Novidades</a></li>
   </ul>
   <div id="tab-featured" class="tab_content">
-      <div class="owl-carousel product_carousel_tab">
+      <div class="owl-carousel product_carousel_tab"> ==> <c:out value="${urlimg}" />
             <c:forEach items="${listaDeProduto}" var="produto">
-            	<c:set var="urlcompleta" scope="application" value="${urlproduto}/${produto.anunciante.id}/${produto.id}/${produto.imagem}"/>
-            	
-            	<c:out value="${urlcompleta}"></c:out>
+            	<c:set var="urlcompleta" scope="application" value="/${urlproduto}/${produto.anunciante.id}/${produto.id}/${produto.imagem}"/>
 	            <div class="product-thumb clearfix">
 	               <div class="image"><a href="product.html"><img src="${urlcompleta}" width="330" height="220" alt="Brand Fashion Cotton T-Shirt" title="Brand Fashion Cotton T-Shirt" class="img-responsive" /></a></div>
 	              <div class="caption">
