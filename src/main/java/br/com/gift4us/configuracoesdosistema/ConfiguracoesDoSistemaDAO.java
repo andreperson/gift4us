@@ -158,11 +158,11 @@ public class ConfiguracoesDoSistemaDAO {
 				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
 				configuracao.setPropriedade("DIRETORIO_DOS_ARQUIVOS");
 				if ("producao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("/dados/docs/GIFT4US/");
+					configuracao.setValor("/docs/arquivos/");
 				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("/dados/docs/GIFT4US/");
+					configuracao.setValor("/docs/arquivos/");
 				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("W:/projetos/GIFT4US/");
+					configuracao.setValor("C:/_temp/arquivos/");
 				}
 				File file = new File(configuracao.getValor());
 				if (!file.exists()) {
@@ -175,11 +175,11 @@ public class ConfiguracoesDoSistemaDAO {
 				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
 				configuracao.setPropriedade("DIRETORIO_DOS_PRODUTOS");
 				if ("producao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("/dados/docs/produtos/");
+					configuracao.setValor("/docs/produtos/");
 				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("/dados/docs/produtos/");
+					configuracao.setValor("/docs/produtos/");
 				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("W:/projetos/produtos/");
+					configuracao.setValor("C:/_temp/produtos/");
 				}
 				File file = new File(configuracao.getValor());
 				if (!file.exists()) {

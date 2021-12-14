@@ -24,9 +24,7 @@ public class Propriedades {
 
 	public Propriedades() {
 		System.out.println("Antes da sysvar");
-		String ambiente = System.getProperty("AMBIENTE") ;
 		sysvar = System.getenv("AMBIENTE");
-		System.out.println("ambiente string: " + ambiente);
 		System.out.println("ambiente sysvar: " + sysvar);
 		init();
 		System.out.println("Depois do INIT");
