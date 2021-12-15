@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
@@ -133,7 +134,7 @@ public class ProdutoController {
 		historico.inserir(encontrado, "Produto");
 		
 		if(arquivo != null) {
-			uploadImagem(bindingResult, produtoid, produto.getAnunciante().getId(), arquivo);	
+			uploadImagem(bindingResult, produtoid, produto.getAnunciante().getId(), arquivo, request);	
 		}
 		
 		sucesso.setMensagem(redirectAttributes,
@@ -199,12 +200,16 @@ public class ProdutoController {
 		return anunciante;
 	}
 
-	private void uploadImagem(BindingResult result, Long produtoid, Long anuncianteid, MultipartFile arquivo) {
+	private void uploadImagem(BindingResult result, Long produtoid, Long anuncianteid, MultipartFile arquivo, HttpServletRequest request) {
 		try {
-			String diretorio = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;
-			System.out.println("antes de gravar o arquivo:" + diretorio);
-			fileUploader.grava(arquivo, result, diretorio);
-			System.out.println("depois de gravar o arquivo:" + diretorio);
+			
+			String diretorioprodutos = propriedades.getValor("arquivo.diretorio.produto.upload") + anuncianteid + propriedades.getValor("arquivo.diretorio.barra") + produtoid;;
+			ServletContext context = request.getServletContext();
+			String diretoriocompleto = context.getRealPath("/").replace("gift4us", diretorioprodutos);
+
+			System.out.println("antes de gravar o arquivo:" + diretoriocompleto);
+			fileUploader.grava(arquivo, result, diretoriocompleto);
+			System.out.println("depois de gravar o arquivo:" + diretoriocompleto);
 			
 		} catch (Exception e) {
 			// TODO: handle exception
