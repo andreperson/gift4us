@@ -58,6 +58,10 @@ public class ConfiguracoesDoSistemaDAO {
 		manager.remove(manager.find(ConfiguracoesDoSistemaModel.class, configuracoesdosistema.getPropriedade()));
 	}
 
+	public ConfiguracoesDoSistemaModel buscarPeloNomeDaPropriedade(String propriedade) {
+		return manager.find(ConfiguracoesDoSistemaModel.class, propriedade);
+	}
+	
 	public ConfiguracoesDoSistemaModel buscaPorPropriedade(String propriedade) {
 
 		if (mapa == null) {
@@ -143,7 +147,7 @@ public class ConfiguracoesDoSistemaDAO {
 			if (emailassunto == null || emailassunto.getPropriedade() == null) {
 				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
 				configuracao.setPropriedade("EMAIL_ASSUNTO");
-				configuracao.setValor("Cadastro de Usuário");
+				configuracao.setValor("Cadastro de Usuï¿½rio");
 				manager.persist(configuracao);
 			}
 			ConfiguracoesDoSistemaModel emaildominio = buscaPorPropriedadeSemCache("EMAIL_DOMINIO");
@@ -187,8 +191,49 @@ public class ConfiguracoesDoSistemaDAO {
 				}
 				manager.persist(configuracao);
 			}
+			
+			ConfiguracoesDoSistemaModel httpRecursos = buscaPorPropriedadeSemCache("HTTP_RECURSOS");
+			if (httpRecursos == null || httpRecursos.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("HTTP_RECURSOS");
+				if ("producao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("/resources/resources-site/");
+				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("../../resources-site/");
+				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("../../resources-site/");
+				}
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel httpsRecursos = buscaPorPropriedadeSemCache("HTTPS_RECURSOS");
+			if (httpsRecursos == null || httpsRecursos.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("HTTPS_RECURSOS");
+				if ("producao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("/resources/resources-site/");
+				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("../../resources-site/");
+				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
+					configuracao.setValor("../../resources-site/");
+				}
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel QualAmbiente = buscaPorPropriedadeSemCache("AMBIENTE");
+			if (QualAmbiente == null || QualAmbiente.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("AMBIENTE");
+				configuracao.setValor(System.getenv("AMBIENTE"));
+				manager.persist(configuracao);
+			}
+			
+			
+			
 		} catch (Exception e) {
 			System.out.println("insertsParaSeremUtilizadosNoPostConstruct + ConfiguracoesDoSistemaModel: " + e.getMessage());
 		}
 	}
+	
+	
 }
