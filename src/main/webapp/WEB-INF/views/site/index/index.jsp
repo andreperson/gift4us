@@ -6,7 +6,8 @@
 	prefix="sec"%>
 <%@ taglib tagdir="/WEB-INF/tags/tag-site" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
-<c:url value="${urlRecursos}image" var="urlproduto" />
+<c:url value="${urlRecursos}image" var="urlrecursos" />
+<c:url value="${urlimg}" var="urlproduto" />
 
 <my:template title="${mensagens.get('NomeDoProjeto').valor}"
 	fluido="false">
@@ -39,17 +40,18 @@
   <div id="tab-featured" class="tab_content">
       <div class="owl-carousel product_carousel_tab">
             <c:forEach items="${listaDeProduto}" var="produto">
-            
-	            <c:set var="urladicional" scope="application" value="/product/"/>
+	            <c:set var="urlprodutomontada" scope="application" value="${urlproduto}samsung_tab_1-220x330.jpg"/>
 	  			<c:if test = "${qualambiente == 'producao'}">
-	         		<c:set var="urladicional" scope="application" value="/product/${produto.anunciante.id}/${produto.id}/"/>
+	         		<c:if test = "${produto.imagem != ''}">
+	  					<c:set var="urlprodutomontada" scope="application" value="${urlproduto}${produto.anunciante.id}/${produto.id}/${produto.imagem}"/>
+	  				</c:if>
 	      		</c:if>
             	
 	            <div class="product-thumb clearfix">
-	               <div class="image"><a href="product.html"><img src="${urlproduto}${urladicional}${produto.imagem}" width="330" height="220" alt="Brand Fashion Cotton T-Shirt" title="Brand Fashion Cotton T-Shirt" class="img-responsive" /></a></div>
+	               <div class="image"><a href="product.html"><img src="${urlprodutomontada}" width="330" height="220" alt="Brand Fashion Cotton T-Shirt" title="Brand Fashion Cotton T-Shirt" class="img-responsive" /></a></div>
 	              <div class="caption">
 	                <h4><a href="product.html">${produto.titulo}</a></h4>
-	                <p class="price"><span class="price-new">$ ${produto.preco}</span> <span class="price-old">$122.00</span><span class="saving">-10%</span></p>
+	                <p class="price"><span class="price-new">$ ${produto.imagem}</span> <span class="price-old">$122.00</span><span class="saving">-10%</span></p>
 	              </div>
 	              <div class="button-group">
 	                <button class="btn-primary" type="button" onClick="cart.add('42');"></button>
@@ -57,9 +59,9 @@
 	            </div>
             </c:forEach>
             <div class="product-thumb clearfix">
-              <div class="image"><a href="product.html"><img src="${urlproduto}/product/samsung_tab_1-220x330.jpg" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-responsive" /></a></div>
+              <div class="image"><a href="product.html"><img src="${urlprodutomontada}" alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop" class="img-responsive" /></a></div>
               <div class="caption">
-                <h4><a href="product.html">Aspire Ultrabook Laptop</a></h4>
+                <h4><a href="product.html">Aspire Ultrabook Laptop xxx</a></h4>
                 <p class="price"> <span class="price-new">$230.00</span> <span class="price-old">$241.99</span> <span class="saving">-5%</span> </p>
                 <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
               </div>

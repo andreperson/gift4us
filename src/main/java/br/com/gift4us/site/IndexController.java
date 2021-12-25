@@ -30,7 +30,7 @@ public class IndexController {
 	@RequestMapping(value = ListaDeURLs.INDEX, method = RequestMethod.GET)
 	public String index(HttpServletResponse response, Model model) {
 		model.addAttribute("listaDeProduto", produtoDAO.listaTudo());
-		model.addAttribute("urlimg", propriedades.getValor("arquivo.diretorio.produto.upload"));
+		model.addAttribute("urlimg", propriedades.getValor("arquivo.diretorio.produto.download"));
 		
 		return "site/index/index";
 	}
