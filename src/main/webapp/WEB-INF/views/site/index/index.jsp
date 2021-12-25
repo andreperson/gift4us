@@ -42,7 +42,7 @@
             <c:forEach items="${listaDeProduto}" var="produto">
 	            <c:set var="urlprodutomontada" scope="application" value="${urlproduto}samsung_tab_1-220x330.jpg"/>
 	  			<c:if test = "${qualambiente == 'producao'}">
-	         		<c:if test = "${produto.imagem != ''}">
+	  				<c:if test="${not empty produto.imagem}">
 	  					<c:set var="urlprodutomontada" scope="application" value="${urlproduto}${produto.anunciante.id}/${produto.id}/${produto.imagem}"/>
 	  				</c:if>
 	      		</c:if>
