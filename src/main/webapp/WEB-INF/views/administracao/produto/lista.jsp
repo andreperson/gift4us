@@ -43,16 +43,7 @@
 											class="table table-striped table-bordered w-100 mt-3 dt-table">
 											<thead>
 												<tr>
-													<th>${mensagens.get('ProdutoListaId').valor}</th>
-													<th>${mensagens.get('ProdutoListaCodigo').valor}</th>
-													<th>${mensagens.get('ProdutoListaTitulo').valor}</th>
-													<th>${mensagens.get('ProdutoListaEstoque').valor}</th>
-													<th>${mensagens.get('ProdutoListaPreco').valor}</th>
-													<th>${mensagens.get('ProdutoListaCategoria').valor}</th>
-													<th>${mensagens.get('ProdutoListaSubCategoria').valor}</th>
-													<th>${mensagens.get('ProdutoListaStatus').valor}</th>
-													<th>${mensagens.get('ProdutoListaDataIncl').valor}</th>													
-													<th class="text-center">${mensagens.get('ProdutoListaAcoes').valor}</th>
+													
 												</tr>
 											</thead>
 											<tbody id="corpo-da-tabela">

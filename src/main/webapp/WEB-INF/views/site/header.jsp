@@ -4,21 +4,50 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
-<c:url value="<%=ListaDeURLs.HOME%>" var="url" />
-
+<c:url value="<%=ListaDeURLs.HOME_SITE%>" var="url" />
 <div id="header">
+	<!-- Top Bar Start-->
+	<nav id="top" class="htop">
+		<div class="container">
+			<div class="row">
+				<span class="drop-icon visible-sm visible-xs"><i
+					class="fa fa-align-justify"></i></span>
+				<div class="pull-left flip left-top">
+					<div class="links">
+						<ul>
+							<!--- <li class="mobile"><i class="fa fa-phone"></i>+91 9898777656</li>  --->
+							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="login.html">login
+							</a>
+							</li>
+							<li>|</li>
+							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="anuncie.html">anuncie conosco
+							</a>
+								</li>
+						</ul>
+					</div>
+				</div>
+				<div id="top-links" class="nav pull-right flip">
+					<ul>
+						<li class="email"><a href="mailto:atendimento@gift4us.com.br"><i
+									class="fa fa-envelope"></i>atendimento@gift4us.com.br</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!-- Top Bar End-->
 	<!-- Header Start-->
-	<header class="header-row">
+	<header class="" style="background-color: #fff;">
 		<div class="container">
 			<div class="table-container">
 				<!-- Logo Start -->
 				<div
 					class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
 					<div id="logo">
-						<a href="${url}"> <c:url
-								value="${baseURL}/resources-site/image/logo-gift.png" var="urllogo" />
-							<img title="Gift4Us" src="${urllogo}"
-							style="height: 50px; margin-top: 20px; margin-bottom: 7px; margin-left: -47px; image-rendering: pixelated;">
+						<a href="#"> <c:url
+								value="${urlRecursos}resources-site/image/logo-gift.png"
+								var="urllogo" /> <img title="Gift4Us" src="${urllogo}"
+							style="height: 55px; margin-top: 20px; margin-bottom: 7px; margin-left: -20px; image-rendering: pixelated;">
 						</a>
 					</div>
 				</div>
@@ -28,8 +57,8 @@
 					<div id="cart">
 						<button type="button" data-toggle="dropdown"
 							data-loading-text="Loading..." class="heading dropdown-toggle">
-							<i class="fa fa-user"></i> <span id="cart-total">LOGIN |
-								REGISTRO</span>
+							<span class="cart-icon pull-left flip"></span> <span
+								id="cart-total">2 item(s) - $1,132.00</span>
 						</button>
 						<ul class="dropdown-menu">
 							<li>
@@ -128,7 +157,7 @@
 		<div class="container">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a class="home_link" title="Home" href="index.html">Home</a></li>
+					<li><a class="home_link" title="Home" href="#">Home</a></li>
 					<li class="dropdown"><a href="category.html">Fashion</a>
 						<div class="dropdown-menu">
 							<ul>

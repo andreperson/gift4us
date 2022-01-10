@@ -16,21 +16,21 @@
 
 
 <!-- Favicon -->
-<link href="../gitf4us/resources/assets/img/brand/favicon.png"
+<link href="${urlRecursos}resources-admin/image/favicon.png"
 	rel="icon" type="image/png">
 <!-- Fonts -->
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
 	rel="stylesheet">
 <!-- Icons -->
-<link href="../gift4us/resources/assets/vendor/nucleo/css/nucleo.css"
+<link href="${urlRecursos}resources-admin/assets/vendor/nucleo/css/nucleo.css"
 	rel="stylesheet">
 <link
-	href="../gift4us/resources/assets/vendor/fortawesome/fontawesome-free/css/all.min.css"
+	href="${urlRecursos}resources-admin/assets/vendor/fortawesome/fontawesome-free/css/all.min.css"
 	rel="stylesheet">
 <!-- Argon CSS -->
 <link type="text/css"
-	href="../gift4us/resources/assets/css/argon.css?v=1.0.0"
+	href="${urlRecursos}resources-admin/assets/css/argon.css?v=1.0.0"
 	rel="stylesheet">
 
 
