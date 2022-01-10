@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
+<%@ taglib tagdir="/WEB-INF/tags/tag-admin/" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
 
 <my:template title="${mensagens.get('NomeDoProjeto').valor}"

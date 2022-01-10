@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.produto.ProdutoDAO;
 import br.com.gift4us.produto.ProdutoModel;
 import br.com.gift4us.urls.ListaDeURLs;
@@ -28,9 +30,9 @@ public class IndexController {
 	
 
 	@RequestMapping(value = ListaDeURLs.INDEX, method = RequestMethod.GET)
-	public String index(HttpServletResponse response, Model model) {
+	public String index(Model model, HttpServletResponse response) {
 		model.addAttribute("listaDeProduto", produtoDAO.listaTudo());
-		model.addAttribute("urlimg", propriedades.getValor("arquivo.diretorio.produto.upload"));
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		
 		return "site/index/index";
 	}
@@ -41,6 +43,9 @@ public class IndexController {
 		
 		return lst;
 	}
+	
+	
+	
 	
 	
 }

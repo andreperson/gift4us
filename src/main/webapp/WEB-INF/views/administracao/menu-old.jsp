@@ -4,14 +4,15 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <c:url value="<%=ListaDeURLs.HOME%>" var="url" />
 <link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/menu/menu.css"/>" media="screen" />
+	href="<c:url value="${urlRecursosAdmin}resources-admin/css/menu/menu.css"/>" media="screen" />
 
 <a href="${url}"> <c:url
-		value="${baseURL}/resources/Images/logo-gift.png" var="urllogo" /> <img
+		value="${urlRecursosAdmin}resources-admin/image/logo-gift.png" var="urllogo" /> <img
 	title="Gift4Us" src="${urllogo}"
-	style="height: 75px; margin-top: -35px; margin-bottom: 7px; margin-left: -47px; image-rendering: pixelated;">
+	style="height: 50px; margin-top: -35px; margin-bottom: 7px; margin-left: -47px; image-rendering: pixelated;">
 </a>
 <!-- Navigation -->
 <ul class="navbar-nav"
@@ -20,7 +21,7 @@
 		<li class="ms-3 ms-sm-0"><c:url
 				value="<%=ListaDeURLs.LISTA_DE_PRODUTO%>" var="url" /> <a
 			href="${url}" class="nav-link"> <c:url
-					value="${baseURL}/resources/Images/icone/ico-menu-produto3.png"
+					value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-produto3.png"
 					var="urllogo" /> <img title="Produtos" src="${urllogo}"
 				class="menu-icone"> <span class="menu-texto">&nbsp;Produtos</span></a></li>
 
@@ -31,7 +32,7 @@
 		<li class="ms-3 ms-sm-0"><c:url
 				value="<%=ListaDeURLs.LISTA_DE_ORCAMENTO%>" var="url" /> <a
 			href="${url}" class="nav-link"><c:url
-					value="${baseURL}/resources/Images/icone/ico-menu-orcamento3.png"
+					value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-orcamento3.png"
 					var="urllogo" /> <img title="Orçamentos" src="${urllogo}"
 				class="menu-icone"> <span class="menu-texto">&nbsp;Orçamentos</span>
 		</a></li>
@@ -41,7 +42,7 @@
 		<li class="ms-3 ms-sm-0 dropdown"><a href="#"
 			class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 			role="button" aria-haspopup="true" aria-expanded="false"> <c:url
-					value="${baseURL}/resources/Images/icone/ico-menu-config.png"
+					value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-config.png"
 					var="urllogo" /> <img title="Configurações" src="${urllogo}"
 				class="menu-icone"> <span class="menu-texto">&nbsp;Configurações</span>
 		</a>
@@ -51,7 +52,7 @@
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_CATEGORIA%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-categoria.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-categoria.png"
 							var="urllogo" /> <img title="Categoria" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Categoria</span>
 					</a>
@@ -61,7 +62,7 @@
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_SUBCATEGORIA%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-sub-categoria.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-sub-categoria.png"
 							var="urllogo" /> <img title="Sub Categoria" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Sub
 							Categoria</span>
@@ -72,7 +73,7 @@
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_ANUNCIANTE%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-anunciante.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-anunciante.png"
 							var="urllogo" /> <img title="Anunciante" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Anunciante</span>
 					</a>
@@ -82,7 +83,7 @@
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_ANUNCIANTETIPO%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-anunciante-tipo.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-anunciante-tipo.png"
 							var="urllogo" /> <img title="anunciante Tipo" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Anunciante
 							Tipo</span>
@@ -92,7 +93,7 @@
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_FAIXADEPRECO%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-faixa-de-preco.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-faixa-de-preco.png"
 							var="urllogo" /> <img title="Status" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Faixas de Preço</span>
 					</a>
@@ -101,7 +102,7 @@
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_STATUS%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-status.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-status.png"
 							var="urllogo" /> <img title="Status" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Status</span>
 					</a>
@@ -117,7 +118,7 @@
 		<li class="ms-3 ms-sm-0 dropdown"><a href="#"
 			class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 			role="button" aria-haspopup="true" aria-expanded="false"> <c:url
-					value="${baseURL}/resources/Images/icone/ico-menu-admin.png"
+					value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-admin.png"
 					var="urllogo" /> <img title="Administrativo" src="${urllogo}"
 				class="menu-icone"> <span class="menu-texto">&nbsp;Administrativo</span>
 		</a>
@@ -126,7 +127,7 @@
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_USUARIO%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-usuario-admin.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-usuario-admin.png"
 							var="urllogo" /> <img title="Usuários Admin" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Usuários
 							Admin</span>
@@ -137,7 +138,7 @@
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<c:url value="<%=ListaDeURLs.LISTA_DE_GRUPO%>" var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-grupo2.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-grupo2.png"
 							var="urllogo" /><img title="Grupos" src="${urllogo}"
 						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Grupo</span>
 					</a>
@@ -147,7 +148,7 @@
 					<c:url value="<%=ListaDeURLs.LISTA_DE_MENSAGENSDOSISTEMA%>"
 						var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-msg.png"
+							value="${urlRecursos}resources-admin/Images/icone/ico-menu-msg.png"
 							var="urllogo" /> <img title="Mensagens do Sistema"
 						src="${urllogo}" class="menu-icone--admin"> <span
 						class="menu-texto--admin">&nbsp;Mensagens do Sistema</span>
@@ -157,7 +158,7 @@
 					<c:url value="<%=ListaDeURLs.LISTA_DE_CONFIGURACOESDOSISTEMA%>"
 						var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-config-sistema.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-config-sistema.png"
 							var="urllogo" /> <img title="Configurações do Sistema"
 						src="${urllogo}" class="menu-icone--admin"> <span
 						class="menu-texto--admin">&nbsp;Configurações do sistema</span>
@@ -169,7 +170,7 @@
 					<c:url value="<%=ListaDeURLs.LISTA_DE_HISTORICODOSISTEMA%>"
 						var="url" />
 					<a href="${url}" class="dropdown-item"> <c:url
-							value="${baseURL}/resources/Images/icone/ico-menu-historico.png"
+							value="${urlRecursosAdmin}resources-admin/Images/icone/ico-menu-historico.png"
 							var="urllogo" /> <img title="Histórico do Sistema"
 						src="${urllogo}" class="menu-icone--admin"> <span
 						class="menu-texto--admin">&nbsp;Histórico do sistema</span>

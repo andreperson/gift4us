@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.categoria.CategoriaModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -135,6 +138,18 @@ public class ProdutoDAO {
 
 		return query.getResultList();
 	}
+	
+	public List<ProdutoModel> buscaPorCategoria(CategoriaModel categoria) {
+
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.categoria = :categoria ";
+
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+
+		query.setParameter("categoria", categoria);
+
+		return query.getResultList();
+	}
+	
 
 	public List<ProdutoModel> buscaPorTitulo(String titulo) {
 

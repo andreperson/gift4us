@@ -4,8 +4,11 @@ public class ListaDeURLs {
 
 	public final static String INDEX = "/site/index";
 	public final static String HOME = "/administracao/home";
+	public final static String HOME_SITE = "/site/index";
 	public final static String LOGOUT = "/logout";
 	public final static String LOGIN = "/login";
+	public final static String PRODUTOS_LISTA = "/site/produtos/lista";
+	public final static String PRODUTO_DETALHE = "/site/produtos/produto";
 	
 
 	public final static String ALTERAR_SENHA = "/administracao/alterarSenha";

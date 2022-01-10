@@ -35,8 +35,21 @@ public class FileUploader {
 	public boolean grava(MultipartFile arquivo, BindingResult result,
 			String diretorio) {
 		try {
-			new File(diretorio).mkdir();
-			File file = new File(diretorio + "/"
+			
+			System.out.println("caminho do diretorio: " + diretorio);
+			
+			File file = new File(diretorio);  
+
+			System.out.println("existe: " + !file.exists());
+			
+			if (!file.exists()) {
+								
+			    file.mkdirs();
+			}
+			
+			System.out.println("depois de criar o diretorio: " + diretorio);
+			
+			file = new File(diretorio + "/"
 					+ arquivo.getOriginalFilename());
 
 			if (file.exists()) {
@@ -53,6 +66,7 @@ public class FileUploader {
 			String msg = msgSource.getMessage("erro.sistema", null, "",
 					new Locale("pt", "BR"));
 			ObjectError error = new ObjectError("arquivoErro", msg);
+			System.out.println("arquivoErro: " + e.getMessage());
 			result.addError(error);
 			return false;
 		}

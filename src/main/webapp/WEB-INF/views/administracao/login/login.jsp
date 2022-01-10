@@ -12,8 +12,8 @@
     
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
-        <a class="navbar-brand" href="../index.html">
-          <img src="/gift4us/resources/assets/img/brand/white.png" />
+        <a class="navbar-brand" href="/administracao">
+          <img src="${urlRecursos}resources-admin/assets/img/brand/white.png" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -118,10 +118,10 @@
 
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="/gift4us/resources/assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="/gift4us/resources/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="${urlRecursos}resources-admin/assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="${urlRecursos}resources-admin/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Argon JS -->
-  <script src="/gift4us/resources/assets/js/argon.js?v=1.0.0"></script>
+  <script src="${urlRecursos}resources-admin/assets/js/argon.js?v=1.0.0"></script>
 </body>
 	
 	

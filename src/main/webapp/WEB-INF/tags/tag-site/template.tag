@@ -15,24 +15,24 @@
 <title>${title}</title>
 
 <!-- Favicon -->
-<link href="../../resources/assets/img/brand/favicon.png" rel="icon"
+<link href="${urlRecursos}resources-site/image/favicon.png" rel="icon"
 	type="image/png">
 
 <!-- CSS Part Start-->
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}css/bootstrap/css/bootstrap.min.css" />
+	href="${urlRecursos}resources-site/css/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}css/font-awesome/css/font-awesome.min.css" />
+	href="${urlRecursos}resources-site/css/font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}/css/stylesheet.css" />
+	href="${urlRecursos}resources-site/css/stylesheet.css" />
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}css/owl.carousel.css" />
+	href="${urlRecursos}resources-site/css/owl.carousel.css" />
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}css/owl.transitions.css" />
+	href="${urlRecursos}resources-site/css/owl.transitions.css" />
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}css/responsive.css" />
+	href="${urlRecursos}resources-site/css/responsive.css" />
 <link rel="stylesheet" type="text/css"
-	href="${urlRecursos}css/stylesheet-skin2.css" />
+	href="${urlRecursos}resources-site/css/stylesheet-skin2.css" />
 <link rel='stylesheet'
 	href='http://fonts.googleapis.com/css?family=Droid+Sans'
 	type='text/css'>
@@ -47,16 +47,16 @@
 
 	<!-- JS Part Start-->
 	<script type="text/javascript"
-		src="${urlRecursos}js/jquery-2.1.1.min.js"></script>
+		src="${urlRecursos}resources-site/js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript"
-		src="${urlRecursos}js/bootstrap/js/bootstrap.min.js"></script>
+		src="${urlRecursos}resources-site/js/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript"
-		src="${urlRecursos}js/jquery.easing-1.3.min.js"></script>
+		src="${urlRecursos}resources-site/js/jquery.easing-1.3.min.js"></script>
 	<script type="text/javascript"
-		src="${urlRecursos}js/jquery.dcjqaccordion.min.js"></script>
+		src="${urlRecursos}resources-site/js/jquery.dcjqaccordion.min.js"></script>
 	<script type="text/javascript"
-		src="${urlRecursos}js/owl.carousel.min.js"></script>
-	<script type="text/javascript" src="${urlRecursos}js/custom.js"></script>
+		src="${urlRecursos}resources-site/js/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="${urlRecursos}resources-site/js/custom.js"></script>
 	<!-- JS Part End-->
 
 </body>

@@ -197,11 +197,11 @@ public class ConfiguracoesDoSistemaDAO {
 				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
 				configuracao.setPropriedade("HTTP_RECURSOS");
 				if ("producao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("/resources/resources-site/");
+					configuracao.setValor("https://gift4us.com.br/resources/");
 				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("../../resources-site/");
+					configuracao.setValor("http://gift4us.com.br/resources-homologacao/");
 				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("../../resources-site/");
+					configuracao.setValor("http://gift4us.com.br/resources-homologacao/");
 				}
 				manager.persist(configuracao);
 			}
@@ -211,11 +211,11 @@ public class ConfiguracoesDoSistemaDAO {
 				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
 				configuracao.setPropriedade("HTTPS_RECURSOS");
 				if ("producao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("/resources/resources-site/");
+					configuracao.setValor("https://gift4us.com.br/resources/");
 				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("../../resources-site/");
+					configuracao.setValor("https://gift4us.com.br/resources-homologacao/");
 				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("../../resources-site/");
+					configuracao.setValor("https://gift4us.com.br/resources-homologacao/");
 				}
 				manager.persist(configuracao);
 			}

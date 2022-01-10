@@ -30,21 +30,19 @@ public class CacheInterceptor extends HandlerInterceptorAdapter {
 		if (modelAndView != null) {
 			modelAndView.addObject("mensagens", mensagemDAO.listaTudoComCache());
 			modelAndView.addObject("configuracoes", configuracoesDAO.listaTudoComCache());
+			
+			String urlRecursos = null;
+			if(request.getRequestURL().toString().startsWith("https")) {
+				urlRecursos = configuracoesDAO.buscarPeloNomeDaPropriedade("HTTPS_RECURSOS").getValor(); 
+			} else {
+				urlRecursos = configuracoesDAO.buscarPeloNomeDaPropriedade("HTTP_RECURSOS").getValor(); 
+			}
+			modelAndView.addObject("urlRecursos", urlRecursos);
+			
+			String ambiente = configuracoesDAO.buscarPeloNomeDaPropriedade("AMBIENTE").getValor();
+			modelAndView.addObject("qualambiente", ambiente);
+			
+			super.postHandle(request, response, handler, modelAndView);
 		}
-		
-		
-		String urlRecursos = null;
-		if(request.getRequestURL().toString().startsWith("https")) {
-			urlRecursos = configuracoesDAO.buscarPeloNomeDaPropriedade("HTTPS_RECURSOS").getValor(); 
-		} else {
-			urlRecursos = configuracoesDAO.buscarPeloNomeDaPropriedade("HTTP_RECURSOS").getValor(); 
-		}
-		modelAndView.addObject("urlRecursos", urlRecursos);
-		
-		
-		String ambiente = configuracoesDAO.buscarPeloNomeDaPropriedade("AMBIENTE").getValor();
-		modelAndView.addObject("qualambiente", ambiente);
-		
-		super.postHandle(request, response, handler, modelAndView);
 	}
 }
