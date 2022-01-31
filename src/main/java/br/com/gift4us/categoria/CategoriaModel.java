@@ -54,6 +54,9 @@ public class CategoriaModel implements Serializable  {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataAlt;
 
+	@Column(length = 255)
+	private String imagem;
+	
 	@Column(length = 1)
 	private StatusEnum status;
 	
@@ -61,13 +64,13 @@ public class CategoriaModel implements Serializable  {
 		
 	}
 
-	public CategoriaModel(Long id, String nome, Calendar dataincl, Calendar dataalt, StatusEnum status) {
+	public CategoriaModel(Long id, String nome, Calendar dataincl, Calendar dataalt, String imagem, StatusEnum status) {
 		this.id = id;
 		this.nome = nome;
 		this.dataIncl = dataincl;
 		this.dataAlt = dataalt;
+		this.imagem= imagem;
 		this.status = status;
-
 	}
 
 	public Long getId() {
@@ -84,6 +87,14 @@ public class CategoriaModel implements Serializable  {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 
 	public Calendar getDataIncl() {

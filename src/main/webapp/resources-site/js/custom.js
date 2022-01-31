@@ -322,7 +322,7 @@ if (localStorage.getItem('display') == 'list') {
 /*---------------------------------------------------
    tooltips
 ----------------------------------------------------- */
-$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+//$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
 /*---------------------------------------------------
    Scroll to top
@@ -423,3 +423,21 @@ $(function(){
   });
 
 })(jQuery);
+
+function mudaImagem(id){
+	
+	console.log("id da imagem: " + id);
+	
+	var imgId = "#img_" + id;
+	var imgNome= $(imgId).attr('src');
+	
+	console.log("nome da imagem: " + imgNome);
+	
+	
+	document.getElementById("img_0").src=imgNome;
+	
+	//$("#img_0").attr("src",imgNome);
+	
+	console.log("fim");
+	
+}

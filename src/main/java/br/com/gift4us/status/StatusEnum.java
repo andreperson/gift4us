@@ -1,7 +1,7 @@
 package br.com.gift4us.status;
 
 public enum StatusEnum {
-	INATIVO(0), ATIVO(1);
+	INATIVO(0), ATIVO(1), BESTSELL(2);
 
 	private final int valor;
 

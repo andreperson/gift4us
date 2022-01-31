@@ -24,7 +24,7 @@
 					<!-- Product Tab Start -->
 					<div id="product-tab" class="product-tab">
 						<ul id="tabs" class="tabs">
-							<li><a href="#">${categoria}</a></li>
+							<li><a href="#product-tab"><i class="fa fa-arrow-circle-right"></i> ${categoria}</a></li>
 						</ul>
 
 						<div id="tab-bestseller" class="tab_content">
@@ -37,25 +37,45 @@
 											value="${urlproduto}/${produto.anunciante.id}/${produto.id}/${produto.imagem}" />
 									</c:if>
 
+
+									<c:set var="desconto" value="0.${produto.desconto}" />       
+										
+									<c:set var="precocomdesconto" scope="application"
+										value="${produto.preco - (produto.preco * desconto)}" />
+						
 									<div class="product-thumb clearfix">
 										<div class="image">
-											<a href="../../produtos/produto/1"><img src="${urlprodutomontada}"
+											<a href="../../produtos/produto/${produto.id}"><img src="${urlprodutomontada}"
 												width="330" height="220" alt="${produto.titulo}"
 												title="${produto.titulo}" class="img-responsive" /></a>
 										</div>
 										<div class="caption">
 											<h4>
-												<a href="product.html">${produto.titulo}</a>
+												${produto.titulo}
 											</h4>
 											<p class="price">
-												<span class="price-new">$ ${produto.preco}</span> <span
-													class="price-old">$122.00</span><span class="saving">-10%</span>
+												<c:if test="${produto.desconto > 0}">
+												<span class="price-new">$ ${precocomdesconto}</span> 
+												<span
+													class="price-old">${produto.preco}</span><span class="saving">-${produto.desconto}%</span>
+												</c:if>
+												<c:if test="${produto.desconto == 0}">
+													<span class="price-new">$ ${produto.preco}</span>
+												</c:if>
+												
 											</p>
 										</div>
 										<div class="button-group">
-											<input onClick="cart.add('42');" type="submit"
-												value="Incluir no Orçamento" class="btn btn-primary">
+										<a href="../../produtos/produto/${produto.id}" class="button gray1" title="Ver ${produto.titulo}">
+											 <i class="fa fa-angle-double-right"></i> veja[+]
+										</a>
+										
+											<a href="../../produtos/produto/${produto.id}" class="button lilas" title="Ver ${produto.titulo}">
+											 <i class="fa fa-shopping-cart"></i> orçar
+										</a>
 										</div>
+										
+										
 									</div>
 								</c:forEach>
 								

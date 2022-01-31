@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.gift4us.categoria.CategoriaDAO;
 import br.com.gift4us.categoria.CategoriaModel;
+import br.com.gift4us.produto.ImagemDAO;
+import br.com.gift4us.produto.ImagemModel;
 import br.com.gift4us.produto.ProdutoDAO;
 import br.com.gift4us.produto.ProdutoModel;
 import br.com.gift4us.urls.ListaDeURLs;
@@ -30,6 +32,8 @@ public class ProdutosController {
 	@Autowired
 	private CategoriaDAO categoriaDAO;
 
+	@Autowired
+	private ImagemDAO imagemDAO;
 	
 	@Autowired
 	private Propriedades propriedades;
@@ -49,12 +53,13 @@ public class ProdutosController {
 	
 	@RequestMapping(value = ListaDeURLs.PRODUTO_DETALHE + "/{id}", method = RequestMethod.GET)
 	public String produto(@PathVariable Long id, HttpServletResponse response, Model model) {
-		List<ProdutoModel> lstProds = new ArrayList<ProdutoModel>(); 
-		lstProds=buscaProdutoPorCategoria(id);
-		String categoria = pegaDescricaoDaCategoria(lstProds);
-		model.addAttribute("listaDeProduto", lstProds);
-		model.addAttribute("categoria", categoria);
+		ProdutoModel produto = produtoDAO.buscaPorId(id);
+		List<ImagemModel> lstImagem = imagemDAO.buscaPorProduto(produto);
+		
+		model.addAttribute("lstImagem", lstImagem);
+		model.addAttribute("produto", produto);
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
+		
 		
 		return "site/produtos/produto";
 	}

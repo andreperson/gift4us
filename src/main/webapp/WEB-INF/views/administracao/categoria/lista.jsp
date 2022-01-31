@@ -49,7 +49,7 @@
 												<tr>
 													<th>${mensagens.get('CategoriaListaId').valor}</th>
 													<th>${mensagens.get('CategoriaListaNome').valor}</th>
-													<th>${mensagens.get('CategoriaListaDataIncl').valor}</th>
+													<th>${mensagens.get('CategoriaListaImagem').valor}</th>
 													<th>${mensagens.get('CategoriaListaDataAlt').valor}</th>
 													<th class="text-center">${mensagens.get('CategoriaListaAcoes').valor}</th>
 												</tr>
@@ -59,8 +59,7 @@
 													<tr>
 														<td>${categoria.id}</td>
 														<td>${categoria.nome}</td>
-														<td><fmt:formatDate pattern="dd/MM/yyyy"
-																value="${categoria.dataIncl.time}" var="data" />${data}</td>
+														<td>${categoria.imagem}</td>
 														<td><fmt:formatDate pattern="dd/MM/yyyy"
 																value="${categoria.dataAlt.time}" var="data" />${data}</td>
 														<td class="text-center text-nowrap"><c:url var="url"

@@ -17,6 +17,7 @@ import java.util.Calendar;
 import javax.validation.constraints.NotNull;
 import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.faixadepreco.FaixaDePrecoModel;
+import br.com.gift4us.linha.LinhaModel;
 import br.com.gift4us.subcategoria.SubCategoriaModel;
 import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.status.StatusModel;
@@ -58,6 +59,9 @@ public class ProdutoModel implements Serializable  {
 	
 	@Column(length = 5)
 	private Integer qtdademin;
+	
+	@Column(length = 5)
+	private Integer desconto;
 
 	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoPreco")
 	@Column(precision=11, scale=0)
@@ -98,15 +102,15 @@ public class ProdutoModel implements Serializable  {
 	@JoinColumn(name = "status_id")
 	private StatusModel status;
 
-	
-	
-
+	@ManyToOne
+	@JoinColumn(name = "linha_id")
+	private LinhaModel linha;
 	
 	public ProdutoModel(){
 		
 	}
 
-	public ProdutoModel(Long id, String codigo, String titulo, String brevedescricao, String descricaocompleta, String tag, Integer qtdademin, Double preco, String imagem, String urlanunciante, Calendar dataIncl, Calendar dataAlt, CategoriaModel categoria, SubCategoriaModel subcategoria, AnuncianteModel anunciante, StatusModel status, FaixaDePrecoModel faixadepreco) {
+	public ProdutoModel(Long id, String codigo, String titulo, String brevedescricao, String descricaocompleta, String tag, Integer qtdademin, Double preco, String imagem, String urlanunciante, Calendar dataIncl, Calendar dataAlt, CategoriaModel categoria, SubCategoriaModel subcategoria, AnuncianteModel anunciante, StatusModel status, FaixaDePrecoModel faixadepreco, Integer desconto, LinhaModel linha) {
 		this.id = id;
 		this.codigo = codigo;
 		this.titulo = titulo;
@@ -124,7 +128,8 @@ public class ProdutoModel implements Serializable  {
 		this.subcategoria = subcategoria;
 		this.anunciante = anunciante;
 		this.status = status;
-
+		this.desconto = desconto;
+		this.linha = linha;
 	}
 
 	public Long getId() {
@@ -190,6 +195,14 @@ public class ProdutoModel implements Serializable  {
 	public void setQtdademin(Integer qtdademin) {
 		this.qtdademin = qtdademin;
 	}
+	
+	public Integer getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Integer desconto) {
+		this.desconto = desconto;
+	}
 
 	public Double getPreco() {
 		return preco;
@@ -205,6 +218,14 @@ public class ProdutoModel implements Serializable  {
 
 	public void setFaixaDePreco(FaixaDePrecoModel faixadepreco) {
 		this.faixadepreco = faixadepreco;
+	}
+	
+	public LinhaModel getLinha() {
+		return linha;
+	}
+
+	public void setLinha(LinhaModel linha) {
+		this.linha = linha;
 	}
 
 	public String getImagem() {

@@ -16,11 +16,13 @@
 					<div class="links">
 						<ul>
 							<!--- <li class="mobile"><i class="fa fa-phone"></i>+91 9898777656</li>  --->
-							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="login.html">login
+							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="login.html"><i
+									class="fas fa-user-circle"></i> login
 							</a>
 							</li>
 							<li>|</li>
-							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="anuncie.html">anuncie conosco
+							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="anuncie.html"><i
+									class="far fa-newspaper"></i> anuncie conosco
 							</a>
 								</li>
 						</ul>
@@ -29,7 +31,7 @@
 				<div id="top-links" class="nav pull-right flip">
 					<ul>
 						<li class="email"><a href="mailto:atendimento@gift4us.com.br"><i
-									class="fa fa-envelope"></i>atendimento@gift4us.com.br</a></li>
+									class="fa fa-envelope"></i> atendimento@gift4us.com.br</a></li>
 					</ul>
 				</div>
 			</div>
@@ -44,7 +46,7 @@
 				<div
 					class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
 					<div id="logo">
-						<a href="#"> <c:url
+						<a href="${url }"> <c:url
 								value="${urlRecursos}resources-site/image/logo-gift.png"
 								var="urllogo" /> <img title="Gift4Us" src="${urllogo}"
 							style="height: 55px; margin-top: 20px; margin-bottom: 7px; margin-left: -20px; image-rendering: pixelated;">
@@ -157,7 +159,7 @@
 		<div class="container">
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li><a class="home_link" title="Home" href="#">Home</a></li>
+					<li><a class="home_link" title="Home" href="${url }">Home</a></li>
 					<li class="dropdown"><a href="category.html">Fashion</a>
 						<div class="dropdown-menu">
 							<ul>

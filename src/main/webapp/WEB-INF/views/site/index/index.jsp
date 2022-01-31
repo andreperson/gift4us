@@ -11,7 +11,8 @@
 <c:url value="${urlpadrao}_sliders" var="urlslider" />
 <c:url value="${urlpadrao}_banners" var="urlbanner" />
 <c:url value="${urlpadrao}_modelos" var="urlmodelo" />
-
+<c:url value="${urlpadrao}_categorias" var="urlcategoria" />
+<c:url value="${urlRecursos	}resources-site/image/icons" var="urlicons" />
 
 <my:template title="${mensagens.get('NomeDoProjeto').valor}"
 	fluido="false">
@@ -23,11 +24,12 @@
 					<!-- Slideshow Start-->
 					<div class="slideshow single-slider owl-carousel">
 						<div class="item">
-							<a href="../site/produtos/lista/5" title="Camisetas"><img class="img-responsive"
-								src="${urlslider}/banner-1.jpg" /></a>
+							<a href="../site/produtos/lista/5" title="Camisetas"><img
+								class="img-responsive" src="${urlslider}/banner-1.jpg" /></a>
 						</div>
 						<div class="item">
-							<a href="../site/produtos/lista/9"><img class="img-responsive" title="Sacolas e Mochilas"
+							<a href="../site/produtos/lista/9"><img
+								class="img-responsive" title="Sacolas e Mochilas"
 								src="${urlslider}/banner-2.jpg" /></a>
 						</div>
 					</div>
@@ -36,8 +38,9 @@
 					<div class="marketshop-banner">
 						<div class="row">
 							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<a href="../site/produtos/lista/1"><img src="${urlbanner}/banner-300-1.jpg"
-									alt="Canecas" title="Canecas" /></a>
+								<a href="../site/produtos/lista/1"><img
+									src="${urlbanner}/banner-300-1.jpg" alt="Canecas"
+									title="Canecas" /></a>
 							</div>
 							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 								<a href="#"><img src="${urlbanner}/banner-300-2.jpg"
@@ -57,119 +60,33 @@
 					<!-- Product Tab Start -->
 					<div id="product-tab" class="product-tab">
 						<ul id="tabs" class="tabs">
-							<li><a href="#tab-bestseller">Mais Vendidos</a></li>
-							<li><a href="#tab-featured">Destaque</a></li>
-							<li><a href="#tab-latest">Novidades</a></li>
-							<li><a href="#tab-special">Especial</a></li>
+							<li><a href="#tab-bestseller"><i class="fa fa-check-circle"></i> Mais Vendidos</a></li>
+							<li><a href="#tab-latest"><i class="fa fa-check-circle"></i> Novidades</a></li>
 						</ul>
 
-						<div id="tab-bestseller" class="tab_content">
+						<div id="tab-bestseller" class="tab_content" >
 							<div class="owl-carousel product_carousel_tab">
-								<div class="product-thumb">
-									<div class="image">
-										<a href="../produtos/lista/1"><img src="${urlmodelo}/_caneca.png"
-											alt="Canecas" title="Canecas" class="img-responsive" /></a>
+								<c:forEach items="${listaDeCategoria}" var="cat">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="../site/produtos/lista/${cat.id}"><img
+												src="${urlcategoria}/${cat.id}/${cat.imagem}"
+												alt="${cat.nome}" title="${cat.nome}" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												${cat.nome}
+											</h4>
+										</div>
+										<a href="../site/produtos/lista/${cat.id}" class="button gray1" title="Ver ${cat.nome}">
+											<i class="fa fa-angle-double-right"></i>  veja[+]
+										</a>
 									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Canecas" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_copo.png"
-											alt="Canecas" title="Copos" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Copos" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_caneta.png"
-											alt="Canecas" title="Canetas" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Canetas" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_garrafa.png"
-											alt="Garrafas" title="Garrafas" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Garrafas" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_camiseta.png"
-											alt="Camisetas" title="Camisetas" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Camisetas" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_sqz.png"
-											alt="Squeeze" title="Squeeze" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Squeeze" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_chaveiro.png"
-											alt="Chaveiros" title="Chaveiros" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Chaveiros" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_mochila.png"
-											alt="Mochilas" title="Mochilas" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Mochilas" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_bag.png"
-											alt="Sacolas" title="Sacolas" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Sacolas" class="btn btn-primary">
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img src="${urlmodelo}/_necessaire.png"
-											alt="Necessaire" title="Necessaire" class="img-responsive" /></a>
-									</div>
-									<div class="button-group">
-										<input onClick="alert('open')" type="submit"
-											value="Necessaire" class="btn btn-primary">
-									</div>
-								</div>
-								
+								</c:forEach>
 							</div>
 						</div>
 
-						<div id="tab-featured" class="tab_content">
+						<div id="tab-latest" class="tab_content">
 							<div class="owl-carousel product_carousel_tab">
 								<c:forEach items="${listaDeProduto}" var="produto">
 									<c:set var="urlprodutomontada" scope="application"
@@ -202,478 +119,6 @@
 								</c:forEach>
 							</div>
 						</div>
-
-						<div id="tab-latest" class="tab_content">
-							<div class="owl-carousel product_carousel_tab">
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/macbook_2-220x330.jpg"
-											alt="Pnina Tornai Perfume" title="Pnina Tornai Perfume"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Pnina Tornai Perfume</a>
-										</h4>
-										<p class="price">$110.00</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/macbook_3-220x330.jpg"
-											alt="Make Up for Naturally Beautiful Better"
-											title="Make Up for Naturally Beautiful Better"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Make Up for Naturally Beautiful
-												Better</a>
-										</h4>
-										<p class="price">$123.00</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/macbook_4-220x330.jpg"
-											alt="Perfumes for Women" title="Perfumes for Women"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Perfumes for Women</a>
-										</h4>
-										<p class="price">$85.00</p>
-										<div class="rating">
-											<span class="fa fa-stack"><i
-												class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span>
-										</div>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/iphone_6-220x330.jpg"
-											alt="Hair Care Cream for Men" title="Hair Care Cream for Men"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Hair Care Cream for Men</a>
-										</h4>
-										<p class="price">$134.00</p>
-										<div class="rating">
-											<span class="fa fa-stack"><i
-												class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span>
-										</div>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/nikon_d300_5-220x330.jpg"
-											alt="Hair Care Products" title="Hair Care Products"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Hair Care Products</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$66.80</span> <span class="price-old">$90.80</span>
-											<span class="saving">-27%</span>
-										</p>
-										<div class="rating">
-											<span class="fa fa-stack"><i
-												class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i
-												class="fa fa-star-o fa-stack-2x"></i></span>
-										</div>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/nikon_d300_4-220x330.jpg"
-											alt="Bed Head Foxy Curls Contour Cream"
-											title="Bed Head Foxy Curls Contour Cream"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Bed Head Foxy Curls Contour Cream</a>
-										</h4>
-										<p class="price">$88.00</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href=""><img
-											src="${urlproduto}/product/macbook_5-220x330.jpg"
-											alt="Shower Gel Perfume for Women"
-											title="Shower Gel Perfume for Women" class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Shower Gel Perfume for Women</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$95.00</span> <span class="price-old">$99.00</span>
-											<span class="saving">-4%</span>
-										</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button"
-											onClick="cart.add('61');">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="wishlist.add('61');">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="compare.add('61');">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div id="tab-special" class="tab_content">
-							<div class="owl-carousel product_carousel_tab">
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/ipod_touch_1-220x330.jpg"
-											alt="Samsung Galaxy S4" title="Samsung Galaxy S4"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Samsung Galaxy S4</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$62.00</span> <span class="price-old">$122.00</span>
-											<span class="saving">-50%</span>
-										</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href=""><img
-											src="${urlproduto}/product/macbook_5-220x330.jpg"
-											alt="Shower Gel Perfume for Women"
-											title="Shower Gel Perfume for Women" class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Shower Gel Perfume for Women</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$95.00</span> <span class="price-old">$99.00</span>
-											<span class="saving">-4%</span>
-										</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button"
-											onClick="cart.add('61');">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="wishlist.add('61');">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="compare.add('61');">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/macbook_air_1-220x330.jpg"
-											alt="Laptop Silver black" title="Laptop Silver black"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Laptop Silver black</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$1,142.00</span> <span
-												class="price-old">$1,202.00</span> <span class="saving">-5%</span>
-										</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb clearfix">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/apple_cinema_30-220x330.jpg"
-											alt="Brand Fashion Cotton T-Shirt"
-											title="Brand Fashion Cotton T-Shirt" class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Brand Fashion Cotton T-Shirt</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$110.00</span> <span
-												class="price-old">$122.00</span><span class="saving">-10%</span>
-										</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button"
-											onClick="cart.add('42');">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to Wish List" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Compare this Product" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/macbook_pro_1-220x330.jpg"
-											alt=" Strategies for Acquiring Your Own Laptop "
-											title=" Strategies for Acquiring Your Own Laptop "
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html"> Strategies for Acquiring Your Own
-												Laptop </a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$1,400.00</span> <span
-												class="price-old">$1,900.00</span> <span class="saving">-26%</span>
-										</p>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-								<div class="product-thumb">
-									<div class="image">
-										<a href="product.html"><img
-											src="${urlproduto}/product/samsung_tab_1-220x330.jpg"
-											alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop"
-											class="img-responsive" /></a>
-									</div>
-									<div class="caption">
-										<h4>
-											<a href="product.html">Aspire Ultrabook Laptop</a>
-										</h4>
-										<p class="price">
-											<span class="price-new">$230.00</span> <span
-												class="price-old">$241.99</span> <span class="saving">-5%</span>
-										</p>
-										<div class="rating">
-											<span class="fa fa-stack"><i
-												class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-												class="fa fa-star-o fa-stack-2x"></i></span> <span
-												class="fa fa-stack"><i
-												class="fa fa-star-o fa-stack-2x"></i></span>
-										</div>
-									</div>
-									<div class="button-group">
-										<button class="btn-primary" type="button" onClick="">
-											<span>Add to Cart</span>
-										</button>
-										<div class="add-to-links">
-											<button type="button" data-toggle="tooltip"
-												title="Add to wishlist" onClick="">
-												<i class="fa fa-heart"></i>
-											</button>
-											<button type="button" data-toggle="tooltip"
-												title="Add to compare" onClick="">
-												<i class="fa fa-exchange"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
 					</div>
 					<!-- Product Tab Start -->
 					<!-- Banner Start -->
@@ -695,16 +140,18 @@
 					<!-- Categories Product Slider Start-->
 					<div class="category-module" id="latest_category">
 						<h3 class="subtitle">
-							Fashion - <a class="viewall" href="category.tpl">view all</a>
+							<i class="fa fa-check-circle"></i> ${Campanha1.nome } - <a class="viewall" href="category.tpl">ver todas</a>
 						</h3>
 						<div class="category-module-content">
 							<ul id="sub-cat" class="tabs">
-								<li><a href="#tab-cat1">Men</a></li>
-								<li><a href="#tab-cat2">Women</a></li>
-								<li><a href="#tab-cat3">Girls</a></li>
-								<li><a href="#tab-cat4">Boys</a></li>
-								<li><a href="#tab-cat5">Baby</a></li>
-								<li><a href="#tab-cat6">Accessories</a></li>
+								<c:forEach items="${Linha1}" var="linha1">
+									<li><a href="#tab-cat1">${linha1.nome }</a></li>
+								</c:forEach>
+								<li><a href="#tab-cat2">Dia da Mulher</a></li>
+								<li><a href="#tab-cat3">Dia das Mães</a></li>
+								<li><a href="#tab-cat4">Dia dos Pais</a></li>
+								<li><a href="#tab-cat5">Dia das Crianças</a></li>
+								<li><a href="#tab-cat6">Natal</a></li>
 							</ul>
 							<div id="tab-cat1" class="tab_content">
 								<div class="owl-carousel latest_category_tabs">
@@ -1602,267 +1049,923 @@
 							</div>
 						</div>
 					</div>
-					<!-- Categories Product Slider End-->
+					<!-- Categories DATAS End-->
 
-					<!-- Categories Product Slider Start -->
-					<h3 class="subtitle">
-						Western Wear - <a class="viewall" href="category.html">view
-							all</a>
-					</h3>
-					<div class="owl-carousel latest_category_carousel">
-						<div class="product-thumb">
-							<div class="image">
-								<a href="product.html"><img
-									src="${urlproduto}/product/iphone_6-220x330.jpg"
-									alt="Hair Care Cream for Men" title="Hair Care Cream for Men"
-									class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Hair Care Cream for Men</a>
-								</h4>
-								<p class="price">$134.00</p>
-								<div class="rating">
-									<span class="fa fa-stack"><i
-										class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span>
+					<!-- Categories CORPORATIVOS Start -->
+						<!-- Categories Product Slider Start-->
+					<div class="category-module" id="latest_category">
+						<h3 class="subtitle">
+							<i class="fa fa-check-circle"></i> Corporativos - <a class="viewall" href="category.tpl">ver todos</a>
+						</h3>
+						<div class="category-module-content">
+							<ul id="sub-cat" class="tabs">
+								<li><a href="#tab-cat7">Escritório</a></li>
+								<li><a href="#tab-cat8">Linha Esológica</a></li>
+								<li><a href="#tab-cat9">Informática</a></li>
+								<li><a href="#tab-cat10">Bar e Bebidas</a></li>
+								<li><a href="#tab-cat11">Cozinha</a></li>
+								<li><a href="#tab-cat12">Viagens</a></li>
+							</ul>
+							<div id="tab-cat7" class="tab_content">
+								<div class="owl-carousel latest_category_tabs">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/samsung_tab_1-220x330.jpg"
+												alt="Aspire Ultrabook Laptop"
+												title="Aspire Ultrabook Laptop" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Aspire Ultrabook Laptop</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$230.00</span> <span
+													class="price-old">$241.99</span> <span class="saving">-5%</span>
+											</p>
+											<div class="rating">
+												<span class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star-o fa-stack-2x"></i></span>
+											</div>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/macbook_pro_1-220x330.jpg"
+												alt=" Strategies for Acquiring Your Own Laptop "
+												title=" Strategies for Acquiring Your Own Laptop "
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html"> Strategies for Acquiring Your
+													Own Laptop </a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$1,400.00</span> <span
+													class="price-old">$1,900.00</span> <span class="saving">-26%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/macbook_air_1-220x330.jpg"
+												alt="Laptop Silver black" title="Laptop Silver black"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Laptop Silver black</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$1,142.00</span> <span
+													class="price-old">$1,202.00</span> <span class="saving">-5%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/macbook_1-220x330.jpg"
+												alt="Ideapad Yoga 13-59341124 Laptop"
+												title="Ideapad Yoga 13-59341124 Laptop"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Ideapad Yoga 13-59341124 Laptop</a>
+											</h4>
+											<p class="price">$211.00</p>
+											<div class="rating">
+												<span class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star-o fa-stack-2x"></i></span>
+											</div>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_shuffle_1-220x330.jpg"
+												alt="Hp Pavilion G6 2314ax Notebok Laptop"
+												title="Hp Pavilion G6 2314ax Notebok Laptop"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Hp Pavilion G6 2314ax Notebok
+													Laptop</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_touch_1-220x330.jpg"
+												alt="Samsung Galaxy S4" title="Samsung Galaxy S4"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Samsung Galaxy S4</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$62.00</span> <span
+													class="price-old">$122.00</span> <span class="saving">-50%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button" onClick="">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="">
-										<i class="fa fa-exchange"></i>
-									</button>
+							<div id="tab-cat8" class="tab_content">
+								<div class="owl-carousel latest_category_tabs">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_shuffle_1-220x330.jpg"
+												alt="Hp Pavilion G6 2314ax Notebok Laptop"
+												title="Hp Pavilion G6 2314ax Notebok Laptop"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Hp Pavilion G6 2314ax Notebok
+													Laptop</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="product-thumb">
-							<div class="image">
-								<a href="product.html"><img
-									src="${urlproduto}/product/nikon_d300_5-220x330.jpg"
-									alt="Hair Care Products" title="Hair Care Products"
-									class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Hair Care Products</a>
-								</h4>
-								<p class="price">
-									<span class="price-new">$66.80</span> <span class="price-old">$90.80</span>
-									<span class="saving">-27%</span>
-								</p>
-								<div class="rating">
-									<span class="fa fa-stack"><i
-										class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-									<span class="fa fa-stack"><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-									<span class="fa fa-stack"><i
-										class="fa fa-star-o fa-stack-2x"></i></span>
+							<div id="tab-cat9" class="tab_content">
+								<div class="owl-carousel latest_category_tabs">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/FinePix-Long-Zoom-Camera-220x330.jpg"
+												alt="FinePix S8400W Long Zoom Camera"
+												title="FinePix S8400W Long Zoom Camera"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">FinePix S8400W Long Zoom Camera</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/nikon_d300_1-220x330.jpg"
+												alt="Digital Camera for Elderly"
+												title="Digital Camera for Elderly" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Digital Camera for Elderly</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$92.00</span> <span
+													class="price-old">$98.00</span> <span class="saving">-6%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button" onClick="">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="">
-										<i class="fa fa-exchange"></i>
-									</button>
+							<div id="tab-cat10" class="tab_content">
+								<div class="owl-carousel latest_category_tabs">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/samsung_tab_1-220x330.jpg"
+												alt="Aspire Ultrabook Laptop"
+												title="Aspire Ultrabook Laptop" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Aspire Ultrabook Laptop</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$230.00</span> <span
+													class="price-old">$241.99</span> <span class="saving">-5%</span>
+											</p>
+											<div class="rating">
+												<span class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star-o fa-stack-2x"></i></span>
+											</div>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/iphone_1-220x330.jpg"
+												alt="iPhone5" title="iPhone5" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">iPhone5</a>
+											</h4>
+											<p class="price">$123.20</p>
+											<div class="rating">
+												<span class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star-o fa-stack-2x"></i></span>
+											</div>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_touch_1-220x330.jpg"
+												alt="Samsung Galaxy S4" title="Samsung Galaxy S4"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Samsung Galaxy S4</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$62.00</span> <span
+													class="price-old">$122.00</span> <span class="saving">-50%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/palm_treo_pro_1-220x330.jpg"
+												alt="HTC M7 with Stunning Looks"
+												title="HTC M7 with Stunning Looks" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">HTC M7 with Stunning Looks</a>
+											</h4>
+											<p class="price">$337.99</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="product-thumb">
-							<div class="image">
-								<a href="product.html"><img
-									src="${urlproduto}/product/nikon_d300_4-220x330.jpg"
-									alt="Bed Head Foxy Curls Contour Cream"
-									title="Bed Head Foxy Curls Contour Cream"
-									class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Bed Head Foxy Curls Contour Cream</a>
-								</h4>
-								<p class="price">$88.00</p>
-							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button" onClick="">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="">
-										<i class="fa fa-exchange"></i>
-									</button>
+							<div id="tab-cat11" class="tab_content">
+								<div class="owl-carousel latest_category_tabs">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/samsung_tab_1-220x330.jpg"
+												alt="Aspire Ultrabook Laptop"
+												title="Aspire Ultrabook Laptop" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Aspire Ultrabook Laptop</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$230.00</span> <span
+													class="price-old">$241.99</span> <span class="saving">-5%</span>
+											</p>
+											<div class="rating">
+												<span class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star-o fa-stack-2x"></i></span>
+											</div>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_classic_1-220x330.jpg"
+												alt="Portable Mp3 Player" title="Portable Mp3 Player"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Portable Mp3 Player</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/macbook_pro_1-220x330.jpg"
+												alt=" Strategies for Acquiring Your Own Laptop "
+												title=" Strategies for Acquiring Your Own Laptop "
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html"> Strategies for Acquiring Your
+													Own Laptop </a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$1,400.00</span> <span
+													class="price-old">$1,900.00</span> <span class="saving">-26%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/macbook_air_1-220x330.jpg"
+												alt="Laptop Silver black" title="Laptop Silver black"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Laptop Silver black</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$1,142.00</span> <span
+													class="price-old">$1,202.00</span> <span class="saving">-5%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/macbook_1-220x330.jpg"
+												alt="Ideapad Yoga 13-59341124 Laptop"
+												title="Ideapad Yoga 13-59341124 Laptop"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Ideapad Yoga 13-59341124 Laptop</a>
+											</h4>
+											<p class="price">$211.00</p>
+											<div class="rating">
+												<span class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star fa-stack-2x"></i><i
+													class="fa fa-star-o fa-stack-2x"></i></span> <span
+													class="fa fa-stack"><i
+													class="fa fa-star-o fa-stack-2x"></i></span>
+											</div>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_nano_1-220x330.jpg"
+												alt="Mp3 Player" title="Mp3 Player" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Mp3 Player</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/FinePix-Long-Zoom-Camera-220x330.jpg"
+												alt="FinePix S8400W Long Zoom Camera"
+												title="FinePix S8400W Long Zoom Camera"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">FinePix S8400W Long Zoom Camera</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_shuffle_1-220x330.jpg"
+												alt="Hp Pavilion G6 2314ax Notebok Laptop"
+												title="Hp Pavilion G6 2314ax Notebok Laptop"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Hp Pavilion G6 2314ax Notebok
+													Laptop</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button"
+												onClick="cart.add('34');">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="wishlist.add('34');">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="compare.add('34');">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_touch_1-220x330.jpg"
+												alt="Samsung Galaxy S4" title="Samsung Galaxy S4"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Samsung Galaxy S4</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$62.00</span> <span
+													class="price-old">$122.00</span> <span class="saving">-50%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/nikon_d300_1-220x330.jpg"
+												alt="Digital Camera for Elderly"
+												title="Digital Camera for Elderly" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Digital Camera for Elderly</a>
+											</h4>
+											<p class="price">
+												<span class="price-new">$92.00</span> <span
+													class="price-old">$98.00</span> <span class="saving">-6%</span>
+											</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="product-thumb">
-							<div class="image">
-								<a href=""><img
-									src="${urlproduto}/product/macbook_5-220x330.jpg"
-									alt="Shower Gel Perfume for Women"
-									title="Shower Gel Perfume for Women" class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Shower Gel Perfume for Women</a>
-								</h4>
-								<p class="price">
-									<span class="price-new">$95.00</span> <span class="price-old">$99.00</span>
-									<span class="saving">-4%</span>
-								</p>
-							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button"
-									onClick="cart.add('61');">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="wishlist.add('61');">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="compare.add('61');">
-										<i class="fa fa-exchange"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="product-thumb">
-							<div class="image">
-								<a href="product.html"><img
-									src="${urlproduto}/product/macbook_4-220x330.jpg"
-									alt="Perfumes for Women" title="Perfumes for Women"
-									class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Perfumes for Women</a>
-								</h4>
-								<p class="price">$85.00</p>
-								<div class="rating">
-									<span class="fa fa-stack"><i
-										class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span> <span
-										class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-										class="fa fa-star-o fa-stack-2x"></i></span>
-								</div>
-							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button" onClick="">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="">
-										<i class="fa fa-exchange"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="product-thumb">
-							<div class="image">
-								<a href="product.html"><img
-									src="${urlproduto}/product/macbook_3-220x330.jpg"
-									alt="Make Up for Naturally Beautiful Better"
-									title="Make Up for Naturally Beautiful Better"
-									class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Make Up for Naturally Beautiful
-										Better</a>
-								</h4>
-								<p class="price">$123.00</p>
-							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button" onClick="">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="">
-										<i class="fa fa-exchange"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div class="product-thumb">
-							<div class="image">
-								<a href="product.html"><img
-									src="${urlproduto}/product/macbook_2-220x330.jpg"
-									alt="Pnina Tornai Perfume" title="Pnina Tornai Perfume"
-									class="img-responsive" /></a>
-							</div>
-							<div class="caption">
-								<h4>
-									<a href="product.html">Pnina Tornai Perfume</a>
-								</h4>
-								<p class="price">$110.00</p>
-							</div>
-							<div class="button-group">
-								<button class="btn-primary" type="button" onClick="">
-									<span>Add to Cart</span>
-								</button>
-								<div class="add-to-links">
-									<button type="button" data-toggle="tooltip"
-										title="Add to wishlist" onClick="">
-										<i class="fa fa-heart"></i>
-									</button>
-									<button type="button" data-toggle="tooltip"
-										title="Add to compare" onClick="">
-										<i class="fa fa-exchange"></i>
-									</button>
+							<div id="tab-cat12" class="tab_content">
+								<div class="owl-carousel latest_category_tabs">
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_classic_1-220x330.jpg"
+												alt="Portable Mp3 Player" title="Portable Mp3 Player"
+												class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Portable Mp3 Player</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button"
+												onClick="cart.add('48');">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="product-thumb">
+										<div class="image">
+											<a href="product.html"><img
+												src="${urlproduto}/product/ipod_nano_1-220x330.jpg"
+												alt="Mp3 Player" title="Mp3 Player" class="img-responsive" /></a>
+										</div>
+										<div class="caption">
+											<h4>
+												<a href="product.html">Mp3 Player</a>
+											</h4>
+											<p class="price">$122.00</p>
+										</div>
+										<div class="button-group">
+											<button class="btn-primary" type="button" onClick="">
+												<span>Add to Cart</span>
+											</button>
+											<div class="add-to-links">
+												<button type="button" data-toggle="tooltip"
+													title="Add to wishlist" onClick="">
+													<i class="fa fa-heart"></i>
+												</button>
+												<button type="button" data-toggle="tooltip"
+													title="Add to compare" onClick="">
+													<i class="fa fa-exchange"></i>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- Categories Product Slider End -->
-
+					
+					
+					<!-- Categories CORPORATIVOS End -->
+					
 
 				</div>
 				<!--Middle Part End-->

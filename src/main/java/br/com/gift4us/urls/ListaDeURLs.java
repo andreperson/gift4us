@@ -68,6 +68,39 @@ public class ListaDeURLs {
 	public final static String SERVICO_DE_ATIVIDADE_LOGADO = "/administracao/service/atividade";
 	public final static String ARQUIVOS_DE_ATIVIDADE_LOGADO = "/administracao/atividade/arquivo";
 	public final static String ARQUIVOS_DE_ATIVIDADE_SITE = "/site/atividade/arquivo";
+	
+	public final static String FORMULARIO_INSERCAO_DE_LINHA = "/administracao/linha/formulario-insercao";
+	public final static String FORMULARIO_EDICAO_DE_LINHA = "/administracao/linha/formulario-edicao";
+	public final static String LISTA_DE_LINHA = "/administracao/linha/lista";
+	public final static String INSERCAO_DE_LINHA = "/administracao/linha/insere";
+	public final static String EDICAO_DE_LINHA = "/administracao/linha/altera";
+	public final static String EXCLUSAO_DE_LINHA = "/administracao/linha/exclui";
+	public final static String SERVICO_DE_LINHA = "/service/linha";
+	public final static String SERVICO_DE_LINHA_LOGADO = "/administracao/service/linha";
+	public final static String ARQUIVOS_DE_LINHA_LOGADO = "/administracao/linha/arquivo";
+	public final static String ARQUIVOS_DE_LINHA_SITE = "/site/linha/arquivo";
+	
+	public final static String FORMULARIO_INSERCAO_DE_LINHA_HOME = "/administracao/linhahome/formulario-insercao";
+	public final static String FORMULARIO_EDICAO_DE_LINHA_HOME = "/administracao/linhahome/formulario-edicao";
+	public final static String LISTA_DE_LINHA_HOME = "/administracao/linhahome/lista";
+	public final static String INSERCAO_DE_LINHA_HOME = "/administracao/linhahome/insere";
+	public final static String EDICAO_DE_LINHA_HOME = "/administracao/linhahome/altera";
+	public final static String EXCLUSAO_DE_LINHA_HOME = "/administracao/linhahome/exclui";
+	public final static String SERVICO_DE_LINHA_HOME = "/service/linhahome";
+	public final static String SERVICO_DE_LINHA_HOME_LOGADO = "/administracao/service/linhahome";
+	public final static String ARQUIVOS_DE_LINHA_HOME_LOGADO = "/administracao/linhahome/arquivo";
+	public final static String ARQUIVOS_DE_LINHA_HOME_SITE = "/site/linhahome/arquivo";
+	
+	public final static String FORMULARIO_INSERCAO_DE_CAMPANHA = "/administracao/campanha/formulario-insercao";
+	public final static String FORMULARIO_EDICAO_DE_CAMPANHA = "/administracao/campanha/formulario-edicao";
+	public final static String LISTA_DE_CAMPANHA = "/administracao/campanha/lista";
+	public final static String INSERCAO_DE_CAMPANHA = "/administracao/campanha/insere";
+	public final static String EDICAO_DE_CAMPANHA = "/administracao/campanha/altera";
+	public final static String EXCLUSAO_DE_CAMPANHA = "/administracao/campanha/exclui";
+	public final static String SERVICO_DE_CAMPANHA = "/service/campanha";
+	public final static String SERVICO_DE_CAMPANHA_LOGADO = "/administracao/service/campanha";
+	public final static String ARQUIVOS_DE_CAMPANHA_LOGADO = "/administracao/campanha/arquivo";
+	public final static String ARQUIVOS_DE_CAMPANHA_SITE = "/site/campanha/arquivo";
 
 	public final static String FORMULARIO_INSERCAO_DE_MODELO = "/administracao/modelo/formulario-insercao";
 	public final static String FORMULARIO_EDICAO_DE_MODELO = "/administracao/modelo/formulario-edicao";
@@ -92,11 +125,14 @@ public class ListaDeURLs {
 	public final static String ARQUIVOS_DE_ORCAMENTO_SITE = "/site/orcamento/arquivo";
 
 	public final static String FORMULARIO_INSERCAO_DE_PRODUTO = "/administracao/produto/formulario-insercao";
+	public final static String FORMULARIO_INSERCAO_DE_IMAGEM = "/administracao/produto/formulario-imagem";
 	public final static String FORMULARIO_EDICAO_DE_PRODUTO = "/administracao/produto/formulario-edicao";
 	public final static String LISTA_DE_PRODUTO = "/administracao/produto/lista";
 	public final static String INSERCAO_DE_PRODUTO = "/administracao/produto/insere";
+	public final static String INSERCAO_DE_IMAGEM = "/administracao/produto/insere-imagens";
 	public final static String EDICAO_DE_PRODUTO = "/administracao/produto/altera";
 	public final static String EXCLUSAO_DE_PRODUTO = "/administracao/produto/exclui";
+	public final static String EXCLUSAO_DE_IMAGEM = "/administracao/produto/exclui-imagens";
 	public final static String SERVICO_DE_PRODUTO = "/service/produto";
 	public final static String SERVICO_DE_PRODUTO_LOGADO = "/administracao/service/produto";
 	public final static String ARQUIVOS_DE_PRODUTO_LOGADO = "/administracao/produto/arquivo";

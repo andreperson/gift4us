@@ -3,6 +3,7 @@ var listaDeSubCategoria = new ListaObjetoIdValor('listaDeSubCategoria');
 var listaDeAnunciante = new ListaObjetoIdValor('listaDeAnunciante');
 var listaDeFaixaDePreco = new ListaObjetoIdValor('listaDeFaixaDePreco');
 var listaDeStatus = new ListaObjetoIdValor('listaDeStatus');
+var listaDeLinha = new ListaObjetoIdValor('listaDeLinha');
 
 function subcategoria_click(){
 	var subid = $("#subcategoria").val();
@@ -116,6 +117,42 @@ function carregaDadosDoStatus() {
 
 
 
+function carregaDadosDaLinha() {
+
+	console.log("carrega dados da linha");
+
+	$('#linha').find('option').remove();
+	$('#linha').append($('<option>', {
+		value : '',
+		text : '-----------'
+	}));
+	$.ajax({
+		url : urlPadrao + 'administracao/service/linha',
+		type : 'get',
+		async : true,
+		success : function(retorno) {
+			retorno.data.forEach(function(item, index) {
+				var objeto = new ObjetoIdValor();
+				objeto.setId(item.id);
+				objeto.setValor(item.nome);
+				$('#linha').append($('<option>', {
+					value : item.id,
+					text : item.nome
+				}));
+				listaDeLinha.adiciona(objeto);
+			});
+			var id = $('#linha').attr('data-selecionado');
+			if(id != ''){
+				var objeto = listaDeLinha.buscaPorId(id);
+				$('#linha').val(id);
+				$('#select2-linha-container').prop('title', objeto.getValor()).text(objeto.getValor());
+			}
+		}
+	});
+};
+
+
+
 
 function carregaDadosDoCategoria() {
 
@@ -215,12 +252,19 @@ $(document).ready(function() {
 		width : '100%'
 	});
 
+	$('#linha').select2({
+		theme : 'bootstrap4',
+		language : 'pt-BR',
+		width : '100%'
+	});
+
 
 	console.log('load form produtos');
 	carregaDadosDoCategoria();
 	carregaDadosDoSubCategoria();
 	carregaDadosDoAnunciante();
 	carregaDadosDaFaixaDePreco();
+	carregaDadosDaLinha();
 	carregaDadosDoStatus();
 });
 

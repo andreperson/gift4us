@@ -18,6 +18,7 @@ import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
 
 import br.com.gift4us.categoria.CategoriaModel;
+import br.com.gift4us.linha.LinhaModel;
 
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,6 +72,16 @@ public class ProdutoDAO {
 	public List<ProdutoModel> listaTudo() {
 		String jpql = "SELECT p FROM " + TABELA + " p ORDER BY p.id desc";
 		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+		return query.getResultList();
+	}
+	
+	
+	
+	public List<ProdutoModel> listaNovidades(Integer quantidade) {
+		String jpql = "SELECT p FROM " + TABELA + " p ORDER BY p.id desc";
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+		query.setFirstResult(0);
+		query.setMaxResults(quantidade);
 		return query.getResultList();
 	}
 	
@@ -146,6 +157,18 @@ public class ProdutoDAO {
 		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
 
 		query.setParameter("categoria", categoria);
+
+		return query.getResultList();
+	}
+	
+	
+	public List<ProdutoModel> buscaPorLinha(LinhaModel linha) {
+
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.linha = :linha ";
+
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+
+		query.setParameter("linha", linha);
 
 		return query.getResultList();
 	}
