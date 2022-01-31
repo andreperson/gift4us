@@ -18,13 +18,14 @@
 <my:template fluido="false"
 	title="${mensagens.get('ProdutoFormularioTituloDaPagina').valor}"
 	cssFiles="${cssFiles}" jsFiles="${jsFiles}">
+	<c:if test="${not empty produto.id}">
+		<c:url var="url" value="<%=ListaDeURLs.EDICAO_DE_PRODUTO%>" />
+		<c:url var="urlimg" value="<%=ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM%>" />
+	</c:if>
+	
 	<c:if test="${empty produto.id}">
 		<c:url var="url" value="<%=ListaDeURLs.INSERCAO_DE_PRODUTO%>" />
 	</c:if>
-	<c:if test="${not empty produto.id}">
-		<c:url var="url" value="<%=ListaDeURLs.EDICAO_DE_PRODUTO%>" />
-	</c:if>
-
 
 	<!-- Page content -->
 	<div class="container-fluid mt--1" style="padding-top: 50px;">
@@ -41,8 +42,15 @@
 					</div>
 					<div class="card-body">
 					
-					<form id="ata-cadastro"
+				<!-- 	
+				<form id="ata-cadastro"
 							action="<c:url value="/administracao/produto/insere?${_csrf.parameterName}=${_csrf.token}" />"
+							enctype="multipart/form-data" method="post">
+					
+					 -->
+					
+					<form id="ata-cadastro"
+							action="${url}?${_csrf.parameterName}=${_csrf.token}"
 							enctype="multipart/form-data" method="post">
 					
 							<input type="hidden" id="${_csrf.parameterName}"
@@ -105,6 +113,15 @@
 									data-msbc-required="Campo obrigatório"
 									data-msbc-maxlength="11|O campo deve ter no máximo {value} caracteres" />
 							</div>
+							
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="preco">${mensagens.get('ProdutoFormularioDesconto').valor}:</label>
+								<input type="text" id="desconto" name="desconto"
+									class="form-control msbc-validator" value="${produto.desconto}"
+									data-msbc-required="Campo obrigatório"
+									data-msbc-maxlength="2|O campo deve ter no máximo {value} caracteres" />
+							</div>
+							
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="faixadepreco">${mensagens.get('ProdutoFormularioFaixadepreco').valor}:</label>
 								<select class="form-select msbc-validator"
@@ -112,13 +129,20 @@
 									data-selecionado='${produto.getFaixaDePreco().getId()}'
 									data-msbc-required="Campo obrigatório"
 									onchange="faixadepreco_click();"></select> <input type="hidden"
-									id="faixadeprecoid" name="faixadeprecoid">
+									id="faixadeprecoid" name="faixadeprecoid" value="${produto.getFaixaDePreco().getId()}">
 							</div>
 							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor}:</label>
+								<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor} (220x330): ${produto.imagem}</label>
 								<input class="form-control texto-html"
 									name="arquivo" id="arquivo" type="file"
-									data-msbc-required="Campo obrigatório">${produto.imagem}
+									data-msbc-required="Campo obrigatório">
+									
+									<c:if test="${not empty produto.id}">
+										<div>
+										<a href="${urlimg}/${produto.id}"><h4><i class="fa fa-images"></i>Outras Imagens</h4></a>
+										</div>
+									</c:if>
+									
 							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="urlanunciante">${mensagens.get('ProdutoFormularioUrlanunciante').valor}:</label>
@@ -142,9 +166,15 @@
 									data-selecionado='${produto.getSubCategoria().getId()}'
 									data-msbc-required="Campo obrigatório"
 									onchange="subcategoria_click();"></select> <input type="hidden"
-									id="subcategoriaid" name="subcategoriaid">
+									id="subcategoriaid" name="subcategoriaid" value="${produto.getSubCategoria().getId()}">
 							</div>
 
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="status">${mensagens.get('ProdutoFormularioLinha').valor}:</label>
+								<select class="form-select msbc-validator" name="linha.id"
+									id="linha" data-selecionado='${produto.linha.id}'
+									data-msbc-required="Campo obrigatório"></select>
+							</div>
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="status">${mensagens.get('ProdutoFormularioStatus').valor}:</label>
 								<select class="form-select msbc-validator" name="status.id"

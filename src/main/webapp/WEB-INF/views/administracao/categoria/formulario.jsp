@@ -32,8 +32,11 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<form class="msbc-validator-form" id="formulario-form"
-							name="formulario" action="${url}" method="POST">
+					
+					<form id="categoria-cadastro"
+							action="${url}?${_csrf.parameterName}=${_csrf.token}"
+							enctype="multipart/form-data" method="post">
+					
 							<input type="hidden" id="${_csrf.parameterName}"
 								name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<c:if test="${not empty categoria.id}">
@@ -45,6 +48,11 @@
 									class="form-control msbc-validator" value="${categoria.nome}"
 									data-msbc-required="Campo obrigatório"
 									data-msbc-maxlength="255|O campo deve ter no máximo {value} caracteres" />
+							</div>
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor}: ${categoria.imagem}</label>
+								<input class="form-control texto-html"
+									name="arquivo" id="arquivo" type="file">
 							</div>
 							<div class="mb-3">
 								<div class="col-md-4 offset-md-4">

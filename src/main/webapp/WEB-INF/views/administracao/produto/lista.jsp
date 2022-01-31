@@ -43,7 +43,14 @@
 											class="table table-striped table-bordered w-100 mt-3 dt-table">
 											<thead>
 												<tr>
-													
+													<th>${mensagens.get('ProdutoListaId').valor}</th>
+													<th>${mensagens.get('ProdutoListaCodigo').valor}</th>
+													<th>${mensagens.get('ProdutoListaTitulo').valor}</th>
+													<th>${mensagens.get('ProdutoListaPreco').valor}</th>
+													<th>${mensagens.get('ProdutoListaCategoria').valor}</th>
+													<th>${mensagens.get('ProdutoListaStatus').valor}</th>
+													<th>${mensagens.get('ProdutoListaDataIncl').valor}</th>
+													<th class="text-center">${mensagens.get('ProdutoListaAcoes').valor}</th>
 												</tr>
 											</thead>
 											<tbody id="corpo-da-tabela">
@@ -52,21 +59,20 @@
 														<td>${produto.id}</td>
 														<td>${produto.codigo}</td>
 														<td>${produto.titulo}</td>
-														<td>${produto.estoque}</td>
 														<td>${produto.preco}</td>
 														<td>${produto.categoria.nome}</td>
-														<td>${produto.getSubCategoria().getNome()}</td>
 														<td>${produto.status.nome}</td>
 														<td><fmt:formatDate pattern="dd/MM/yyyy"
 																value="${produto.dataIncl.time}" var="data" />${data}</td>
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_PRODUTO%>" />
-															<sec:authorize access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+															<sec:authorize
+																access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${produto.id}"><i
 																	class="fas fa-pencil-alt"></i></a>
-															</sec:authorize> 
-															<sec:authorize access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+															</sec:authorize> <sec:authorize
+																access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${produto.id}"
@@ -88,7 +94,8 @@
 		</div>
 	</div>
 	<br>
-	<sec:authorize access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+	<sec:authorize
+		access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_PRODUTO%>" />
 		<my:modal-excluir url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"

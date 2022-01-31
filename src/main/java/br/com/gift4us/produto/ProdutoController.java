@@ -36,6 +36,7 @@ import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.anunciante.AnuncianteDAO;
 import br.com.gift4us.anunciante.AnuncianteModel;
+import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.faixadepreco.FaixaDePrecoDAO;
 import br.com.gift4us.faixadepreco.FaixaDePrecoModel;
@@ -60,6 +61,9 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoDAO produtoDAO;
+	
+	@Autowired
+	private ImagemDAO imagemDAO;
 
 	@Autowired
 	private AnuncianteDAO anuncianteDAO;
@@ -107,6 +111,19 @@ public class ProdutoController {
 	}
 
 	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/{id}", method = RequestMethod.GET)
+	public String carregaFormularioParaImagens(@PathVariable Long id, Model model) {
+		ProdutoModel produto = produtoDAO.buscaPorId(id);
+		List<ImagemModel> lstImagem = imagemDAO.buscaPorProduto(produto);
+		model.addAttribute("produto", produto);
+		model.addAttribute("lstImagem", lstImagem);
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
+		
+		return "administracao/produto/imagens";
+	}
+
+	
+	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@Transactional
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_PRODUTO, method = RequestMethod.POST)
 	public String insere(@RequestParam("subcategoriaid") Long subcategoriaid,
@@ -132,7 +149,7 @@ public class ProdutoController {
 		ProdutoModel encontrado = produtoDAO.buscaPorId(produto.getId());
 		historico.inserir(encontrado, "Produto");
 		
-		if(arquivo != null) {
+		if(arquivo.getSize() > 0) {
 			uploadImagem(bindingResult, produtoid, produto.getAnunciante().getId(), arquivo);	
 		}
 		
@@ -145,7 +162,7 @@ public class ProdutoController {
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_PRODUTO, method = RequestMethod.POST)
 	public String altera(@RequestParam("subcategoriaid") Long subcategoriaid,
 			@RequestParam("faixadeprecoid") Long faixadeprecoid, @Valid ProdutoModel produto,
-			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+			BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, MultipartFile arquivo) {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("produto", produto);
@@ -163,12 +180,44 @@ public class ProdutoController {
 		produto.setAnunciante(buscaAnunciantePeloUsuarioLogado());
 		produto.setDataAlt(Calendar.getInstance());
 		produto.setDataIncl(anterior.getDataIncl());
+		produto.setImagem(anterior.getImagem());
+		if (arquivo.getSize() > 0) {
+			produto.setImagem(arquivo.getOriginalFilename());
+		}
 		produtoDAO.altera(produto);
+
+		if(arquivo.getSize() > 0) {
+			uploadImagem(bindingResult, produto.getId(), produto.getAnunciante().getId(), arquivo);	
+		}
+		
 		ProdutoModel atual = produtoDAO.buscaPorIdClonando(produto.getId());
 		historico.alterar(anterior, atual, "Produto");
+		
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
+	}
+	
+	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Transactional
+	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_IMAGEM, method = RequestMethod.POST)
+	public String insereimagens(@Valid ImagemModel imagem, @RequestParam("anuncianteid") Long anuncianteid,
+			@RequestParam("produtoid") Long produtoid, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartFile arquivo) {
+
+		if(arquivo.getSize() > 0) {
+			uploadImagem(bindingResult, produtoid, anuncianteid, arquivo);
+		}
+		
+		ProdutoModel produto = new ProdutoModel();
+		produto = produtoDAO.buscaPorId(produtoid);
+		
+		imagem.setImagem(arquivo.getOriginalFilename());
+		imagem.setProduto(produto);
+		imagemDAO.insere(imagem);
+		
+		sucesso.setMensagem(redirectAttributes,
+				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
+		return "redirect:" + ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/" + produtoid;
 	}
 
 	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
@@ -189,6 +238,24 @@ public class ProdutoController {
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
+	}
+	
+	
+	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_IMAGEM + "/{id}", method = RequestMethod.GET)
+	public String excluiimagens(@PathVariable Long id,  Model model) {
+
+		ImagemModel encontrado = imagemDAO.buscaPorId(id);
+		
+		try {
+			imagemDAO.exclui(encontrado);
+		} catch (Exception e) {
+			erros.adiciona(
+					"Não foi possível excluir o registro. Verificar se o registro está sendo utilizado em outras partes do sistema.");
+			return "redirect:" + ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/" + encontrado.getProduto().getId();
+		}
+		historico.excluir(encontrado, "Imagem");
+		return "redirect:" + ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/" + encontrado.getProduto().getId();
 	}
 
 	private AnuncianteModel buscaAnunciantePeloUsuarioLogado() {

@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.produto.ProdutoModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -37,6 +40,14 @@ public class CategoriaDAO {
 		this.manager = em;
 	}
 
+	@Transactional
+	public Long saveorupdate(CategoriaModel categoria) {
+		manager.persist(categoria);
+		manager.flush();
+		manager.detach(categoria);
+		return categoria.getId();
+	}
+	
 	
 	@Transactional
 	public void insere(CategoriaModel categoria) {
@@ -59,6 +70,12 @@ public class CategoriaDAO {
 
 	public List<CategoriaModel> listaTudo() {
 		String jpql = "SELECT c FROM " + TABELA + " c ORDER BY c.id";
+		TypedQuery<CategoriaModel> query = manager.createQuery(jpql, CategoriaModel.class);
+		return query.getResultList();
+	}
+	
+	public List<CategoriaModel> listaMaisVendidos() { 
+		String jpql = "SELECT c FROM " + TABELA + " c where c.status=2 ORDER BY c.id";
 		TypedQuery<CategoriaModel> query = manager.createQuery(jpql, CategoriaModel.class);
 		return query.getResultList();
 	}

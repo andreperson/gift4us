@@ -7,6 +7,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,8 @@ import java.lang.reflect.Method;
 import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
+import br.com.gift4us.util.FileUploader;
+import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Alerta;
@@ -38,7 +42,13 @@ public class CategoriaController {
 
 	@Autowired
 	private Erros erros;
+	
+	@Autowired
+	private Propriedades propriedades;
 
+	@Autowired
+	FileUploader fileUploader;
+	
 	@Autowired
 	private Sucesso sucesso;
 
@@ -78,7 +88,7 @@ public class CategoriaController {
 	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_CATEGORIA, method = RequestMethod.POST)
 	public String insere(@Valid CategoriaModel categoria, BindingResult bindingResult, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes, MultipartFile arquivo) {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("categoria", categoria);
@@ -89,7 +99,7 @@ public class CategoriaController {
 			}
 			return "administracao/categoria/formulario";
 		}
-
+		
 		// verifica se ja existe uma categoria com esse nome
 		List<CategoriaModel> lst = categoriaDAO.buscaPorNomeExato(categoria.getNome());
 		if (lst.size() > 0) {
@@ -104,9 +114,17 @@ public class CategoriaController {
 		categoria.setDataIncl(Calendar.getInstance());
 		categoria.setDataAlt(Calendar.getInstance());
 		categoria.setStatus(StatusEnum.ATIVO);
-		categoriaDAO.insere(categoria);
+		if (arquivo != null) {
+			categoria.setImagem(arquivo.getName());
+		}
+		Long categoriaid = categoriaDAO.saveorupdate(categoria);
 		CategoriaModel encontrado = categoriaDAO.buscaPorId(categoria.getId());
 		historico.inserir(encontrado, "Categoria");
+		
+		if(arquivo != null) {
+			uploadImagem(bindingResult, categoriaid, arquivo);	
+		}
+		
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_CATEGORIA;
@@ -115,7 +133,7 @@ public class CategoriaController {
 	@Secured({ "ROLE_CONFIGURACOES", "ROLE_ADMIN" })
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_CATEGORIA, method = RequestMethod.POST)
 	public String altera(@Valid CategoriaModel categoria, BindingResult bindingResult, Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes, MultipartFile arquivo) {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("categoria", categoria);
@@ -141,10 +159,19 @@ public class CategoriaController {
 		CategoriaModel anterior = categoriaDAO.buscaPorIdClonando(categoria.getId());
 		categoria.setDataAlt(Calendar.getInstance());
 		categoria.setDataIncl(anterior.getDataIncl());
+		categoria.setImagem(anterior.getImagem());
 		categoria.setStatus(StatusEnum.ATIVO);
+		if (arquivo.getSize() > 0) {
+			categoria.setImagem(arquivo.getOriginalFilename());
+		}
 		categoriaDAO.altera(categoria);
 		CategoriaModel atual = categoriaDAO.buscaPorIdClonando(categoria.getId());
 		historico.alterar(anterior, atual, "Categoria");
+		
+		if(arquivo.getSize() > 0) {
+			uploadImagem(bindingResult, categoria.getId(), arquivo);	
+		}
+		
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_CATEGORIA;
@@ -170,4 +197,18 @@ public class CategoriaController {
 		return "redirect:" + ListaDeURLs.LISTA_DE_CATEGORIA;
 	}
 
+	private void uploadImagem(BindingResult result, Long categoriaid, MultipartFile arquivo) {
+		try {
+			String diretorio = propriedades.getValor("arquivo.diretorio.categoria.upload") + propriedades.getValor("arquivo.diretorio.barra") + categoriaid;
+			System.out.println("antes de gravar o arquivo:" + diretorio);
+			fileUploader.grava(arquivo, result, diretorio);
+			System.out.println("depois de gravar o arquivo:" + diretorio);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Erro ao gravar arquivo: " + e.getMessage());
+		}
+		
+	}
+	
 }

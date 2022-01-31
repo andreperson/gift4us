@@ -68,6 +68,26 @@
 							Categoria</span>
 					</a>
 				</sec:authorize>
+				
+				<sec:authorize
+					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
+					<c:url value="<%=ListaDeURLs.LISTA_DE_CAMPANHA%>" var="url" />
+					<a href="${url}" class="dropdown-item"> <c:url
+							value="${urlRecursos}resources-admin/Images/icone/ico-menu-campanha.png"
+							var="urllogo" /> <img title="Campanha" src="${urllogo}"
+						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Campanha</span>
+					</a>
+				</sec:authorize>
+
+				<sec:authorize
+					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
+					<c:url value="<%=ListaDeURLs.LISTA_DE_LINHA%>" var="url" />
+					<a href="${url}" class="dropdown-item"> <c:url
+							value="${urlRecursos}resources-admin/Images/icone/ico-menu-linha.png"
+							var="urllogo" /> <img title="Linha" src="${urllogo}"
+						class="menu-icone--admin"> <span class="menu-texto--admin">&nbsp;Linha</span>
+					</a>
+				</sec:authorize>
 
 				<sec:authorize
 					access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
