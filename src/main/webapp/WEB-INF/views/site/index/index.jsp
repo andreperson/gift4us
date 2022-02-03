@@ -145,7 +145,8 @@
 						<div class="category-module-content">
 							<ul id="sub-cat" class="tabs">
 								<c:forEach items="${Linha1}" var="linha1">
-									<li><a href="#tab-cat1">${linha1.nome }</a></li>
+									<c:set var="ref" value="#tab-" />
+									<li><a href="${ref }${linha1.id }" style="cursor:pointer">${linha1.nome }</a></li>
 								</c:forEach>
 								<li><a href="#tab-cat2">Dia da Mulher</a></li>
 								<li><a href="#tab-cat3">Dia das Mães</a></li>
@@ -153,7 +154,11 @@
 								<li><a href="#tab-cat5">Dia das Crianças</a></li>
 								<li><a href="#tab-cat6">Natal</a></li>
 							</ul>
-							<div id="tab-cat1" class="tab_content">
+							
+							
+							
+							
+							<div id="tab-4" class="tab_content">
 								<div class="owl-carousel latest_category_tabs">
 									<div class="product-thumb">
 										<div class="image">
@@ -164,7 +169,10 @@
 										</div>
 										<div class="caption">
 											<h4>
-												<a href="product.html">Aspire Ultrabook Laptop</a>
+												<a href="product.html">
+												<c:forEach items="${Produto1}" var="produto1">
+													<div>xxxxxxxxxxxxx</div>
+												</c:forEach></a>
 											</h4>
 											<p class="price">
 												<span class="price-new">$230.00</span> <span

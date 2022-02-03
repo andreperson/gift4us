@@ -50,7 +50,6 @@ public class IndexController {
 		model.addAttribute("listaDeCategoria", categoriaDAO.listaMaisVendidos());
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		
-		
 		List<CampanhaModel> lstCamp = new ArrayList<CampanhaModel>();
 		
 		lstCamp = campanhaDAO.listaTudo();
@@ -58,10 +57,19 @@ public class IndexController {
 		for (CampanhaModel campanha : lstCamp) {
 			i+=1;
 			model.addAttribute("Campanha".concat(i.toString()), buscaCampanha(campanha.getId()));
-			model.addAttribute("Linha".concat(i.toString()), buscaLinha(campanha));
+			List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
+			lstLinha = buscaLinha(campanha);
+			model.addAttribute("Linha".concat(i.toString()),lstLinha);
+			
+			for (LinhaModel linha : lstLinha) {
+				List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
+				lstProd=buscaProduto(linha);
+				model.addAttribute("Produto".concat(i.toString()), lstProd);
+			}
+			
 		}
 
-		
+		model.addAttribute("qtde", i);
 		
 		return "site/index/index";
 	}
@@ -84,23 +92,9 @@ public class IndexController {
 	}
 	
 	
-	
-	
-	private List<ProdutoModel> buscaLinhasPorCampanhas(Long campanhaid){
-		CampanhaModel campanha = new CampanhaModel();
+	private List<ProdutoModel> buscaProduto(LinhaModel linha){
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
-		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
-		
-		campanha = campanhaDAO.buscaPorId(campanhaid);
-		//busca as linhas da campanha
-		lstLinha = linhaDAO.buscaPorCampanha(campanha);
-		
-		for (LinhaModel linha : lstLinha) {
-		
-			lstProd = produtoDAO.buscaPorLinha(linha);
-			
-		}
-		
+		lstProd = produtoDAO.buscaPorLinha(linha);
 		return lstProd;
 	}
 	
