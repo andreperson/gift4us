@@ -1,28 +1,15 @@
 package br.com.gift4us.linha;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import javax.transaction.Transactional;
-import org.springframework.cache.annotation.Cacheable;
-import java.util.Set;
-import org.springframework.cache.annotation.CacheEvict;
-import java.util.HashMap;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Calendar;
-import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
 
 import br.com.gift4us.campanha.CampanhaModel;
-import br.com.gift4us.categoria.CategoriaModel;
-import br.com.gift4us.produto.ProdutoModel;
 
-import java.util.Map;
-import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.stereotype.Repository;
 

@@ -50,26 +50,29 @@ public class IndexController {
 		model.addAttribute("listaDeCategoria", categoriaDAO.listaMaisVendidos());
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		
+		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
 		List<CampanhaModel> lstCamp = new ArrayList<CampanhaModel>();
 		
 		lstCamp = campanhaDAO.listaTudo();
-		Integer i =0;
+		Integer l =0;
+		Integer p =0;
 		for (CampanhaModel campanha : lstCamp) {
-			i+=1;
-			model.addAttribute("Campanha".concat(i.toString()), buscaCampanha(campanha.getId()));
+			model.addAttribute("Campanha".concat(l.toString()), buscaCampanha(campanha.getId()));
 			List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
 			lstLinha = buscaLinha(campanha);
-			model.addAttribute("Linha".concat(i.toString()),lstLinha);
+			model.addAttribute("Linha".concat(l.toString()),lstLinha);
 			
 			for (LinhaModel linha : lstLinha) {
-				List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
+				
+				lstProd = new ArrayList<ProdutoModel>();
 				lstProd=buscaProduto(linha);
-				model.addAttribute("Produto".concat(i.toString()), lstProd);
+				model.addAttribute("Produto".concat(p.toString()),lstProd);
+				p+=1;
 			}
-			
+			l+=1;
 		}
 
-		model.addAttribute("qtde", i);
+		model.addAttribute("qtde", p);
 		
 		return "site/index/index";
 	}
@@ -91,15 +94,10 @@ public class IndexController {
 		return lstLinha;
 	}
 	
-	
 	private List<ProdutoModel> buscaProduto(LinhaModel linha){
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
 		lstProd = produtoDAO.buscaPorLinha(linha);
 		return lstProd;
 	}
-	
-	
-	
-	
 	
 }

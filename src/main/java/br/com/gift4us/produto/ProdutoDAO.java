@@ -75,8 +75,6 @@ public class ProdutoDAO {
 		return query.getResultList();
 	}
 	
-	
-	
 	public List<ProdutoModel> listaNovidades(Integer quantidade) {
 		String jpql = "SELECT p FROM " + TABELA + " p ORDER BY p.id desc";
 		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
@@ -113,6 +111,17 @@ public class ProdutoDAO {
 		}
 		
 		return lstShow;
+	}
+	
+	public List<ProdutoModel> buscaProdutoByLinha(LinhaModel linha) {
+
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.linha = :linha ";
+
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+
+		query.setParameter("linha", linha);
+
+		return query.getResultList();
 	}
 	
 	

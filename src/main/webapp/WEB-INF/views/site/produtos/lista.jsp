@@ -51,7 +51,7 @@
 										</div>
 										<div class="caption">
 											<h4>
-												${produto.titulo}
+												<a href="../../produtos/produto/${produto.id}">${produto.titulo}</a>
 											</h4>
 											<p class="price">
 												<c:if test="${produto.desconto > 0}">
