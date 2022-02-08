@@ -28,8 +28,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import br.com.gift4us.campanha.CampanhaModel;
-import br.com.gift4us.categoria.CategoriaModel;
-import br.com.gift4us.produto.ProdutoModel;
 import br.com.gift4us.status.StatusEnum;
 
 

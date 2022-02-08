@@ -44,7 +44,9 @@
 		<jsp:doBody />
 		<c:import url="../footer.jsp" />
 	</div>
-
+	<script type="text/javascript">
+		var urlPadrao = '<c:url value="/"/>';
+	</script>
 	<!-- JS Part Start-->
 	<script type="text/javascript"
 		src="${urlRecursos}resources-site/js/jquery-2.1.1.min.js"></script>
@@ -57,6 +59,7 @@
 	<script type="text/javascript"
 		src="${urlRecursos}resources-site/js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="${urlRecursos}resources-site/js/custom.js"></script>
+	<script type="text/javascript" src="${urlRecursos}resources-site/js/Index.js"></script>
 	<!-- JS Part End-->
 
 </body>
