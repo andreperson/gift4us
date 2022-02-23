@@ -47,6 +47,7 @@
 												<tr>
 													<th>${mensagens.get('CampanhaListaId').valor}</th>
 													<th>${mensagens.get('CampanhaListaNome').valor}</th>
+													<th>${mensagens.get('CampanhaListaOrdem').valor}</th>
 													<th>${mensagens.get('CampanhaListaDataIncl').valor}</th>
 													<th>${mensagens.get('CampanhaListaDataAlt').valor}</th>
 													<th class="text-center">${mensagens.get('CampanhaListaAcoes').valor}</th>
@@ -57,6 +58,7 @@
 													<tr>
 														<td>${Campanha.id}</td>
 														<td>${Campanha.nome}</td>
+														<td>${Campanha.ordem}</td>
 														<td><fmt:formatDate pattern="dd/MM/yyyy"
 																value="${Campanha.dataIncl.time}" var="data" />${data}</td>
 														<td><fmt:formatDate pattern="dd/MM/yyyy"

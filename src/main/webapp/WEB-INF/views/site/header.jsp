@@ -160,7 +160,7 @@
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li><a class="home_link" title="Home" href="${url }">Home</a></li>
-					<li class="dropdown"><a href="category.html">Fashion</a>
+					<li class="dropdown"><a href="category.html">Categorias</a>
 						<div class="dropdown-menu">
 							<ul>
 								<li><a href="category.html">Men <span>&rsaquo;</span></a>
@@ -192,7 +192,7 @@
 									</div></li>
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Electronics</a>
+					<li class="dropdown"><a href="category.html">Linhas</a>
 						<div class="dropdown-menu">
 							<ul>
 								<li><a href="category.html">Laptops <span>&rsaquo;</span></a>
@@ -234,7 +234,7 @@
 								<li><a href="category.html">MP3 Players</a></li>
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Shoes</a>
+					<li class="dropdown"><a href="category.html">Datas Especiais</a>
 						<div class="dropdown-menu">
 							<ul>
 								<li><a href="category.html">Men</a></li>
@@ -258,7 +258,7 @@
 									</div></li>
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Watches</a>
+					<li class="dropdown"><a href="category.html">Novidades</a>
 						<div class="dropdown-menu">
 							<ul>
 								<li><a href="category.html">Men's Watches</a></li>
@@ -267,19 +267,7 @@
 								<li><a href="category.html">Accessories</a></li>
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Health &amp;
-							Beauty</a>
-						<div class="dropdown-menu">
-							<ul>
-								<li><a href="category.html">Perfumes</a></li>
-								<li><a href="category.html">Makeup</a></li>
-								<li><a href="category.html">Sun Care</a></li>
-								<li><a href="category.html">Skin Care</a></li>
-								<li><a href="category.html">Eye Care</a></li>
-								<li><a href="category.html">Hair Care</a></li>
-							</ul>
-						</div></li>
-					<li class="menu_brands dropdown"><a href="#">Brands</a>
+					<li class="menu_brands dropdown"><a href="#">Mais Vendidos</a>
 						<div class="dropdown-menu">
 							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
 								<a href="#"><img src="image/product/apple_logo-60x60.jpg"
@@ -328,88 +316,8 @@
 
 
 						</div></li>
-					<li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>Custom
-							Block</a>
-						<div class="dropdown-menu custom_block">
-							<ul>
-								<li>
-									<table>
-										<tbody>
-											<tr>
-												<td><img alt="" src="image/banner/cms-block.jpg"></td>
-												<td><img alt="" src="image/banner/responsive.jpg"></td>
-												<td><img alt="" src="image/banner/cms-block.jpg"></td>
-											</tr>
-											<tr>
-												<td><h4>CMS Blocks</h4></td>
-												<td><h4>Responsive Template</h4></td>
-												<td><h4>Dedicated Support</h4></td>
-											</tr>
-											<tr>
-												<td>This is a CMS block. You can insert any content
-													(HTML, Text, Images) Here.</td>
-												<td>This is a CMS block. You can insert any content
-													(HTML, Text, Images) Here.</td>
-												<td>This is a CMS block. You can insert any content
-													(HTML, Text, Images) Here.</td>
-											</tr>
-											<tr>
-												<td><strong><a class="btn btn-primary btn-sm"
-														href="#">Read More</a></strong></td>
-												<td><strong><a class="btn btn-primary btn-sm"
-														href="#">Read More</a></strong></td>
-												<td><strong><a class="btn btn-primary btn-sm"
-														href="#">Read More</a></strong></td>
-											</tr>
-										</tbody>
-									</table>
-								</li>
-							</ul>
-						</div></li>
-					<li class="dropdown"><a href="blog.html">Blog</a>
-						<div class="dropdown-menu">
-							<ul>
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="blog-grid.html">Blog Grid</a></li>
-								<li><a href="blog-detail.html">Single Post</a></li>
-							</ul>
-						</div></li>
-					<li class="dropdown"><a>Pages</a>
-						<div class="dropdown-menu">
-							<ul>
-								<li><a href="category.html">Category (Grid/List)</a></li>
-								<li><a href="product.html">Product Page</a></li>
-								<li><a href="cart.html">Shopping Cart</a></li>
-								<li><a href="checkout.html">Checkout</a></li>
-								<li><a href="compare.html">Product Compare</a></li>
-								<li><a href="wishlist.html">Wishlist</a></li>
-								<li><a href="search.html">Search</a></li>
-								<li><a href="manufacturer.html">Brands</a></li>
-							</ul>
-							<ul>
-								<li><a href="about-us.html">About Us</a></li>
-								<li><a href="elements.html">Elements</a></li>
-								<li><a href="elements-forms.html">Forms</a></li>
-								<li><a href="careers.html">Careers</a></li>
-								<li><a href="faq.html">Faq</a></li>
-								<li><a href="404.html">404</a></li>
-								<li><a href="sitemap.html">Sitemap</a></li>
-								<li><a href="contact-us.html">Contact Us</a></li>
-								<li><a href="email-template" target="_blank">Email
-										Template Page</a></li>
-							</ul>
-							<ul>
-								<li><a href="login.html">Login</a></li>
-								<li><a href="register.html">Register</a></li>
-								<li><a href="my-account.html">My Account</a></li>
-								<li><a href="order-history.html">Order History</a></li>
-								<li><a href="order-information.html">Order Information</a></li>
-								<li><a href="return.html">Return</a></li>
-								<li><a href="gift-voucher.html">Gift Voucher</a></li>
-							</ul>
-						</div></li>
-					<li class="custom-link-right"><a href="#" target="_blank">Buy
-							Now!</a></li>
+					
+					<li class="custom-link-right"><a href="#" target="_blank">Anuncie!</a></li>
 				</ul>
 			</div>
 		</div>

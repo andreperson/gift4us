@@ -1,5 +1,6 @@
 package br.com.gift4us.site;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,69 +36,102 @@ public class IndexController {
 
 	@Autowired
 	private LinhaDAO linhaDAO;
-	
+
 	@Autowired
 	private CategoriaDAO categoriaDAO;
 
-	
 	@Autowired
 	private Propriedades propriedades;
-	
 
 	@RequestMapping(value = ListaDeURLs.INDEX, method = RequestMethod.GET)
 	public String index(Model model, HttpServletResponse response) {
 		model.addAttribute("listaDeProduto", produtoDAO.listaNovidades(10));
 		model.addAttribute("listaDeCategoria", categoriaDAO.listaMaisVendidos());
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
-		
-		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
-		List<CampanhaModel> lstCamp = new ArrayList<CampanhaModel>();
-		
-		lstCamp = campanhaDAO.listaTudo();
-		Integer l =0;
-		Integer p =0;
-		for (CampanhaModel campanha : lstCamp) {
-			model.addAttribute("Campanha".concat(l.toString()), buscaCampanha(campanha.getId()));
-			List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
-			lstLinha = buscaLinha(campanha);
-			model.addAttribute("Linha".concat(l.toString()),lstLinha);
-			
-			for (LinhaModel linha : lstLinha) {
-				
-				lstProd = new ArrayList<ProdutoModel>();
-				lstProd=buscaProduto(linha);
-				model.addAttribute("Produto".concat(p.toString()),lstProd);
-				p+=1;
-			}
-			l+=1;
-		}
 
-		model.addAttribute("qtde", p);
+		montaCampanha1(model);
+		montaCampanha2(model);
 		
+
 		return "site/index/index";
 	}
 	
 	
-	private CampanhaModel buscaCampanha(Long campanhaid) {
+	private void montaCampanha1(Model model) {
 		
+		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
+		CampanhaModel campanha = buscaCampanhaPorOrdem(1);
+		Integer p = 0;
+		model.addAttribute("Campanha1", campanha);
+		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
+
+		lstLinha = buscaLinha(campanha);
+		model.addAttribute("Linha1", lstLinha);
+		for (LinhaModel linha : lstLinha) {
+			lstProd = new ArrayList<ProdutoModel>();
+			lstProd = buscaProduto(linha);
+			model.addAttribute("Produto".concat(p.toString()), lstProd);
+			p += 1;
+		}
+
+	}
+	
+	
+	private void montaCampanha2(Model model) {
+		
+		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
+		CampanhaModel campanha = buscaCampanhaPorOrdem(2);
+		Integer p = 0;
+		model.addAttribute("Campanha2", campanha);
+		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
+		lstLinha = buscaLinha(campanha);
+		LinhaModel linha  = escolheLinhaAleatoria(lstLinha);
+		
+		model.addAttribute("Linha2", linha);
+			lstProd = new ArrayList<ProdutoModel>();
+			lstProd = buscaProduto(linha);
+			model.addAttribute("ProdutoCampanha2", lstProd);
+	}
+	
+	
+	private LinhaModel escolheLinhaAleatoria(List<LinhaModel> lstLinha) {
+		
+		LinhaModel aleatoria = new LinhaModel();
+		int diadomes = LocalDateTime.now().getDayOfMonth();
+		
+		for (LinhaModel linha : lstLinha) {
+			if (linha.getId() == diadomes) {
+				aleatoria = linha;
+				break;
+			}
+			aleatoria=linha;
+		}
+		
+		return aleatoria;
+	}
+	
+	
+
+	private CampanhaModel buscaCampanhaPorOrdem(Integer ordem) {
+
 		CampanhaModel campanha = new CampanhaModel();
-		campanha = campanhaDAO.buscaPorId(campanhaid);
-		
+		campanha = campanhaDAO.buscaPorOrdem(ordem);
+
 		return campanha;
 	}
-	
+
 	private List<LinhaModel> buscaLinha(CampanhaModel campanha) {
-		
+
 		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
 		lstLinha = linhaDAO.buscaPorCampanha(campanha);
-		
+
 		return lstLinha;
 	}
-	
-	private List<ProdutoModel> buscaProduto(LinhaModel linha){
+
+	private List<ProdutoModel> buscaProduto(LinhaModel linha) {
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
 		lstProd = produtoDAO.buscaPorLinha(linha);
 		return lstProd;
 	}
-	
+
 }

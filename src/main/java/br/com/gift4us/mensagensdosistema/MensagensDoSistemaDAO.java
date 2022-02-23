@@ -277,7 +277,9 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "CampanhaFormularioId", "Código", "Formulário de Campanha");
 		criaSeNaoExistir(lista, "CampanhaListaId", "Código", "Lista de Campanha");
 		criaSeNaoExistir(lista, "CampanhaFormularioNome", "Nome", "Formulário de Campanha");
+		criaSeNaoExistir(lista, "CampanhaFormularioOrdem", "Ordem", "Formulário de Campanha");
 		criaSeNaoExistir(lista, "CampanhaListaNome", "Nome", "Lista de Campanha");
+		criaSeNaoExistir(lista, "CampanhaListaOrdem", "Ordem", "Lista de Campanha");
 		criaSeNaoExistir(lista, "CampanhaFormularioProduto", "Produto", "Formulário de Campanha");
 		criaSeNaoExistir(lista, "CampanhaListaProduto", "Produto", "Lista de Campanha");
 		criaSeNaoExistir(lista, "CampanhaFormularioDataIncl", "Data Inclusão", "Formulário de Campanha");
@@ -631,6 +633,7 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioLinhaDataIncl", "O campo Data Inclusão deve ser preenchido!", "Formulário de Linha");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioLinhaDataAlt", "O campo Data Alteração deve ser preenchido!", "Formulário de Linha");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioCampanhaNome", "O campo Nome deve ser preenchido!", "Formulário de Campanha");
+		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioCampanhaOrdem", "O campo Ordem deve ser preenchido!", "Formulário de Campanha");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioModeloDescricao", "O campo Descrição deve ser preenchido!", "Formulário de Modelo");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioModeloTitulo", "O campo Título do Certificado deve ser preenchido!", "Formulário de Modelo");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioModeloCorTitulo", "O campo Cor do Título deve ser preenchido!", "Formulário de Modelo");

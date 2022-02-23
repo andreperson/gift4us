@@ -46,6 +46,12 @@
 								<input type="text" id="nome" name="nome"
 									class="form-control msbc-validator" value="${campanha.nome}" />
 							</div>
+							
+							<div class="div-msbc-validator mb-3">
+								<label class="col-form-label" for="ordem">${mensagens.get('CampanhaFormularioOrdem').valor}:</label>
+								<input type="text" id="ordem" name="ordem"
+									class="form-control msbc-validator" value="${campanha.ordem}" />
+							</div>
 							<div class="mb-3">
 								<div class="col-md-4 offset-md-4">
 									<c:if test="${empty campanha.id}">
