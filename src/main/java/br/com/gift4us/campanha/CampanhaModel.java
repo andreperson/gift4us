@@ -44,6 +44,10 @@ public class CampanhaModel implements Serializable  {
 	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioCampanhaNome")
 	@Column(length = 100)
 	private String nome;
+	
+	
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioCampanhaOrdem")
+	private Integer ordem;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -60,9 +64,10 @@ public class CampanhaModel implements Serializable  {
 		
 	}
 
-	public CampanhaModel(Long id, String nome, Calendar dataIncl, Calendar dataAlt, StatusEnum status) {
+	public CampanhaModel(Long id, String nome, Integer ordem, Calendar dataIncl, Calendar dataAlt, StatusEnum status) {
 		this.id = id;
 		this.nome = nome;
+		this.ordem = ordem;
 		this.dataIncl = dataIncl;
 		this.dataAlt = dataAlt;
 		this.status = status;
@@ -82,6 +87,14 @@ public class CampanhaModel implements Serializable  {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
 	}
 
 	public Calendar getDataIncl() {

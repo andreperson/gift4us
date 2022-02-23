@@ -99,6 +99,7 @@ public class ProdutoController {
 	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_PRODUTO, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		return "administracao/produto/formulario";
 	}
 
@@ -106,6 +107,7 @@ public class ProdutoController {
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_EDICAO_DE_PRODUTO + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaEdicao(@PathVariable Long id, Model model) {
 		ProdutoModel produto = produtoDAO.buscaPorId(id);
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		model.addAttribute("produto", produto);
 		return "administracao/produto/formulario";
 	}

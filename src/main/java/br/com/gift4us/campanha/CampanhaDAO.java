@@ -61,7 +61,7 @@ public class CampanhaDAO {
 	}
 
 	public List<CampanhaModel> listaTudo() {
-		String jpql = "SELECT a FROM " + TABELA + " a ORDER BY a.id";
+		String jpql = "SELECT a FROM " + TABELA + " a ORDER BY a.ordem";
 		TypedQuery<CampanhaModel> query = manager.createQuery(jpql, CampanhaModel.class);
 		return query.getResultList();
 	}
@@ -77,6 +77,22 @@ public class CampanhaDAO {
 		return query.getResultList();
 	}
 	
+	public CampanhaModel buscaPorOrdem(Integer ordem) {
+
+		String jpql = "SELECT a FROM " + TABELA + " a WHERE a.ordem = :ordem ";
+
+		TypedQuery<CampanhaModel> query = manager.createQuery(jpql, CampanhaModel.class);
+
+		query.setParameter("ordem", ordem);
+
+		List<CampanhaModel> resultado = query.getResultList();
+
+		if(resultado.size() == 0){
+			return new CampanhaModel();
+		}else{
+			return resultado.get(0);
+		}
+	}
 
 	public CampanhaModel buscaPorId(Long id) {
 

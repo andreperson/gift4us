@@ -6,7 +6,7 @@
 	prefix="sec"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
-
+<c:url value="${urlpadrao}_modelos" var="urlmodelo" />
 
 
 <c:set var="cssFiles"
@@ -132,7 +132,8 @@
 									id="faixadeprecoid" name="faixadeprecoid" value="${produto.getFaixaDePreco().getId()}">
 							</div>
 							<div class="div-msbc-validator mb-3">
-								<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor} (220x330): ${produto.imagem}</label>
+								<c:set var="urlmodeloproduto" scope="application" value="${urlmodelo}/modelo-220x330.jpg" />
+								<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor} <a href="${urlmodeloproduto}" title="Pegar modelo" target="_blank">(220x330)</a>: ${produto.imagem}</label>
 								<input class="form-control texto-html"
 									name="arquivo" id="arquivo" type="file"
 									data-msbc-required="Campo obrigatório">
