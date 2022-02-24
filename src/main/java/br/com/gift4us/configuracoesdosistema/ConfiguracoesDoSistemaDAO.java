@@ -199,9 +199,9 @@ public class ConfiguracoesDoSistemaDAO {
 				if ("producao".equals(System.getenv("AMBIENTE"))) {
 					configuracao.setValor("https://gift4us.com.br/resources/");
 				} else if ("homologacao".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("http://gift4us.com.br/resources-homologacao/");
+					configuracao.setValor("https://gift4us.com.br/resources-homologacao/");
 				} else if ("desenvolvimento".equals(System.getenv("AMBIENTE"))) {
-					configuracao.setValor("http://gift4us.com.br/resources-homologacao/");
+					configuracao.setValor("https://gift4us.com.br/resources-homologacao/");
 				}
 				manager.persist(configuracao);
 			}
