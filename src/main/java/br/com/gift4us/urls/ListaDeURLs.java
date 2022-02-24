@@ -7,9 +7,12 @@ public class ListaDeURLs {
 	public final static String HOME_SITE = "/site/index";
 	public final static String LOGOUT = "/logout";
 	public final static String LOGIN = "/login";
+	public final static String ESQUECI_A_SENHA = "/esqueciasenha";
+	public final static String RECUPERAR_A_SENHA = "/recuperarasenha";
 	public final static String PRODUTOS_LISTA = "/site/produtos/lista";
 	public final static String PRODUTO_DETALHE = "/site/produtos/produto";
 	public final static String SERVICO_DE_INDEXPRODUTOPORLINHA = "/site/service/produtobylinha";
+	
 	
 
 	public final static String ALTERAR_SENHA = "/administracao/alterarSenha";

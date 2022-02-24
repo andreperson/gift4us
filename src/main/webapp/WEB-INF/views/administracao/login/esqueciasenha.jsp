@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib tagdir="/WEB-INF/tags/tag-login" prefix="my"%>
+<%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
 
 
 <my:template fluido="false"
@@ -49,11 +50,11 @@
     </nav>
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-8">
-      <div class="container">
+      <div class="container">==> ${msg}
         <div class="header-body text-center mb-2">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">Bem Vindo!</h1>
+              <h1 class="text-white">Esquecimento de Senha!</h1>
             </div>
           </div>
         </div>
@@ -67,7 +68,7 @@
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
 
-              		<i class="fa fa-user-circle" aria-hidden="true"></i> Login Gift4Us
+              		<i class="fa fa-user-circle" aria-hidden="true"></i> Gift4Us
 
               
               
@@ -80,7 +81,7 @@
 					</span>
 				</c:if>
               </div>
-              <c:url value="/efetuaLogin" var="action" />
+              <c:url var="action" value="<%=ListaDeURLs.RECUPERAR_A_SENHA%>" />
         <section class="login" id="login">
              <form:form action="${action}" id="form-login" method="post">
                 <div class="form-group mb-3">
@@ -88,19 +89,12 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input id="login" name="login" class="form-control" placeholder="Login" type="text" required autofocus >
+                    <input id="loginouemail" name="loginouemail" class="form-control" placeholder="Login ou E-mail" type="text" required autofocus >
                   </div>
                 </div>
-                <div class="form-group">
-                  <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                    </div>
-                    <input id="senha" name="senha" class="form-control" placeholder="Senha" type="password" required>
-                  </div>
-                </div>
+                
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">Entrar</button>
+                  <button type="submit" class="btn btn-primary my-4">Enviar</button>
                 </div>
               </form:form>
         </section>
@@ -108,7 +102,7 @@
           </div>
           <div class="row mt-3">
             <div class="col-6">
-              <a href="esqueciasenha" class="text-light"><small>Esqueci a senha</small></a>
+              <a href="login" class="text-light"><small>voltar ao login</small></a>
             </div>
           </div>
         </div>

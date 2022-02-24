@@ -22,4 +22,6 @@ public interface UsuarioDAO extends UserDetailsService {
 	public abstract List<UsuarioModel> buscaPorLogin(String login);
 
 	public abstract List<UsuarioModel> buscaPorNome(String nome);
+	
+	public abstract List<UsuarioModel> buscaPorEmail(String email);
 }
