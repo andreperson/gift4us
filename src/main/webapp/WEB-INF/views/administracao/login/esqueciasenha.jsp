@@ -13,7 +13,7 @@
     
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
-        <a class="navbar-brand" href="/administracao">
+        <a class="navbar-brand" href="login">
           <img src="${urlRecursos}resources-admin/assets/img/brand/white.png" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,7 @@
           <!-- Navbar items -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="../examples/profile.html">
+              <a class="nav-link nav-link-icon" href="faleconosco">
                 <i class="ni ni-single-02"></i>
                 <span class="nav-link-inner--text">Fale Conosco</span>
               </a>
@@ -50,11 +50,12 @@
     </nav>
     <!-- Header -->
     <div class="header bg-gradient-primary py-7 py-lg-8">
-      <div class="container">==> ${msg}
+      <div class="container">
         <div class="header-body text-center mb-2">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
               <h1 class="text-white">Esquecimento de Senha!</h1>
+              <h5 class="text-white">${msg }</h5>
             </div>
           </div>
         </div>
@@ -69,8 +70,6 @@
               <div class="text-center text-muted mb-4">
 
               		<i class="fa fa-user-circle" aria-hidden="true"></i> Gift4Us
-
-              
               
 	            <c:if test="${not empty sessionScope.SPRING_SECURITY_LAST_EXCEPTION}">
 					<br>

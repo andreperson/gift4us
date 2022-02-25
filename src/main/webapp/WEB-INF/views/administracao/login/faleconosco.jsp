@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib tagdir="/WEB-INF/tags/tag-login" prefix="my"%>
+<%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
 
 
 <my:template fluido="false"
@@ -35,15 +36,6 @@
               </div>
             </div>
           </div>
-          <!-- Navbar items -->
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="faleconosco">
-                <i class="ni ni-single-02"></i>
-                <span class="nav-link-inner--text">Fale Conosco</span>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </nav>
@@ -53,7 +45,8 @@
         <div class="header-body text-center mb-2">
           <div class="row justify-content-center">
             <div class="col-lg-5 col-md-6">
-              <h1 class="text-white">Bem Vindo!</h1>
+              <h1 class="text-white">Fale Conosco</h1>
+              <h5 class="text-white">${msg }</h5>
             </div>
           </div>
         </div>
@@ -67,9 +60,7 @@
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
 
-              		<i class="fa fa-user-circle" aria-hidden="true"></i> Login Gift4Us
-
-              
+              		<i class="fa fa-user-circle" aria-hidden="true"></i> Gift4Us
               
 	            <c:if test="${not empty sessionScope.SPRING_SECURITY_LAST_EXCEPTION}">
 					<br>
@@ -80,7 +71,7 @@
 					</span>
 				</c:if>
               </div>
-              <c:url value="/efetuaLogin" var="action" />
+              <c:url var="action" value="<%=ListaDeURLs.FALOUCONOSCO%>" />
         <section class="login" id="login">
              <form:form action="${action}" id="form-login" method="post">
                 <div class="form-group mb-3">
@@ -88,19 +79,53 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input id="login" name="login" class="form-control" placeholder="Login" type="text" required autofocus >
+                    <input id="nome" name="nome" class="form-control" placeholder="Nome" type="text" required autofocus >
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                   <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input id="senha" name="senha" class="form-control" placeholder="Senha" type="password" required>
+                    <input id="email" name="email" class="form-control" placeholder="E-mail" type="text" required autofocus >
                   </div>
                 </div>
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <input id="celular" name="celular" class="form-control" placeholder="ddd + celular" type="text">
+                  </div>
+                </div>
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <textarea id="mensagem" name="mensagem" class="form-control" placeholder="Mensagem" required autofocus ></textarea>
+                  </div>
+                </div>
+                <div>
+                    <div style="font-size: 13px; color:gray;">
+                    	<i class="ni ni-email-83"></i>&nbsp;&nbsp;Prefiro receber contato por:<br>
+                    	<input id="whats" name="contato" placeholder="Whats App" value="whats" type="checkbox">&nbsp; Whats App &nbsp;&nbsp; 
+                    	<input id="email" name="contato" placeholder="E-mail" value="email" type="checkbox"> &nbsp; E-mail &nbsp;&nbsp;
+                    	<input id="ligacao" name="contato" placeholder="Ligação" value="ligacao" type="checkbox"> &nbsp; Ligação
+                	</div>
+                </div>
+                <p>&nbsp;</p>
+                <div>
+                    <div style="font-size: 13px; color:gray;">
+                    	<i class="ni ni-email-83"></i>&nbsp;&nbsp;Melhor período para contato:<br>
+                    	<input id="manha" name="horario" placeholder="manhã" value="manha" type="checkbox">&nbsp; manhã &nbsp;&nbsp; 
+                    	<input id="tarde" name="horario" placeholder="tarde" value="tarde" type="checkbox"> &nbsp; tarde &nbsp;&nbsp;
+                    	<input id="almoco" name="horario" placeholder="almoço" value="almoco" type="checkbox"> &nbsp; horário do almoço
+                	</div>
+                </div>
+                
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">Entrar</button>
+                  <button type="submit" class="btn btn-primary my-4">Enviar</button>
                 </div>
               </form:form>
         </section>
@@ -108,7 +133,7 @@
           </div>
           <div class="row mt-3">
             <div class="col-6">
-              <a href="esqueciasenha" class="text-light"><small>Esqueci a senha</small></a>
+              <a href="login" class="text-light"><small>voltar ao login</small></a>
             </div>
           </div>
         </div>
