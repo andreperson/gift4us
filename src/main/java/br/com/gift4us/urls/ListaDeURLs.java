@@ -12,6 +12,8 @@ public class ListaDeURLs {
 	public final static String FALECONOSCO = "/faleconosco";
 	public final static String FALOUCONOSCO = "/falouconosco";
 
+	public final static String SERVICO_DE_TOTALDEPRODUTOS = "/administracao/service/produtototal";
+	
 	public final static String PRODUTOS_LISTA = "/site/produtos/lista";
 	public final static String PRODUTO_DETALHE = "/site/produtos/produto";
 	public final static String SERVICO_DE_INDEXPRODUTOPORLINHA = "/site/service/produtobylinha";

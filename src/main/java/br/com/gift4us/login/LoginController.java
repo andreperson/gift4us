@@ -135,10 +135,10 @@ public class LoginController {
 		String corpoEmail = "Prezado(a) " + nome + ", <br><br> sua nova senha é " + senha
 				+ " <br><br> Equipe gift4Us";
 
-		String mail_emailfrom = "nao-responda@saobernardo.sp.gov.br";
-		String mail_senha = "dti*2012";
-		String mail_porta = "25";
-		String mail_smtp = "california.saobernardo.sp.gov.br";
+		String mail_emailfrom = "nao-responda@gift4us.com.br";
+		String mail_senha = "NaoResp123*";
+		String mail_porta = "465";
+		String mail_smtp = "smtp.hostinger.com";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
