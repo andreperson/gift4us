@@ -23,12 +23,16 @@ import br.com.gift4us.usuario.UsuarioAdaptador;
 import br.com.gift4us.usuario.UsuarioDAO;
 import br.com.gift4us.usuario.UsuarioModel;
 import br.com.gift4us.anunciante.AnuncianteModel;
+import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
 import br.com.gift4us.mail.Mail;
 
 @Controller
 public class LoginController {
 
+	@Autowired
+	private ConfiguracoesDoSistemaDAO configuracoesDAO;
+	
 	@Autowired
 	private CustomUserService userService;
 
@@ -135,16 +139,28 @@ public class LoginController {
 		String corpoEmail = "Prezado(a) " + nome + ", <br><br> sua nova senha é " + senha
 				+ " <br><br> Equipe gift4Us";
 
-		String mail_emailfrom = "nao-responda@gift4us.com.br";
-		String mail_senha = "NaoResp123*";
-		String mail_porta = "465";
-		String mail_smtp = "smtp.hostinger.com";
+		String mail_emailfrom = configuracoesDAO.buscarPeloNomeDaPropriedade("mailfrom").getValor();
+		String mail_senha = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsenha").getValor();
+		String mail_porta = configuracoesDAO.buscarPeloNomeDaPropriedade("mailporta").getValor();
+		String mail_smtp = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsmtp").getValor();
+		String mail_auth = configuracoesDAO.buscarPeloNomeDaPropriedade("mailauth").getValor();
+		String mail_trust = configuracoesDAO.buscarPeloNomeDaPropriedade("mailtrust").getValor();
+		String mail_protocol = configuracoesDAO.buscarPeloNomeDaPropriedade("mailprotocol").getValor();
 
+		System.out.println("from: " + mail_emailfrom);
+		System.out.println("senha: " + mail_senha);
+		System.out.println("porta: " + mail_porta);
+		System.out.println("smtp: " + mail_smtp);
+		System.out.println("auth: " + mail_auth);
+		System.out.println("trust: " + mail_trust);
+		System.out.println("protocol: " + mail_protocol);
+		
+		
 		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "false");
+		props.put("mail.smtp.auth", mail_auth);
+		props.put("mail.smtp.ssl.trust", mail_trust);
 		props.put("mail.smtp.host", mail_smtp);
-		props.put("mail.MailTransport.protocol", "smtp");
+		props.put("mail.MailTransport.protocol", mail_protocol);
 		props.put("mail.smtp.port", mail_porta);
 
 		boolean enviaPara = Mail.EnviarEmail(props, mail_emailfrom, mail_senha, corpoEmail, assunto, destinatario, null,
@@ -230,10 +246,10 @@ public class LoginController {
 				"<br> celular: " + celular + "<br> mensagem: " + mensagem + 
 				"<br> melhor pedíodo: " + periodo + "<br> entrar em contato por " + contato;
 
-		String mail_emailfrom = "nao-responda@saobernardo.sp.gov.br";
-		String mail_senha = "dti*2012";
-		String mail_porta = "25";
-		String mail_smtp = "california.saobernardo.sp.gov.br";
+		String mail_emailfrom = configuracoesDAO.buscarPeloNomeDaPropriedade("mailfrom").getValor();
+		String mail_senha = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsenha").getValor();
+		String mail_porta = configuracoesDAO.buscarPeloNomeDaPropriedade("mailporta").getValor();
+		String mail_smtp = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsmtp").getValor();
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");

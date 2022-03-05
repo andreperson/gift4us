@@ -58,7 +58,7 @@ public class Mail {
 			System.out.println("Email enviado com sucesso!");
 			return true;
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("Erro ao enviar email:" + e.getMessage());
 			return false;
 		}
 	}

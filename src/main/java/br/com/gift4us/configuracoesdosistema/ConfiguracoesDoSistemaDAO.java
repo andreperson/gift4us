@@ -17,6 +17,8 @@ import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
 import java.util.Map;
+import java.util.Properties;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.stereotype.Repository;
@@ -228,7 +230,61 @@ public class ConfiguracoesDoSistemaDAO {
 				manager.persist(configuracao);
 			}
 			
+			ConfiguracoesDoSistemaModel mailfrom = buscaPorPropriedadeSemCache("mailfrom");
+			if (mailfrom == null || mailfrom.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailfrom");
+				configuracao.setValor("nao-responda@gift4us.com.br");
+				manager.persist(configuracao);
+			}
 			
+			ConfiguracoesDoSistemaModel mailsenha = buscaPorPropriedadeSemCache("mailsenha");
+			if (mailsenha == null || mailsenha.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailsenha");
+				configuracao.setValor("NaoResp123*");
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel mailporta = buscaPorPropriedadeSemCache("mailporta");
+			if (mailporta == null || mailporta.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailporta");
+				configuracao.setValor("465");
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel mailsmtp = buscaPorPropriedadeSemCache("mailsmtp");
+			if (mailsmtp == null || mailsmtp.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailsmtp");
+				configuracao.setValor("smtp.hostinger.com.br");
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel mailauth = buscaPorPropriedadeSemCache("mailauth");
+			if (mailauth == null || mailauth.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailauth");
+				configuracao.setValor("true");
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel mailtrust = buscaPorPropriedadeSemCache("mailtrust");
+			if (mailtrust == null || mailtrust.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailtrust");
+				configuracao.setValor("smtp.hostinger.com.br");
+				manager.persist(configuracao);
+			}
+			
+			ConfiguracoesDoSistemaModel mailprotocol = buscaPorPropriedadeSemCache("mailprotocol");
+			if (mailprotocol == null || mailprotocol.getPropriedade() == null) {
+				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
+				configuracao.setPropriedade("mailprotocol");
+				configuracao.setValor("smtp");
+				manager.persist(configuracao);
+			}
 			
 		} catch (Exception e) {
 			System.out.println("insertsParaSeremUtilizadosNoPostConstruct + ConfiguracoesDoSistemaModel: " + e.getMessage());
