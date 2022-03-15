@@ -30,6 +30,11 @@ public class CustomUserService implements UserDetailsService {
 	public UsuarioModel buscaPorLogin(String username) {
 		return usuarioDao.buscaPorLogin(username).get(0);
 	}
+	
+	public UsuarioModel buscaPorEmail(String email) {
+		return usuarioDao.buscaPorEmail(email).get(0);
+	}
+	
 
 	public void alteraUsuario(UsuarioModel usuario) {
 		usuarioDao.altera(usuario);

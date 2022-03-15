@@ -51,66 +51,76 @@ public class IndexController {
 
 		montaCampanha1(model);
 		montaCampanha2(model);
-		
 
 		return "site/index/index";
 	}
-	
-	
+
 	private void montaCampanha1(Model model) {
-		
+
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
 		CampanhaModel campanha = buscaCampanhaPorOrdem(1);
 		Integer p = 0;
 		model.addAttribute("Campanha1", campanha);
 		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
 
-		lstLinha = buscaLinha(campanha);
-		model.addAttribute("Linha1", lstLinha);
-		for (LinhaModel linha : lstLinha) {
-			lstProd = new ArrayList<ProdutoModel>();
-			lstProd = buscaProduto(linha);
-			model.addAttribute("Produto".concat(p.toString()), lstProd);
-			p += 1;
+		if (campanha != null) {
+			if (campanha.getId() != null) {
+				lstLinha = buscaLinha(campanha);
+				model.addAttribute("Linha1", lstLinha);
+				for (LinhaModel linha : lstLinha) {
+					lstProd = new ArrayList<ProdutoModel>();
+					lstProd = buscaProduto(linha);
+					model.addAttribute("Produto".concat(p.toString()), lstProd);
+					p += 1;
+				}
+			}
 		}
-
 	}
-	
-	
+
 	private void montaCampanha2(Model model) {
-		
+
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
 		CampanhaModel campanha = buscaCampanhaPorOrdem(2);
-		Integer p = 0;
 		model.addAttribute("Campanha2", campanha);
 		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
-		lstLinha = buscaLinha(campanha);
-		LinhaModel linha  = escolheLinhaAleatoria(lstLinha);
-		
-		model.addAttribute("Linha2", linha);
-			lstProd = new ArrayList<ProdutoModel>();
-			lstProd = buscaProduto(linha);
-			model.addAttribute("ProdutoCampanha2", lstProd);
+		if (campanha != null) {
+			if (campanha.getId() != null) {
+				lstLinha = buscaLinha(campanha);
+				LinhaModel linha = escolheLinhaAleatoria(lstLinha);
+
+				model.addAttribute("Linha2", linha);
+				lstProd = new ArrayList<ProdutoModel>();
+				lstProd = buscaProduto(linha);
+				model.addAttribute("ProdutoCampanha2", lstProd);
+			}
+		}
 	}
-	
-	
+
 	private LinhaModel escolheLinhaAleatoria(List<LinhaModel> lstLinha) {
+
+		Integer maximo =  lstLinha.size();
 		
 		LinhaModel aleatoria = new LinhaModel();
-		int diadomes = LocalDateTime.now().getDayOfMonth();
+		int segundo = LocalDateTime.now().getSecond();
 		
+		System.out.println("escolha aleatoria: " + segundo);
+
+		if (segundo > maximo) {
+			segundo = maximo;
+		}
+		
+		Integer i=0;
 		for (LinhaModel linha : lstLinha) {
-			if (linha.getId() == diadomes) {
+			i+=1;
+			if (i == segundo) {
 				aleatoria = linha;
 				break;
 			}
-			aleatoria=linha;
+			aleatoria = linha;
 		}
-		
+
 		return aleatoria;
 	}
-	
-	
 
 	private CampanhaModel buscaCampanhaPorOrdem(Integer ordem) {
 

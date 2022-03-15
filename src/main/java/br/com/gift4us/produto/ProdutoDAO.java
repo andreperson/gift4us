@@ -17,6 +17,7 @@ import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
 
+import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.linha.LinhaModel;
 
@@ -120,6 +121,29 @@ public class ProdutoDAO {
 		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
 
 		query.setParameter("linha", linha);
+
+		return query.getResultList();
+	}
+	
+	public List<ProdutoModel> buscaProdutoByAnunciante(AnuncianteModel anunciante) {
+
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.anunciante = :anunciante order by dataincl desc";
+
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+
+		query.setParameter("anunciante", anunciante);
+
+		return query.getResultList();
+	}
+	
+	public List<ProdutoModel> buscaProdutoByAnuncianteNoMes(AnuncianteModel anunciante, Integer month) {
+
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.anunciante = :anunciante and month(dataincl) =:month order by dataincl desc";
+
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+
+		query.setParameter("anunciante", anunciante);
+		query.setParameter("month", month);
 
 		return query.getResultList();
 	}

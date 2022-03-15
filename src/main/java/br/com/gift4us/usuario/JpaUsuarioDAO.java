@@ -103,11 +103,22 @@ public class JpaUsuarioDAO implements UsuarioDAO {
 
 	public List<UsuarioModel> buscaPorLogin(String login) {
 
-		String jpql = "SELECT u FROM " + TABELA + " u WHERE u.login LIKE  :login ";
+		String jpql = "SELECT u FROM " + TABELA + " u WHERE u.login = :login ";
 
 		TypedQuery<UsuarioModel> query = manager.createQuery(jpql, UsuarioModel.class);
 
 		query.setParameter("login", login);
+
+		return query.getResultList();
+	}
+	
+	public List<UsuarioModel> buscaPorEmail(String email) {
+
+		String jpql = "SELECT u FROM " + TABELA + " u WHERE u.email = :email ";
+
+		TypedQuery<UsuarioModel> query = manager.createQuery(jpql, UsuarioModel.class);
+
+		query.setParameter("email", email);
 
 		return query.getResultList();
 	}

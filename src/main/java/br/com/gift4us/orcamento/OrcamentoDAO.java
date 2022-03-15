@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Calendar;
 import org.springframework.validation.ObjectError;
 import com.google.gson.Gson;
+
+import br.com.gift4us.anunciante.AnuncianteModel;
+import br.com.gift4us.produto.ProdutoModel;
+
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.google.common.annotations.VisibleForTesting;
@@ -62,6 +66,24 @@ public class OrcamentoDAO {
 		TypedQuery<OrcamentoModel> query = manager.createQuery(jpql, OrcamentoModel.class);
 		return query.getResultList();
 	}
+	
+	public OrcamentoModel buscaPorProdutoeAnunciante(ProdutoModel produto, AnuncianteModel anunciante) {
+
+		String jpql = "SELECT o FROM " + TABELA + " o WHERE o.produto = :produto and o.anunciante = :anunciante";
+
+		TypedQuery<OrcamentoModel> query = manager.createQuery(jpql, OrcamentoModel.class);
+
+		query.setParameter("produto", produto);
+		query.setParameter("anunciante", anunciante);
+
+		List<OrcamentoModel> resultado = query.getResultList();
+
+		if(resultado.size() == 0){
+			return new OrcamentoModel();
+		}else{
+			return resultado.get(0);
+		}
+	}
 
 	public OrcamentoModel buscaPorId(Long id) {
 
@@ -86,13 +108,13 @@ public class OrcamentoDAO {
 		return gson.fromJson(gson.toJson(encontrado), OrcamentoModel.class);
 	}
 
-	public List<OrcamentoModel> buscaPorQuantidade(Integer quantidade) {
+	public List<OrcamentoModel> buscaPorAnunciante(AnuncianteModel anunciante) {
 
-		String jpql = "SELECT o FROM " + TABELA + " o WHERE o.quantidade =  :quantidade ";
+		String jpql = "SELECT o FROM " + TABELA + " o WHERE o.anunciante =  :anunciante ";
 
 		TypedQuery<OrcamentoModel> query = manager.createQuery(jpql, OrcamentoModel.class);
 
-		query.setParameter("quantidade", quantidade);
+		query.setParameter("anunciante", anunciante);
 
 		return query.getResultList();
 	}

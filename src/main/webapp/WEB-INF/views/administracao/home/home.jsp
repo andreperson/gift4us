@@ -7,16 +7,18 @@
 <%@ taglib tagdir="/WEB-INF/tags/tag-admin/" prefix="my"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
 
+<c:set var="jsFiles"
+	value="js/Home.js,/js/jquery/bootstrap-toggle.min.js" />
+
 <my:template title="${mensagens.get('NomeDoProjeto').valor}"
-	fluido="false">
+	fluido="false" jsFiles="${jsFiles}">
 
 	<!-- Top navbar -->
 	<nav class="navbar navbar-top navbar-expand-md navbar-dark"
 		id="navbar-main">
 		<div class="container-fluid">
 			<!-- Brand -->
-			<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-				href="../index.html">Dashboard</a>
+			Dashboard
 			<!-- Form -->
 			<!-- User -->
 			<div style="padding-top: 20px;">
@@ -58,8 +60,8 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
-										<span class="h2 font-weight-bold mb-0">350,897</span>
+										<h5 class="card-title text-uppercase text-muted mb-0">Produtos</h5>
+										<span class="h2 font-weight-bold mb-0" id="totaldeprodutos">-</span>
 									</div>
 									<div class="col-auto">
 										<div
@@ -70,8 +72,7 @@
 								</div>
 								<p class="mt-3 mb-0 text-muted text-sm">
 									<span class="text-success mr-2"><i
-										class="fa fa-arrow-up"></i> 3.48%</span> <span class="text-nowrap">Since
-										last month</span>
+										class="fa fa-arrow-up"></i></span> <span class="text-success mr-2" id="produtosnomes"></span><span> Cadastrados este mês</span>
 								</p>
 							</div>
 						</div>
@@ -81,8 +82,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">New
-											users</h5>
+										<h5 class="card-title text-uppercase text-muted mb-0">Orçamentos em aberto</h5>
 										<span class="h2 font-weight-bold mb-0">2,356</span>
 									</div>
 									<div class="col-auto">
@@ -94,7 +94,7 @@
 								</div>
 								<p class="mt-3 mb-0 text-muted text-sm">
 									<span class="text-danger mr-2"><i
-										class="fas fa-arrow-down"></i> 3.48%</span> <span class="text-nowrap">Since
+										class="fas fa-arrow-down"></i></span><span class="text-danger mr-2" id="xxx">XX</span> <span class="text-nowrap">Since
 										last week</span>
 								</p>
 							</div>
@@ -105,7 +105,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+										<h5 class="card-title text-uppercase text-muted mb-0">Total de Orçamentos</h5>
 										<span class="h2 font-weight-bold mb-0">924</span>
 									</div>
 									<div class="col-auto">
@@ -117,7 +117,7 @@
 								</div>
 								<p class="mt-3 mb-0 text-muted text-sm">
 									<span class="text-warning mr-2"><i
-										class="fas fa-arrow-down"></i> 1.10%</span> <span class="text-nowrap">Since
+										class="fas fa-arrow-down"></i></span><span class="text-warning mr-2" id="ZZ">XX</span> <span class="text-nowrap">Since
 										yesterday</span>
 								</p>
 							</div>
@@ -128,7 +128,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+										<h5 class="card-title text-uppercase text-muted mb-0">Orçamentos de Hoje</h5>
 										<span class="h2 font-weight-bold mb-0">49,65%</span>
 									</div>
 									<div class="col-auto">
@@ -140,8 +140,7 @@
 								</div>
 								<p class="mt-3 mb-0 text-muted text-sm">
 									<span class="text-success mr-2"><i
-										class="fas fa-arrow-up"></i> 12%</span> <span class="text-nowrap">Since
-										last month</span>
+										class="fas fa-arrow-up"></i></span><span class="text-success mr-2" id="ZZ">XX</span> <span class="text-nowrap">Ontem</span>
 								</p>
 							</div>
 						</div>
