@@ -69,13 +69,13 @@
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
 
-              		<i class="fa fa-user-circle" aria-hidden="true"></i> Gift4Us
+              		<i class="fa fa-user-secret" aria-hidden="true"></i> gift4Us
               
-	            <c:if test="${not empty sessionScope.SPRING_SECURITY_LAST_EXCEPTION}">
+	            <c:if test="${not empty msg}">
 					<br>
 					<span style="color:#F44104;">
 						<small><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-							${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
+							${msg}
 						</small>
 					</span>
 				</c:if>
@@ -88,7 +88,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input id="loginouemail" name="loginouemail" class="form-control" placeholder="Login ou E-mail" type="text" required autofocus >
+                    <input id="loginouemail" name="loginouemail" class="form-control" placeholder="Login ou Email" type="text" required autofocus >
                   </div>
                 </div>
                 

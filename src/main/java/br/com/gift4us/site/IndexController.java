@@ -98,11 +98,21 @@ public class IndexController {
 
 	private LinhaModel escolheLinhaAleatoria(List<LinhaModel> lstLinha) {
 
+		Integer maximo =  lstLinha.size();
+		
 		LinhaModel aleatoria = new LinhaModel();
-		int diadomes = LocalDateTime.now().getDayOfMonth();
+		int segundo = LocalDateTime.now().getSecond();
+		
+		System.out.println("escolha aleatoria: " + segundo);
 
+		if (segundo > maximo) {
+			segundo = maximo;
+		}
+		
+		Integer i=0;
 		for (LinhaModel linha : lstLinha) {
-			if (linha.getId() == diadomes) {
+			i+=1;
+			if (i == segundo) {
 				aleatoria = linha;
 				break;
 			}

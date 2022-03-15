@@ -62,11 +62,11 @@
 
               		<i class="fa fa-user-circle" aria-hidden="true"></i> Gift4Us
               
-	            <c:if test="${not empty sessionScope.SPRING_SECURITY_LAST_EXCEPTION}">
+	            <c:if test="${not empty msg}">
 					<br>
 					<span style="color:#F44104;">
 						<small><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-							${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
+							${msg}
 						</small>
 					</span>
 				</c:if>

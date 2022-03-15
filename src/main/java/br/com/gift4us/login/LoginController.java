@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import br.com.gift4us.usuario.UsuarioDAO;
 import br.com.gift4us.usuario.UsuarioModel;
 import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
+import br.com.gift4us.enuns.TipoDeEmail;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
 import br.com.gift4us.mail.Mail;
 
@@ -105,15 +107,28 @@ public class LoginController {
 			usuarioDoBanco = userService.buscaPorLogin(loginouemail);
 		}
 
-		String senha = novaSenha(usuarioDoBanco);
+		String codigo = criaCodigo(usuarioDoBanco);
 
 		if (usuarioDoBanco != null) {
 			if (usuarioDoBanco.getEmail() != null) {
-				if (enviaEmailSenha(usuarioDoBanco, senha)) {
-					msg = "Senha gerada com sucesso! Verifique o e-mail cadastrado!";
+
+				String destinatario = usuarioDoBanco.getEmail();
+				String nome = usuarioDoBanco.getApelido();
+
+				if (usuarioDoBanco.getApelido().isEmpty()) {
+					nome = usuarioDoBanco.getNome();
+				}
+				
+				String assunto = "Esqueci a senha | gift4Us";
+				String urlalterasenha ="https://gift4us.com.br/admin/alterarasenha";
+				String corpoEmail = "Prezado(a) " + nome + ", <br><br> para definir uma nova senha, utilize o código " + codigo
+						+ " <br><br> através da url abaixo: <br><br>" + urlalterasenha + "<br><br>Equipe gift4Us";
+				
+				if (enviaEmail(ambiente, TipoDeEmail.SENHA, assunto, corpoEmail, destinatario)) {
+					msg = "Email enviado com sucesso para " + usuarioDoBanco.getEmail();
 				}
 				else {
-					msg = "Erro ao gerar senha!";
+					msg = "Erro ao enviar email!";
 				}
 				
 			}
@@ -125,19 +140,7 @@ public class LoginController {
 		return "administracao/login/esqueciasenha";
 	}
 
-	private Boolean enviaEmailSenha(UsuarioModel usuario, String senha) {
-
-		String destinatario = usuario.getEmail();
-		String assunto = "Esqueci a Senha | gift4Us";
-
-		String nome = usuario.getApelido();
-
-		if (usuario.getApelido().isEmpty()) {
-			nome = usuario.getNome();
-		}
-		
-		String corpoEmail = "Prezado(a) " + nome + ", <br><br> sua nova senha é " + senha
-				+ " <br><br> Equipe gift4Us";
+	private Boolean enviaEmail(String ambiente, TipoDeEmail tipodeemail, String assunto, String corpo, String destinatario) {
 
 		String mail_emailfrom = configuracoesDAO.buscarPeloNomeDaPropriedade("mailfrom").getValor();
 		String mail_senha = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsenha").getValor();
@@ -163,28 +166,40 @@ public class LoginController {
 		props.put("mail.MailTransport.protocol", mail_protocol);
 		props.put("mail.smtp.port", mail_porta);
 
-		boolean enviaPara = Mail.EnviarEmail(props, mail_emailfrom, mail_senha, corpoEmail, assunto, destinatario, null,
+		boolean enviaPara=false;
+		
+		System.out.println("Ambiente: " + ambiente);
+		
+		if (ambiente.equals("producao")) {
+		
+			System.out.println("Entrou para enviar email");
+			
+			enviaPara = Mail.EnviarEmail(props, mail_emailfrom, mail_senha, corpo, assunto, destinatario, null,
 				null);
-
+		}
 		return enviaPara;
 	}
 
-	private String novaSenha(UsuarioModel usuarioanterior) {
+	private String criaCodigo(UsuarioModel usuarioanterior) {
 
 		UsuarioModel novousuario = new UsuarioModel();
 		novousuario = usuarioanterior;
 
-		String senha = gerarSenha(8);
-		novousuario.setSenha(senha);
+		String codigo = gerarCodigo(8);
+		novousuario.setCodigo(codigo);
 		usuarioDAO.altera(novousuario);
 
 		//historico.alterar(usuarioanterior, novousuario, "Usuário");
 
-		return senha;
+		return codigo;
 
 	}
+	
+	private void alteraSenha(UsuarioModel usuariosenhanova) {
+		usuarioDAO.altera(usuariosenhanova);
+	}
 
-	private String gerarSenha(int i) {
+	private String gerarCodigo(int i) {
 		String theAlphaNumericS;
 		StringBuilder builder;
 
@@ -205,7 +220,53 @@ public class LoginController {
 		return builder.toString();
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.GET, value = ListaDeURLs.ALTERAR_A_SENHA)
+	public String formularioDeAlteracaodeSenha(@RequestParam(value = "error", required = false) String error,
+			Model model) {
+
+		String ambiente = System.getenv("AMBIENTE");
+		model.addAttribute("ambiente", ambiente);
+		if (error != null) {
+			erros.setRedirectOrModel(model);
+			// erros.adiciona(mensagem.buscaPorPropriedade("ErroLoginAutenticacao").getValor());
+		}
+		return "administracao/login/alterasenha";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = ListaDeURLs.ALTERAR_A_SENHA)
+	public String formularioAlterarSenha(@Valid String loginouemail, @Valid String codigo, @Valid String novasenha, Model model) {
+		UsuarioModel usuarioDoBanco = null;
+		String msg = "Erro ao alterar a senha! Por gentileza tente novamente.";
+		String ambiente = System.getenv("AMBIENTE");
+
+
+		// verifica se é um email
+		if (loginouemail.contains("@")) {
+			usuarioDoBanco = userService.buscaPorEmail(loginouemail);
+		} else {
+			usuarioDoBanco = userService.buscaPorLogin(loginouemail);
+		}
+		
+		
+		if (!codigo.equals(usuarioDoBanco.getCodigo())) {
+			System.out.println("Código inválido");
+			msg = "Código Inválido, favor verificar!";
+		}
+		else
+		{
+			
+			usuarioDoBanco.setSenha(novasenha);
+			alteraSenha(usuarioDoBanco);
+			msg = "Senha alterada com sucesso!";
+
+		}
+		
+		model.addAttribute("ambiente", ambiente);
+		model.addAttribute("msg", msg);
+
+		return "administracao/login/alterasenha";
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = ListaDeURLs.FALECONOSCO)
 	public String formularioDeFaleConosco(@RequestParam(value = "error", required = false) String error,
 			Model model) {
@@ -224,7 +285,15 @@ public class LoginController {
 		String msg = "";
 		String ambiente = System.getenv("AMBIENTE");
 
-		if (enviaEmailFaleConosco(nome, email, celular, mensagem, contato, periodo)) {
+		String destinatario = "andrep.person@gmail.com";
+		String assunto = "Fale Conosco | gift4Us";
+		
+		String corpoEmail = "Fale Conosco | gift4Us" + 
+				"<br> nome:" + nome + "<br> email: " + email +
+				"<br> celular: " + celular + "<br> mensagem: " + mensagem + 
+				"<br> melhor pedíodo: " + periodo + "<br> entrar em contato por " + contato;
+		
+		if (enviaEmail(ambiente, TipoDeEmail.FALECONOSCO, assunto, corpoEmail, destinatario)) {
 			msg = "Seu email foi enviado com sucesso! <br> Respondemos rapidinho, obrigado pelo contato!";
 		}
 		else {
@@ -236,31 +305,4 @@ public class LoginController {
 		return "administracao/login/faleconosco";
 	}
 
-	private Boolean enviaEmailFaleConosco(String nome, String email, String celular, String mensagem, String contato, String periodo) {
-
-		String destinatario = "andrep.person@gmail.com";
-		String assunto = "Fale Conosco | gift4Us";
-		
-		String corpoEmail = "Fale Conosco gift4Us" + 
-				"<br> nome:" + nome + "<br> email: " + email +
-				"<br> celular: " + celular + "<br> mensagem: " + mensagem + 
-				"<br> melhor pedíodo: " + periodo + "<br> entrar em contato por " + contato;
-
-		String mail_emailfrom = configuracoesDAO.buscarPeloNomeDaPropriedade("mailfrom").getValor();
-		String mail_senha = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsenha").getValor();
-		String mail_porta = configuracoesDAO.buscarPeloNomeDaPropriedade("mailporta").getValor();
-		String mail_smtp = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsmtp").getValor();
-
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "false");
-		props.put("mail.smtp.host", mail_smtp);
-		props.put("mail.MailTransport.protocol", "smtp");
-		props.put("mail.smtp.port", mail_porta);
-
-		boolean enviaPara = Mail.EnviarEmail(props, mail_emailfrom, mail_senha, corpoEmail, assunto, destinatario, null,
-				null);
-
-		return enviaPara;
-	}
 }

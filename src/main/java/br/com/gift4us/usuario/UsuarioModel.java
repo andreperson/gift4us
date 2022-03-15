@@ -58,6 +58,9 @@ public class UsuarioModel implements Serializable , UserDetails {
 	
 	@Column(length = 255)
 	private String senha;
+	
+	@Column(length = 20)
+	private String codigo;
 
 	@Column(length = 10)
 	private String dddcelular;
@@ -84,12 +87,13 @@ public class UsuarioModel implements Serializable , UserDetails {
 		
 	}
 
-	public UsuarioModel(Long id, String login, String nome, String senha, String email, String apelido, List<GrupoModel> listaDeGrupo, AnuncianteModel anunciante, String dddcelular, String celular, String dddtelefone, String telefone, String about) {
+	public UsuarioModel(Long id, String login, String nome, String senha, String codigo, String email, String apelido, List<GrupoModel> listaDeGrupo, AnuncianteModel anunciante, String dddcelular, String celular, String dddtelefone, String telefone, String about) {
 		this.id = id;
 		this.login = login;
 		this.nome = nome;
 		this.apelido = apelido;
 		this.senha = senha;
+		this.codigo = codigo;
 		this.email = email;
 		this.listaDeGrupo = listaDeGrupo;
 		this.dddcelular = dddcelular;
@@ -98,6 +102,7 @@ public class UsuarioModel implements Serializable , UserDetails {
 		this.telefone = telefone;
 		this.about = about;
 		this.anunciante = anunciante;
+		
 	}
 
 	public Long getId() {
@@ -150,6 +155,14 @@ public class UsuarioModel implements Serializable , UserDetails {
 	
 	public void setSenhaNoCrypt(String senha) {
 		this.senha = senha;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public List<GrupoModel> getListaDeGrupo() {

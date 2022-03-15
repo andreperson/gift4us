@@ -250,7 +250,7 @@ public class ConfiguracoesDoSistemaDAO {
 			if (mailporta == null || mailporta.getPropriedade() == null) {
 				ConfiguracoesDoSistemaModel configuracao = new ConfiguracoesDoSistemaModel();
 				configuracao.setPropriedade("mailporta");
-				configuracao.setValor("465");
+				configuracao.setValor("587");
 				manager.persist(configuracao);
 			}
 			

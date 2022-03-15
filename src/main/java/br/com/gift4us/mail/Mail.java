@@ -53,6 +53,8 @@ public class Mail {
 			}
 			message.setSubject(assunto);
 
+			System.out.println("Antes de mandar email!");
+			
 			Transport.send(message);
 
 			System.out.println("Email enviado com sucesso!");

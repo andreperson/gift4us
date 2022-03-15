@@ -50,35 +50,25 @@ public class OrcamentoModel implements Serializable  {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataIncl;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioOrcamentoDataAlt")
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Calendar dataAlt;
-
-	
-	
 	@ManyToOne
 	private ProdutoModel produto;
 
-	
+	@ManyToOne
+	private AnuncianteModel anunciante;
 	
 	@ManyToMany
 	private List<AnuncianteModel> listaDeAnunciante = new ArrayList<AnuncianteModel>();
 
-
-
 	public OrcamentoModel(){
-		
 	}
 
-	public OrcamentoModel(Long id, Integer quantidade, Calendar dataIncl, Calendar dataAlt, ProdutoModel produto, List<AnuncianteModel> listaDeAnunciante) {
+	public OrcamentoModel(Long id, Integer quantidade, Calendar dataIncl, ProdutoModel produto, List<AnuncianteModel> listaDeAnunciante, AnuncianteModel anunciante) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.dataIncl = dataIncl;
-		this.dataAlt = dataAlt;
 		this.produto = produto;
 		this.listaDeAnunciante = listaDeAnunciante;
-
+		this.anunciante = anunciante;
 	}
 
 	public Long getId() {
@@ -105,20 +95,20 @@ public class OrcamentoModel implements Serializable  {
 		this.dataIncl = dataIncl;
 	}
 
-	public Calendar getDataAlt() {
-		return dataAlt;
-	}
-
-	public void setDataAlt(Calendar dataAlt) {
-		this.dataAlt = dataAlt;
-	}
-
 	public ProdutoModel getProduto() {
 		return produto;
 	}
 
 	public void setProduto(ProdutoModel produto) {
 		this.produto = produto;
+	}
+	
+	public AnuncianteModel getAnunciante() {
+		return anunciante;
+	}
+
+	public void setAnunciante(AnuncianteModel anunciante) {
+		this.anunciante = anunciante;
 	}
 
 	public List<AnuncianteModel> getListaDeAnunciante() {
@@ -128,12 +118,6 @@ public class OrcamentoModel implements Serializable  {
 	public void setListaDeAnunciante(List<AnuncianteModel> listaDeAnunciante) {
 		this.listaDeAnunciante = listaDeAnunciante;
 	}
-
-
-
-
-
-
 
 	@Override
 	public String toString() {
