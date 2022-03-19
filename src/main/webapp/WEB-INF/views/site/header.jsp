@@ -60,7 +60,7 @@
 						<button type="button" data-toggle="dropdown"
 							data-loading-text="Loading..." class="heading dropdown-toggle">
 							<span class="cart-icon pull-left flip"></span> <span
-								id="cart-total">2 item(s) - $1,132.00</span>
+								id="cart-total"><span id="somacarrinho"></span> item(s)</span>
 						</button>
 						<ul class="dropdown-menu">
 							<li>

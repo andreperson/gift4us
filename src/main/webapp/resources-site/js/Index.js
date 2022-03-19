@@ -4,25 +4,24 @@
 $(document).ready(function() {
 	//carregaProdutoByLinha(4);
 	console.log('load no index');
-	addProdutoNoCarrinho(1,1,1);
+	addCarrinho(0);
 });
 
 
 
-function addProdutoNoCarrinho(produtoid, anuncianteid, qtde) {
+function addCarrinho(produtoid) {
 	console.log('chamou o produto id:' + produtoid);
 	
 	$.ajax({
-		url : urlPadrao + 'site/service/addprodutonocarrinho/1',
+		url : urlPadrao + 'site/service/addprodutonocarrinho/' + produtoid,
 		type : 'get',
 		async : true,
 		success : function(retorno) {
-			retorno.data.forEach(function(item, index) {
-				
-				
-				console.log("item:" + item.titulo);
-				
-			});
+			
+			console.log("qtde carrinho:" + retorno.data);
+			
+			$("#somacarrinho").html(retorno.data).fadeIn(1000);
+			
 			
 		}
 	});

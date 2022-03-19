@@ -69,53 +69,68 @@ public class IndexRestController {
 	@ResponseBody
 	@RequestMapping(value = {ListaDeURLs.SERVICO_DE_INDEXADDPRODUTONOCARRINHO + "/{id}"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public ResponseEntity<Resposta> addNoCarrinho(@PathVariable(value = "id") Long id) {
+		Resposta resposta = new Resposta();
+		ProdutoModel produto = buscaProduto(id);
+		
+		if(produto == null) {
+			return null;
+		}
 		
 		OrcamentoModel orcamento = new OrcamentoModel();
-		if (id != 0) {
-			orcamento = montaOrcamento(1l,1l);	
+		orcamento = montaOrcamento(produto);	
+		
+		if (id>0) {
+			Integer quantidade=1;
+			if(orcamento != null) {
+				if(orcamento.getId() != null) {
+					quantidade += orcamento.getQuantidade();
+					orcamento.setQuantidade(quantidade);
+					orcamentoDAO.altera(orcamento);
+				}
+				else {
+					orcamento.setQuantidade(quantidade);
+					orcamentoDAO.insere(orcamento);
+				}
+			}
 		}
 		
-		Integer quantidade=1;
-		if(orcamento != null) {
-			if(orcamento.getId() != null) {
-				quantidade += orcamento.getQuantidade();
-				orcamento.setQuantidade(quantidade);
-				orcamentoDAO.altera(orcamento);
-			}
-			else {
-				orcamento.setQuantidade(quantidade);
-				orcamentoDAO.insere(orcamento);
-			}
-		}
-		
-		Resposta resposta = new Resposta();
 		try {
-			resposta.setData(orcamentoDAO.buscaPorAnunciante(orcamento.getAnunciante()));
+			Object qtde = orcamentoDAO.buscaQtdeCarrinhoPorAnunciante(orcamento.getAnunciante().getId());
+			resposta.setData(qtde);
 		} catch (Exception e) {
 			for (StackTraceElement trace : e.getStackTrace()) {
 				resposta.addErro(trace.toString());
 			}
 		}
+		
+		
+		
 		return new ResponseEntity<Resposta>(resposta, HttpStatus.OK);
 	}
 	
-	private OrcamentoModel montaOrcamento(Long anuncianteid, Long produtoid) {
-		AnuncianteModel anunciante = new AnuncianteModel();
-		ProdutoModel produto = new ProdutoModel();
+	private OrcamentoModel montaOrcamento(ProdutoModel produto) {
 		OrcamentoModel orcamento = new OrcamentoModel();
 		
-		anunciante = anuncianteDAO.buscaPorId(anuncianteid);
-		produto = produtoDAO.buscaPorId(produtoid);
-		orcamento = orcamentoDAO.buscaPorProdutoeAnunciante(produto, anunciante);
+		orcamento = orcamentoDAO.buscaPorProdutoeAnunciante(produto, produto.getAnunciante());
 		
 		if(orcamento.getId() == null) {
-			orcamento.setAnunciante(anunciante);
+			orcamento.setAnunciante(produto.getAnunciante());
 			orcamento.setProduto(produto);
 			orcamento.setDataIncl(Calendar.getInstance());
 		}
 		
 		return orcamento;
 	}
+	
+	
+	private ProdutoModel buscaProduto(Long produtoid) {
+		ProdutoModel produto = new ProdutoModel();
+		
+		produto = produtoDAO.buscaPorId(produtoid);
+		
+		return produto;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = {ListaDeURLs.SERVICO_DE_INDEXPRODUTOPORLINHA + "/{id}"}, method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

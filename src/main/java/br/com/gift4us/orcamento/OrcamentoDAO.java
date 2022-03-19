@@ -119,6 +119,20 @@ public class OrcamentoDAO {
 		return query.getResultList();
 	}
 
+	
+	public Object buscaQtdeCarrinhoPorAnunciante(Long anunciante_id) {
+
+		String sql = "SELECT sum(quantidade) as quantidade FROM Orcamento o WHERE o.anunciante_id = " + anunciante_id;
+		Object orcamento = manager.createNativeQuery(sql).getSingleResult();
+		
+		
+		
+		return orcamento;
+	}
+
+	
+	
+	
 	public List<OrcamentoModel> buscaPorDataIncl(Calendar dataIncl) {
 
 		String jpql = "SELECT o FROM " + TABELA + " o WHERE o.dataIncl =  :dataIncl ";

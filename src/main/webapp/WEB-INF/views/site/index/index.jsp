@@ -234,9 +234,9 @@
 													<a href="../../produtos/produto/${produto.id}"
 														class="button gray1" title="Ver ${produto.titulo}"> <i
 														class="fa fa-angle-double-right"></i> veja[+]
-													</a> <a href="../../produtos/produto/${produto.id}"
+													</a> <a href="##" onclick="addCarrinho(${produto.id})"
 														class="button lilas" title="Ver ${produto.titulo}"> <i
-														class="fa fa-shopping-cart"></i> orçar
+														class="fa fa-shopping-cart"></i> Add
 													</a>
 												</div>
 											</div>
@@ -299,7 +299,7 @@
 										class="fa fa-angle-double-right"></i> veja[+]
 									</a> <a href="../../produtos/produto/${produto.id}"
 										class="button lilas" title="Ver ${produto.titulo}"> <i
-										class="fa fa-shopping-cart"></i> orçar
+										class="fa fa-shopping-cart"></i> Add
 									</a>
 								</div>
 							</div>
