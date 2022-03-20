@@ -83,7 +83,6 @@ public class OrcamentoController {
 			return "administracao/orcamento/formulario";
 		}
 		orcamento.setDataIncl(Calendar.getInstance());
-		orcamento.setDataAlt(Calendar.getInstance());
 		orcamentoDAO.insere(orcamento);
 		OrcamentoModel encontrado = orcamentoDAO.buscaPorId(orcamento.getId());
 		historico.inserir(encontrado, "Orcamento");
@@ -106,7 +105,6 @@ public class OrcamentoController {
 		}
 
 		OrcamentoModel anterior = orcamentoDAO.buscaPorIdClonando(orcamento.getId());
-		orcamento.setDataAlt(Calendar.getInstance());
 		orcamento.setDataIncl(anterior.getDataIncl());
 		orcamentoDAO.altera(orcamento);
 		OrcamentoModel atual = orcamentoDAO.buscaPorIdClonando(orcamento.getId());
