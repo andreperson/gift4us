@@ -115,7 +115,7 @@
 											</p>
 										</div>
 										<div class="button-group">
-											<a href="../../produtos/produto/${produto.id}"
+											<a href="../site/produtos/produto/${produto.id}"
 												class="button gray1" title="Ver ${produto.titulo}"> <i
 												class="fa fa-angle-double-right"></i> veja[+]
 											</a> <a href="##" onclick="addCarrinho(${produto.id})"
@@ -214,14 +214,14 @@
 
 											<div class="product-thumb">
 												<div class="image">
-													<a href="../../produtos/produto/${produto.id}"><img
+													<a href="../site/produtos/produto/${produto.id}"><img
 														src="${urlprodutomontada}" width="330" height="220"
 														alt="${produto.titulo}" title="${produto.titulo}"
 														class="img-responsive" /></a>
 												</div>
 												<div class="caption">
 													<h4>
-														<a href="../../produtos/produto/${produto.id}">${produto.titulo}</a>
+														<a href="../site/produtos/produto/${produto.id}">${produto.titulo}</a>
 													</h4>
 
 													<p class="price">

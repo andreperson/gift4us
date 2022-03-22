@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -144,4 +146,47 @@ public class IndexController {
 		return lstProd;
 	}
 
+	
+	@RequestMapping(value = ListaDeURLs.CART, method = RequestMethod.GET)
+	public String cart(Model model, HttpServletResponse response, HttpServletRequest request) {
+
+		Cookie cookie = getCookie(request, "gift4us-cart");
+		List<ProdutoModel> lstProdutos = buscaProdutosDoCarrinho(cookie.getValue());
+		model.addAttribute("lstProdutos", lstProdutos);
+		
+		return "site/index/cart";
+	}
+	
+	
+	
+	private List<ProdutoModel> buscaProdutosDoCarrinho(String cookie) {
+		List<ProdutoModel> lstProdutos = new ArrayList<ProdutoModel>();
+		
+		
+		
+		
+		
+		
+		
+		return lstProdutos;
+		
+		
+	}
+	
+	private Cookie getCookie(HttpServletRequest request, String cookieName) {
+	    Cookie[] cookies = request.getCookies();
+	    Cookie cookie = null;
+	    if (cookies != null) {
+	        for (Cookie cook : cookies) {
+	            if (cook.getName().equals( cookieName )) {
+	            	cookie = cook;
+	            	break;
+	            }
+	        }
+	    }
+        return cookie;
+	}
+	
+	
 }
+
