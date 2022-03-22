@@ -115,8 +115,13 @@
 											</p>
 										</div>
 										<div class="button-group">
-											<input onClick="cart.add('42');" type="submit"
-												value="Incluir no Orçamento" class="btn btn-primary">
+											<a href="../../produtos/produto/${produto.id}"
+												class="button gray1" title="Ver ${produto.titulo}"> <i
+												class="fa fa-angle-double-right"></i> veja[+]
+											</a> <a href="##" onclick="addCarrinho(${produto.id})"
+												class="button lilas" title="Ver ${produto.titulo}"> <i
+												class="fa fa-shopping-cart"></i> Add
+											</a>
 										</div>
 									</div>
 								</c:forEach>
@@ -297,7 +302,7 @@
 									<a href="../../produtos/produto/${produto.id}"
 										class="button gray1" title="Ver ${produto.titulo}"> <i
 										class="fa fa-angle-double-right"></i> veja[+]
-									</a> <a href="../../produtos/produto/${produto.id}"
+									</a> <a href="##" onclick="addCarrinho(${produto.id})"
 										class="button lilas" title="Ver ${produto.titulo}"> <i
 										class="fa fa-shopping-cart"></i> Add
 									</a>
