@@ -336,7 +336,7 @@ public class IndexController {
 		String emailfrom = config.getEmailfrom();
 		String emailsenha = config.getSenha();
 		
-		if (ambiente.equals("desenvolvimento")) {
+		if (ambiente.equals("producao")) {
 		
 			System.out.println("Entrou para enviar email");
 			
