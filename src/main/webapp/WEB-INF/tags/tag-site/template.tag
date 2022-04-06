@@ -50,6 +50,10 @@
 	<!-- JS Part Start-->
 	<script type="text/javascript"
 		src="${urlRecursos}resources-site/js/jquery-2.1.1.min.js"></script>
+		
+	<script type="text/javascript"
+		src="${urlRecursos}resources-site/js/js-cookie.js"></script>
+		
 	<script type="text/javascript"
 		src="${urlRecursos}resources-site/js/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript"
@@ -60,6 +64,8 @@
 		src="${urlRecursos}resources-site/js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="${urlRecursos}resources-site/js/custom.js"></script>
 	<script type="text/javascript" src="${urlRecursos}resources-site/js/Index.js"></script>
+	
+	<script type="text/javascript" src="${urlRecursos}resources-site/js/checkout.js"></script>
 	<!-- JS Part End-->
 
 </body>

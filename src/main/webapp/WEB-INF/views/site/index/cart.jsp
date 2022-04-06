@@ -23,132 +23,76 @@
 			<div class="row">
 				<!--Middle Part Start-->
 				<div id="content" class="col-sm-12">
-					<h1 class="title">Shopping Cart</h1>
+					<h1 class="title">Carrinho</h1>
 					<div class="table-responsive">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
 									<td class="text-center">Imagem</td>
 									<td class="text-left">Produto</td>
-									<td class="text-left">Categoria</td>
+									<td class="text-left">Preço</td>
 									<td class="text-left">Quantidade</td>
 								</tr>
 							</thead>
 							<tbody>
+							<c:set var="total" value="0" />
+							<c:forEach items="${lstProdutos}" var="produto">
+								<c:set var="urlprodutomontada" scope="application"
+									value="${urlmodelo}/modelo-220x330.jpg" />
+								<c:if test="${not empty produto.imagem}">
+									<c:set var="urlprodutomontada" scope="application"
+										value="${urlproduto}/${produto.anunciante.id}/${produto.id}/${produto.imagem}" />
+								</c:if>
+								<c:set var="desconto" value="0.${produto.desconto}" />       
+								<c:set var="precocomdesconto"
+										value="${produto.preco - (produto.preco * desconto)}" />
+								<c:set var="total"
+										value="${total + (produto.qtdademin * precocomdesconto)}" />
 								<tr>
-									<td class="text-center"><a href="product.html"><img
-											src="image/product/samsung_tab_1-50x75.jpg"
-											alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop"
-											class="img-thumbnail" /></a></td>
-									<td class="text-left"><a href="product.html">Aspire
-											Ultrabook Laptop</a><br /> <small>Reward Points: 1000</small></td>
-									<td class="text-left">SAM1</td>
+									<td class="text-center">
+									<a href="../../site/produtos/produto/${produto.id}"><img src="${urlprodutomontada}"
+												 alt="${produto.titulo}"
+												title="${produto.titulo}" width="40px;" class="img-thumbnail" /></a></td>
+									<td class="text-left"><small>${produto.titulo}</small></td>
+									<td class="text-left"><fmt:formatNumber value="${precocomdesconto}" minFractionDigits="2" type="currency" /></td>
 									<td class="text-left"><div
 											class="input-group btn-block quantity">
-											<input type="text" name="quantity" value="1" size="1"
+											<input type="text" name="quantity" id="quantity_${produto.id}" value="${produto.qtdademin}" size="1"
 												class="form-control" /> <span class="input-group-btn">
-												<button type="submit" data-toggle="tooltip" title="Update"
-													class="btn btn-primary">
+												<button type="submit" data-toggle="tooltip" title="Atualizar Carrinho"
+													class="btn btn-primary" onclick="upd(${produto.id});">
 													<i class="fa fa-refresh"></i>
 												</button>
-												<button type="button" data-toggle="tooltip" title="Remove"
-													class="btn btn-danger" onClick="">
+												<button type="button" data-toggle="tooltip" title="Remover do Carrinho"
+													class="btn btn-danger" onClick="del(${produto.id});">
 													<i class="fa fa-times-circle"></i>
 												</button>
 											</span>
 										</div></td>
 								</tr>
-								<tr>
-									<td class="text-center"><a href="product.html"><img
-											src="image/product/sony_vaio_1-50x75.jpg"
-											alt="Xitefun Causal Wear Fancy Shoes"
-											title="Xitefun Causal Wear Fancy Shoes" class="img-thumbnail" /></a></td>
-									<td class="text-left"><a href="product.html">Xitefun
-											Causal Wear Fancy Shoes</a></td>
-									<td class="text-left">Product 114</td>
-									<td class="text-left"><div
-											class="input-group btn-block quantity">
-											<input type="text" name="quantity" value="1" size="1"
-												class="form-control" /> <span class="input-group-btn">
-												<button type="submit" data-toggle="tooltip" title="Update"
-													class="btn btn-primary">
-													<i class="fa fa-refresh"></i>
-												</button>
-												<button type="button" data-toggle="tooltip" title="Remove"
-													class="btn btn-danger" onClick="">
-													<i class="fa fa-times-circle"></i>
-												</button>
-											</span>
-										</div></td>
-								</tr>
+								</c:forEach>
+							
 							</tbody>
 						</table>
 					</div>
-					<h2 class="subtitle">What would you like to do next?</h2>
-					<p>Choose if you have a discount code or reward points you want
-						to use or would like to estimate your delivery cost.</p>
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">Use Coupon Code</h4>
-								</div>
-								<div id="collapse-coupon" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<label class="col-sm-4 control-label" for="input-coupon">Enter
-											your coupon here</label>
-										<div class="input-group">
-											<input type="text" name="coupon" value=""
-												placeholder="Enter your coupon here" id="input-coupon"
-												class="form-control" /> <span class="input-group-btn">
-												<input type="button" value="Apply Coupon" id="button-coupon"
-												data-loading-text="Loading..." class="btn btn-primary" />
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">Use Gift Voucher</h4>
-								</div>
-								<div id="collapse-voucher" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<label class="col-sm-4 control-label" for="input-voucher">Enter
-											gift voucher code here</label>
-										<div class="input-group">
-											<input type="text" name="voucher" value=""
-												placeholder="Enter gift voucher code here"
-												id="input-voucher" class="form-control" /> <span
-												class="input-group-btn"> <input type="submit"
-												value="Apply Voucher" id="button-voucher"
-												data-loading-text="Loading..." class="btn btn-primary" />
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<div class="row">
 						<div class="col-sm-4 col-sm-offset-8">
 							<table class="table table-bordered">
 								<tr>
 									<td class="text-right"><strong>Quantidade de Produtos:</strong></td>
-									<td class="text-right">$940.00</td>
+									<td class="text-right"><fmt:formatNumber value="${total }" minFractionDigits="2" type="currency" /></td>
 								</tr>
 							</table>
 						</div>
 					</div>
 					<div class="buttons">
 						<div class="pull-left">
-							<a href="index.html" class="btn btn-default">Continue
-								Shopping</a>
+							<a href="../index" class="btn btn-default">Continue
+								Comprando</a>
 						</div>
 						<div class="pull-right">
-							<a href="checkout.html" class="btn btn-primary">Checkout</a>
+							<a href="checkout" class="btn btn-primary">Fechar Orçamento</a>
 						</div>
 					</div>
 				</div>

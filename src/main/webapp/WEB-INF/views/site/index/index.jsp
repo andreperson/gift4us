@@ -35,6 +35,7 @@
 								src="${urlslider}/banner-2.jpg" /></a>
 						</div>
 					</div>
+					
 					<!-- Slideshow End-->
 					<!-- Banner Start-->
 					<div class="marketshop-banner">
@@ -99,6 +100,11 @@
 											value="${urlproduto}/${produto.anunciante.id}/${produto.id}/${produto.imagem}" />
 									</c:if>
 
+									<c:set var="desconto" value="0.${produto.desconto}" />
+									<c:set var="precocomdesconto" scope="application"
+										value="${produto.preco - (produto.preco * desconto)}" />
+
+
 									<div class="product-thumb clearfix">
 										<div class="image">
 											<a href="product.html"><img src="${urlprodutomontada}"
@@ -109,16 +115,29 @@
 											<h4>
 												<a href="product.html">${produto.titulo}</a>
 											</h4>
+
 											<p class="price">
-												<span class="price-new">$ ${produto.preco}</span> <span
-													class="price-old">$122.00</span><span class="saving">-10%</span>
+												<c:if test="${produto.desconto > 0}">
+													<span class="price-new"><fmt:formatNumber
+															value="${precocomdesconto}" minFractionDigits="2"
+															type="currency" /></span>
+													<span class="price-old"><fmt:formatNumber
+															value="${produto.preco}" minFractionDigits="2"
+															type="currency" /></span>
+													<span class="saving">-${produto.desconto}%</span>
+												</c:if>
+												<c:if test="${produto.desconto == 0}">
+													<span class="price-new"><fmt:formatNumber
+															value="${produto.preco}" minFractionDigits="2"
+															type="currency" /></span>
+												</c:if>
 											</p>
 										</div>
 										<div class="button-group">
 											<a href="../site/produtos/produto/${produto.id}"
 												class="button gray1" title="Ver ${produto.titulo}"> <i
 												class="fa fa-angle-double-right"></i> veja[+]
-											</a> <a href="##" onclick="addCarrinho(${produto.id})"
+											</a> <a href="##" onclick="add(${produto.id});"
 												class="button lilas" title="Ver ${produto.titulo}"> <i
 												class="fa fa-shopping-cart"></i> Add
 											</a>
@@ -239,7 +258,7 @@
 													<a href="../../produtos/produto/${produto.id}"
 														class="button gray1" title="Ver ${produto.titulo}"> <i
 														class="fa fa-angle-double-right"></i> veja[+]
-													</a> <a href="##" onclick="addCarrinho(${produto.id})"
+													</a> <a href="##" onclick="add(${produto.id});"
 														class="button lilas" title="Ver ${produto.titulo}"> <i
 														class="fa fa-shopping-cart"></i> Add
 													</a>
@@ -289,12 +308,18 @@
 
 									<p class="price">
 										<c:if test="${produto.desconto > 0}">
-											<span class="price-new">$ ${precocomdesconto}</span>
-											<span class="price-old">${produto.preco}</span>
+											<span class="price-new"><fmt:formatNumber
+													value="${precocomdesconto}" minFractionDigits="2"
+													type="currency" /></span>
+											<span class="price-old"><fmt:formatNumber
+													value="${produto.preco}" minFractionDigits="2"
+													type="currency" /></span>
 											<span class="saving">-${produto.desconto}%</span>
 										</c:if>
 										<c:if test="${produto.desconto == 0}">
-											<span class="price-new">$ ${produto.preco}</span>
+											<span class="price-new"><fmt:formatNumber
+													value="${produto.preco}" minFractionDigits="2"
+													type="currency" /></span>
 										</c:if>
 									</p>
 								</div>
@@ -302,7 +327,7 @@
 									<a href="../../produtos/produto/${produto.id}"
 										class="button gray1" title="Ver ${produto.titulo}"> <i
 										class="fa fa-angle-double-right"></i> veja[+]
-									</a> <a href="##" onclick="addCarrinho(${produto.id})"
+									</a> <a href="##" onclick="add(${produto.id});"
 										class="button lilas" title="Ver ${produto.titulo}"> <i
 										class="fa fa-shopping-cart"></i> Add
 									</a>

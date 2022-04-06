@@ -1,63 +1,123 @@
-
-
+var cookiename = "gift4us-cart";
 
 $(document).ready(function() {
-	//carregaProdutoByLinha(4);
-	console.log('load no index');
+	console.log('load index');
+	var biscoito = getCookie(cookiename);
+	console.log("cookie: " + biscoito);
+	var qtde = 0;
 
-	var qtde = pegaQtdeCookie()
+	checkCookie(cookiename);
+
+	if (biscoito != null) {
+		qtde = pegaQtde();
+	}
+
 	$("#somacarrinho").html(qtde);
 });
 
-function addCarrinho(produtoid_click) {
 
-	console.log("prod-id: " + produtoid_click);
-
-	var novocarrinho = atualizaCarrinhoCookie(produtoid_click);
-
-	setCookie("gift4us-cart",novocarrinho,30);
-
-	qtde = pegaQtdeCookie();
-
+function add(produtoid) {
+	console.log('entrou ADD prodid: ' + produtoid);
+	var biscoito = getCookie(cookiename);
+	console.log("cookie: " + biscoito);
+	novocarrinho = atualizaCarrinhoCookie(biscoito, produtoid, 1, "add");
+	console.log("novo cart " + novocarrinho);
+	setCookie(cookiename, novocarrinho);
+	var qtde = pegaQtde();
 	$("#somacarrinho").html(qtde);
-
 }
 
 
-function atualizaCarrinhoCookie(produtoid) {
+
+
+function upd(produtoid) {
+	console.log('entrou UPD');
+	var biscoito = getCookie(cookiename);
+	qtde_no_carrinho = $("#quantity_" + produtoid).val();
+	console.log("qtde no carrinho: " + qtde_no_carrinho);
+	console.log("prod-id: " + produtoid);
+	var novocarrinho = atualizaCarrinhoCookie(biscoito, produtoid, qtde_no_carrinho, "upd");
+	setCookie(cookiename, novocarrinho);
+	var qtde = pegaQtde();
+	$("#somacarrinho").html(qtde);
+}
+
+
+
+function del(produtoid) {
+	console.log('entrou DEL prdid:' + produtoid);
+	var biscoito = getCookie(cookiename);
+	var novocarrinho = atualizaCarrinhoCookie(biscoito, produtoid, 0, "del");
+	setCookie(cookiename, novocarrinho);
+	qtde = pegaQtde();
+	$("#somacarrinho").html(qtde);
+
+	biscoito = checkCookie(cookiename);
+	if (biscoito == "") {
+		console.log("cookie vazio");
+	}
+	else {
+		console.log("cookie não esta vazio");
+	}
+
+	location.reload();
+}
+
+
+function atualizaCarrinhoCookie(biscoito, produtoid, qtdeUser, tipo) {
+	console.log('entrou Atualiza Carrinho: ' + biscoito + " " + tipo);
 	var carrinhoRetorno = "";
-	var cretorno = checkCookie("gift4us-cart");
-
-	console.log("carrinho atual:" + cretorno);
-
 	var produtojaexistia = false;
 	var qtde = parseInt(0);
-	if (cretorno != '') {
-		console.log("cretorno nao é vazio ");
+	if (biscoito != null) {
+		if (biscoito != "") {
+			const myArray = biscoito.split("-");
 
-		const myArray = cretorno.split("-");
 
-		if (myArray.length > 0) {
-			for (let i = 0; i < myArray.length; i = i + 1) {
-				console.log(i + 'º [for]', myArray[i]);
-				const myArrayProd = myArray[i].split(":");
-				if (myArrayProd[0] == produtoid) {
-					console.log('[qtde do produto]', myArrayProd[1]);
-					qtde = myArrayProd[1];
-					qtde = parseInt(qtde) + parseInt(1);
-					carrinhoRetorno += produtoid + ":" + qtde + "-";
-					produtojaexistia = true;
-				}
-				else {
-					if (myArrayProd[0] != 30) {
+			console.log("biscoito: " + biscoito);
+
+			console.log("array: " + myArray);
+
+			if (myArray.length > 0) {
+				for (let i = 0; i < myArray.length; i = i + 1) {
+					console.log(i + 'º item ', myArray[i]);
+					const myArrayProd = myArray[i].split(":");
+
+					console.log("myArrayProd:" + myArrayProd);
+
+
+					if (myArrayProd[0] == produtoid) {
+						qtde = parseInt(myArrayProd[1]);
+						if (tipo == "add") {
+							console.log("entrou no add prodid: " + produtoid + " qtde do carrinho: " + qtde + " qtde p/ add: " + qtdeUser);
+							qtde = parseInt(qtde) + parseInt(qtdeUser);
+							carrinhoRetorno += produtoid + ":" + qtde + "-";
+						}
+						else if (tipo == "upd") {
+							console.log("entrou no upd - prodid: " + produtoid + " qtde do carrinho: " + qtde + " qtde p/ add: " + qtdeUser);
+							qtde = parseInt(qtdeUser);
+							carrinhoRetorno += produtoid + ":" + qtde + "-";
+						}
+						else if (tipo == "del") {
+							//nao monta o carrinho com o produto escolhido ele vai sumir 	
+						}
+
+						console.log("nova quantidade: " + qtde);
+						produtojaexistia = true;
+					}
+					else {
 						carrinhoRetorno += myArray[i] + "-";
 					}
 				}
+
+				if (!produtojaexistia) {
+					carrinhoRetorno += produtoid + ":" + 1 + "-";
+				}
 			}
-			
-			if(!produtojaexistia){
-				carrinhoRetorno += produtoid + ":" + 1 + "-";
-			}
+		}
+		else {
+			console.log('primeiro item do carrinho');
+			carrinhoRetorno = produtoid + ":" + 1 + "-";
 		}
 
 	}
@@ -66,30 +126,28 @@ function atualizaCarrinhoCookie(produtoid) {
 		carrinhoRetorno = produtoid + ":" + 1 + "-";
 	}
 
-	
-
 	console.log("carrinho retorno:" + carrinhoRetorno);
-	carrinhoRetorno = carrinhoRetorno.substring(0, carrinhoRetorno.length-1)
-	console.log("carrinho retorno substr:" + carrinhoRetorno);	
+	carrinhoRetorno = carrinhoRetorno.substring(0, carrinhoRetorno.length - 1)
+	console.log("carrinho retorno substr:" + carrinhoRetorno);
 
 	return carrinhoRetorno;
 }
 
 
-function pegaQtdeCookie() {
-
-	var cretorno = checkCookie("gift4us-cart");
+function pegaQtde() {
+	var biscoito = getCookie(cookiename);
+	console.log('entrou Pega Qtde');
 	var qtde = parseInt(0);
-	if (cretorno != '') {
-		const myArray = cretorno.split("-");
+	if (biscoito != '') {
+		const myArray = biscoito.split("-");
+		console.log('array length: ' + myArray.length);
 		if (myArray.length > 0) {
 			for (let i = 0; i < myArray.length; i = i + 1) {
-				console.log(i + 'º for', myArray[i]);
 				const myArrayQtde = myArray[i].split(":");
-				console.log('[for 2]', myArrayQtde[i]);
-				if (myArrayQtde[i] != null) {
+				console.log('i: ' + i + ' array quantidade: ' + myArrayQtde + ' length: ' + myArrayQtde.length);
+				if (myArrayQtde != null) {
 					qtde = parseInt(qtde) + parseInt(myArrayQtde[1]);
-					console.log('qtde:', qtde);
+					console.log('qtde somada: ', qtde);
 				}
 			}
 		}
@@ -100,6 +158,7 @@ function pegaQtdeCookie() {
 
 	return qtde;
 }
+
 
 /*
 function addCarrinho(produtoid) {
@@ -142,44 +201,40 @@ function carregaProdutoByLinha(linhaid) {
 };
 
 
-
-function setCookie(cname, cvalue, exdays) {
-
-	console.log("nome: " + cname + " valor: " + cvalue + " expira: " + exdays);
-
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	var expires = "expires=" + d.toGMTString();
-
-	//console.log("antes de criar;");
-
-	document.cookie = cname + "=" + cvalue + ";" + expires + "; SameSite=None; Secure;";
-
-}
-
 function getCookie(cname) {
-	var name = cname + "=";
-	var ca = document.cookie.split(';');
-	for (var i = 0; i < ca.length; i++) {
-		var c = ca[i];
-		while (c.charAt(0) == ' ') c = c.substring(1);
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
+	return Cookies.get(cname);
 }
 
 function checkCookie(cname) {
 	var cvalue = getCookie(cname);
-
 	if (cvalue != "") {
-		//console.log("existe valor:" + cvalue);
+		console.log("existe valor:" + cvalue);
+	}
+	else {
+		eraseCookie(cookiename);
 	}
 
-	//console.log("check cookie :" + cvalue);
 
 	return cvalue;
-
 }
 
+function setCookie(cname, cvalue) {
+
+	// Cria uma nova data no futuro 01/01/2020
+	var data = new Date(2020, 0, 01);
+	// Converte a data para GMT
+	// Wed, 01 Jan 2020 02:00:00 GMT
+	data = data.toGMTString();
+	// Cria o cookie
+
+	console.log("Entrou Set: " + cname + " " + cvalue);
+
+	document.cookie = cname + "=" + cvalue + "; " + data + '; path=/' + "; SameSite=None; Secure;";
+}
+
+function eraseCookie(cname) {
+
+	console.log("Entrou ERASE: " + cname);
+
+	document.cookie = cname + '=; Max-Age=-99999999;';
+}

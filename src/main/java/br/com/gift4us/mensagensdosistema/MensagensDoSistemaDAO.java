@@ -328,6 +328,11 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "OrcamentoFormularioId", "Código", "Formulário de Orcamento");
 		criaSeNaoExistir(lista, "OrcamentoListaId", "Código", "Lista de Orcamento");
 		criaSeNaoExistir(lista, "OrcamentoFormularioQuantidade", "Quantidade", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "OrcamentoFormularioNome", "Nome", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "OrcamentoFormularioEmail", "Email", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "OrcamentoFormularioDDD", "DDD", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "OrcamentoFormularioCelular", "Celular", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "OrcamentoFormularioBotaoEnviar", "Enviar Orçamento", "Formulário de Orcamento");
 		criaSeNaoExistir(lista, "OrcamentoListaQuantidade", "Quantidade", "Lista de Orcamento");
 		criaSeNaoExistir(lista, "OrcamentoFormularioDataIncl", "Data Inclusão", "Formulário de Orcamento");
 		criaSeNaoExistir(lista, "OrcamentoListaDataIncl", "Data Inclusão", "Lista de Orcamento");
@@ -641,6 +646,8 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioOrcamentoQuantidade", "O campo Quantidade deve ser preenchido!", "Formulário de Orcamento");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioOrcamentoDataIncl", "O campo Data Inclusão deve ser preenchido!", "Formulário de Orcamento");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioOrcamentoDataAlt", "O campo Data Alteração deve ser preenchido!", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioOrcamentoNome", "O campo Nome deve ser preenchido!", "Formulário de Orcamento");
+		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioOrcamentoEmail", "O campo Email deve ser preenchido!", "Formulário de Orcamento");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioProdutoCodigo", "O campo Código deve ser preenchido!", "Formulário de Produto");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioProdutoTitulo", "O campo Título deve ser preenchido!", "Formulário de Produto");
 		criaSeNaoExistir(lista, "ValidacaoErroPreenchimentoObrigatorioProdutoBrevedescricao", "O campo Breve Descricao deve ser preenchido!", "Formulário de Produto");

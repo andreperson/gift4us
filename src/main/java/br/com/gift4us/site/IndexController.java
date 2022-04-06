@@ -2,7 +2,9 @@ package br.com.gift4us.site;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,24 +14,53 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gift4us.campanha.CampanhaDAO;
 import br.com.gift4us.campanha.CampanhaModel;
+import br.com.gift4us.cart.Cart;
 import br.com.gift4us.categoria.CategoriaDAO;
 import br.com.gift4us.categoria.CategoriaModel;
+import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
+import br.com.gift4us.enuns.TipoDeEmail;
 import br.com.gift4us.linha.LinhaDAO;
 import br.com.gift4us.linha.LinhaModel;
+import br.com.gift4us.mail.Mail;
+import br.com.gift4us.mensagensdosistema.Erros;
+import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
+import br.com.gift4us.mensagensdosistema.Sucesso;
+import br.com.gift4us.orcamento.OrcamentoDAO;
+import br.com.gift4us.orcamento.OrcamentoModel;
 import br.com.gift4us.produto.ProdutoDAO;
 import br.com.gift4us.produto.ProdutoModel;
+import br.com.gift4us.produto.ProdutoShow;
 import br.com.gift4us.urls.ListaDeURLs;
+import br.com.gift4us.util.MailConfig;
 import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.util.Util;
 
 @Controller
 public class IndexController {
 
+	@Autowired
+	private Erros erros;
+
+	@Autowired
+	private Sucesso sucesso;
+
+	@Autowired
+	private OrcamentoDAO orcamentoDAO;
+
+	@Autowired
+	private MensagensDoSistemaDAO mensagensDoSistemaDAO;
+	
+	@Autowired
+	private ConfiguracoesDoSistemaDAO configuracoesDAO;
+	
 	@Autowired
 	private ProdutoDAO produtoDAO;
 
@@ -100,20 +131,20 @@ public class IndexController {
 
 	private LinhaModel escolheLinhaAleatoria(List<LinhaModel> lstLinha) {
 
-		Integer maximo =  lstLinha.size();
-		
+		Integer maximo = lstLinha.size();
+
 		LinhaModel aleatoria = new LinhaModel();
 		int segundo = LocalDateTime.now().getSecond();
-		
+
 		System.out.println("escolha aleatoria: " + segundo);
 
 		if (segundo > maximo) {
 			segundo = maximo;
 		}
-		
-		Integer i=0;
+
+		Integer i = 0;
 		for (LinhaModel linha : lstLinha) {
-			i+=1;
+			i += 1;
 			if (i == segundo) {
 				aleatoria = linha;
 				break;
@@ -146,47 +177,223 @@ public class IndexController {
 		return lstProd;
 	}
 
-	
 	@RequestMapping(value = ListaDeURLs.CART, method = RequestMethod.GET)
 	public String cart(Model model, HttpServletResponse response, HttpServletRequest request) {
 
 		Cookie cookie = getCookie(request, "gift4us-cart");
-		List<ProdutoModel> lstProdutos = buscaProdutosDoCarrinho(cookie.getValue());
+		List<Cart> lstCart = new ArrayList<Cart>();
+		List<ProdutoModel> lstProdutos = new ArrayList<ProdutoModel>();
+		
+
+		if (cookie != null) {
+			if(cookie.getValue() != ""){
+				lstCart = extracaoProdutosDoCookie(cookie.getValue());
+				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoIds(lstCart));
+				insereQtdes(lstProdutos, lstCart);
+			}
+
+		}
+		
 		model.addAttribute("lstProdutos", lstProdutos);
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		
 		return "site/index/cart";
 	}
 	
-	
-	
-	private List<ProdutoModel> buscaProdutosDoCarrinho(String cookie) {
+	@RequestMapping(value = ListaDeURLs.CHECKOUT, method = RequestMethod.GET)
+	public String checkout(@Valid String nome, @Valid String email, @Valid String ddd, @Valid String celular, Model model, HttpServletResponse response, HttpServletRequest request) {
+
+		Cookie cookie = getCookie(request, "gift4us-cart");
+		List<Cart> lstCart = new ArrayList<Cart>();
 		List<ProdutoModel> lstProdutos = new ArrayList<ProdutoModel>();
 		
+
+		if (cookie != null) {
+			if(cookie.getValue() != ""){
+				lstCart = extracaoProdutosDoCookie(cookie.getValue());
+				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoIds(lstCart));
+				insereQtdes(lstProdutos, lstCart);
+			}
+
+		}
 		
+		//enviaEmailOrcamento();
 		
+		OrcamentoModel orcamento = new OrcamentoModel();
+		model.addAttribute("orcamento", orcamento);
+		model.addAttribute("lstProdutos", lstProdutos);
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		
-		
-		
-		
-		return lstProdutos;
-		
-		
+		return "site/index/checkout";
 	}
 	
-	private Cookie getCookie(HttpServletRequest request, String cookieName) {
-	    Cookie[] cookies = request.getCookies();
-	    Cookie cookie = null;
-	    if (cookies != null) {
-	        for (Cookie cook : cookies) {
-	            if (cook.getName().equals( cookieName )) {
-	            	cookie = cook;
-	            	break;
-	            }
-	        }
-	    }
-        return cookie;
+	@RequestMapping(value = ListaDeURLs.CHECKOUT, method = RequestMethod.POST)
+	public String checkout(@Valid OrcamentoModel orcamento, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response, HttpServletRequest request) {
+
+		Cookie cookie = getCookie(request, "gift4us-cart");
+		List<Cart> lstCart = new ArrayList<Cart>();
+		List<ProdutoModel> lstProdutos = new ArrayList<ProdutoModel>();
+		
+
+		if (cookie != null) {
+			if(cookie.getValue() != ""){
+				lstCart = extracaoProdutosDoCookie(cookie.getValue());
+				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoIds(lstCart));
+				insereQtdes(lstProdutos, lstCart);
+			}
+		}
+		
+		//grava orçamento na tabela
+		orcamento.setDataIncl(Calendar.getInstance());
+		//orcamentoDAO.insere(orcamento);
+		
+		enviaEmailOrcamento(lstProdutos);	
+		
+		
+		
+		
+		model.addAttribute("lstProdutos", lstProdutos);
+		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
+		
+		return "site/index/checkout";
 	}
+	
+	
+	
+
+	private List<ProdutoModel> insereQtdes(List<ProdutoModel> lstProdutos, List<Cart> lstCart) {
+
+		for (ProdutoModel prd : lstProdutos) {
+			for (Cart cart : lstCart) {
+				if (prd.getId().equals(cart.getProdutoId())) {
+					prd.setQtdademin(cart.getQtde());
+				}
+			}
+		}
+
+		return lstProdutos;
+	}
+
+	private List<Long> extracaoIds(List<Cart> lst) {
+		List<Long> lstIds = new ArrayList<Long>();
+		Long id;
+
+		for (Cart cart : lst) {
+			id = cart.getProdutoId();
+			lstIds.add(id);
+		}
+
+		return lstIds;
+	}
+
+	private List<Cart> extracaoProdutosDoCookie(String cookie) {
+
+		String[] arrayCookie = cookie.split("-");
+		String[] itemCookie = null;
+		Cart cart = new Cart();
+		List<Cart> lstCart = new ArrayList<Cart>();
+
+		for (String item : arrayCookie) {
+			itemCookie = item.split(":");
+			cart = new Cart();
+			cart.setProdutoId(Long.parseLong(itemCookie[0]));
+			cart.setQtde(Integer.parseInt(itemCookie[1]));
+			lstCart.add(cart);
+		}
+
+		return lstCart;
+	}
+
+	private Cookie getCookie(HttpServletRequest request, String cookieName) {
+		Cookie[] cookies = request.getCookies();
+		Cookie cookie = null;
+		if (cookies != null) {
+			for (Cookie cook : cookies) {
+				if (cook.getName().equals(cookieName)) {
+					cookie = cook;
+					break;
+				}
+			}
+		}
+		return cookie;
+	}
+
+	private Boolean enviaEmailOrcamento(List<ProdutoModel> lstProdutos) {
+		boolean enviaPara=false;
+		String cabecalho = cabecalhoOrcamento();
+		String rodape = rodapeOrcamento();
+		String corpo = cabecalho;
+		String ambiente = System.getenv("AMBIENTE");
+
+		String destinatario = "andrep.person@gmail.com";
+		String assunto = "Orçamento | gift4Us";
+		
+		MailConfig config = new MailConfig();
+		Properties props = new Properties();
+		config = config.setConfigeProperties(configuracoesDAO);
+		props = setProps(config);
+		
+		String emailfrom = config.getEmailfrom();
+		String emailsenha = config.getSenha();
+		
+		if (ambiente.equals("desenvolvimento")) {
+		
+			System.out.println("Entrou para enviar email");
+			
+			Long ultimoAnunciante =0l;
+			Boolean enviou = false;
+			for (ProdutoModel prd : lstProdutos) {
+				if (prd.getAnunciante().getId() != ultimoAnunciante && (ultimoAnunciante != 0)) {
+					//manda email
+					corpo= corpo + rodape;
+					enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+							null);
+					corpo=cabecalho;
+					enviou = true;
+				}
+
+				corpo += "<tr><td class='text-center'><a href='../../site/produtos/produto/'" + prd.getId() + "'>"
+					+ "<img src='' alt='' width='40px;' class='img-thumbnail' /></a></td>"
+					+ "<td class='text-left'><small>" + prd.getTitulo() + "</small></td>"
+					+ "<td class='text-left'></td><td class='text-left'>"
+					+ "<div>" + prd.getQtdademin() + "</div></td>"
+					+ "<td class='text-left'>valor somado<div></div></td></tr>";
+
+				ultimoAnunciante = prd.getAnunciante().getId();
+				enviou = false;
+			}
+			if(!enviou) {
+				corpo+=rodape;
+				enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+						null);				
+			}
+			
+		}
+		return enviaPara;
+	}
+	
+	private Properties setProps(MailConfig config ) {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", config.getAuth());
+		props.put("mail.smtp.ssl.trust", config.getTrust());
+		props.put("mail.smtp.host", config.getSmtp());
+		props.put("mail.MailTransport.protocol", config.getProtocol());
+		props.put("mail.smtp.port", config.getPort());
+		
+		return props;
+	}
+	
+	private String cabecalhoOrcamento() {
+		String cabeca = "<div id='container' style='padding-top: 180px;'><div class='container'><div class='row'><div id='content' class='col-sm-12'><h1 class='title'>Orçamento</h1><div class='table-responsive'><table class='table table-bordered'><thead><tr><td class='text-center'>Imagem</td><td class='text-left'>Produto</td><td class='text-left'>Preço</td><td class='text-left'>Quantidade</td><td class='text-left'>Total</td></tr></thead><tbody>";
+		return cabeca;
+	}
+	
+	
+	private String rodapeOrcamento() {
+		String rodape = "<div><br><br>fim</div>";
+		return rodape;
+	}
+	
 	
 	
 }
-

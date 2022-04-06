@@ -57,7 +57,7 @@
 				<!-- Mini Cart Start-->
 				<div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<div id="cart">
-						<a href="../site/cart">
+						<a href="${url }/cart">
 							<button type="button" data-toggle="dropdown"
 								data-loading-text="Loading..." class="heading dropdown-toggle">
 								<span class="cart-icon pull-left flip"></span> <span
