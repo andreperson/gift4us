@@ -218,13 +218,13 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 	<distributionManagement>
-        <repository>
-              <id>myrepository</id>
-              <url>file:C:/repository/</url>
-        </repository>
-      </distributionManagement>
-	
-	
+		<repository>
+			<id>myrepository</id>
+			<url>file:C:/repository/</url>
+		</repository>
+	</distributionManagement>
+
+
 </project>

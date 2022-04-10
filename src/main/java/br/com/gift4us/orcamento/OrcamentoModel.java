@@ -63,7 +63,10 @@ public class OrcamentoModel implements Serializable  {
 	
 	@Column(length = 10)
 	private String celular;
-	
+
+	@Column(length = 1)
+	private Integer status;
+
 	@ManyToOne
 	private ProdutoModel produto;
 
@@ -159,6 +162,14 @@ public class OrcamentoModel implements Serializable  {
 
 	public void setAnunciante(AnuncianteModel anunciante) {
 		this.anunciante = anunciante;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public List<AnuncianteModel> getListaDeAnunciante() {
