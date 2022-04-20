@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -33,7 +34,6 @@ import br.com.gift4us.enuns.TipoDeEmail;
 import br.com.gift4us.linha.LinhaDAO;
 import br.com.gift4us.linha.LinhaModel;
 import br.com.gift4us.mail.Mail;
-import br.com.gift4us.mail.SendGmail;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Sucesso;
@@ -42,11 +42,9 @@ import br.com.gift4us.orcamento.OrcamentoEnum;
 import br.com.gift4us.orcamento.OrcamentoModel;
 import br.com.gift4us.produto.ProdutoDAO;
 import br.com.gift4us.produto.ProdutoModel;
-import br.com.gift4us.produto.ProdutoShow;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.MailConfig;
 import br.com.gift4us.util.Propriedades;
-import br.com.gift4us.util.Util;
 
 @Controller
 public class IndexController {
@@ -340,9 +338,11 @@ public class IndexController {
 
 	private Boolean enviaEmailOrcamento(List<ProdutoModel> lstProdutos) {
 		boolean enviaPara=false;
-		String cabecalho = cabecalhoOrcamento();
-		String rodape = rodapeOrcamento();
-		String corpo = cabecalho;
+		
+		
+		String cabecalho = pegaCabecalho();
+		String rodape = "</table><p>&nbsp;</p><hr>";
+		String corpo = "";
 		String ambiente = System.getenv("AMBIENTE");
 
 		String destinatario = "andrep.person@gmail.com";
@@ -356,7 +356,6 @@ public class IndexController {
 		String emailfrom = config.getEmailfrom();
 		String emailsenha = config.getSenha();
 		
-		
 			System.out.println("vai enviar email");
 			
 			Long ultimoAnunciante =0l;
@@ -366,10 +365,13 @@ public class IndexController {
 			for (ProdutoModel prd : lstProdutos) {
 				if (prd.getAnunciante().getId() != ultimoAnunciante && (ultimoAnunciante != 0)) {
 					//manda email
-					corpo= corpo + rodape;
+					corpo = cabecalho + corpo + rodape;
 					if (ambiente.equals("producao")) {
 						enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
 								null);	
+					}
+					else {
+						System.out.println("email" + corpo);
 					}
 					corpo=cabecalho;
 					enviou = true;
@@ -383,21 +385,24 @@ public class IndexController {
 				}
 				
 				precoxqtde = prd.getQtdademin() * precocomdesconto;
-				corpo += "<tr><td class='text-center'><a href='../../site/produtos/produto/'" + prd.getId() + "'>"
-					+ "<img src='https://gift4us.com.br/' alt='' width='40px;' class='img-thumbnail' /></a></td>"
-					+ "<td class='text-left'><small>" + prd.getTitulo() + "</small></td>"
-					+ "<td class='text-left'>" + precocomdesconto + "</td>"
-					+ "<td class='text-left'>" + prd.getQtdademin() + "</td>"
-					+ "<td class='text-left'>" + precoxqtde + "</td></tr>";
+				corpo += "<tr><td class='first-col'><a href='../../site/produtos/produto/'" + prd.getId() + "'>"
+						+ "<img src='https://gift4us.com.br/' alt='' width='40px;' class='img-thumbnail' /></a> &nbsp;&nbsp;&nbsp;"
+						+ "<small>" + prd.getTitulo() + "</small></td>"
+						+ "<td>" + precocomdesconto + "</td>"
+						+ "<td>" + prd.getQtdademin() + "</td>"
+						+ "<td>" + precoxqtde + "</td></tr>";
 
 				ultimoAnunciante = prd.getAnunciante().getId();
 				enviou = false;
 			}
 			if(!enviou) {
-				corpo+=rodape;
+				corpo = cabecalho + corpo + rodape;
 				if (ambiente.equals("producao")) {
 					enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
 							null);	
+				}
+				else {
+					System.out.println("email" + corpo);
 				}
 			}
 			
@@ -415,17 +420,32 @@ public class IndexController {
 		return props;
 	}
 	
-	private String cabecalhoOrcamento() {
-		String cabeca = "<html><body><div id='container' style='padding-top: 180px;'><div class='container'><div class='row'><div id='content' class='col-sm-12'><h1 class='title'>Orçamento</h1><div class='table-responsive'><table class='table table-bordered'><thead><tr><td class='text-center'>Imagem</td><td class='text-left'>Produto</td><td class='text-left'>Preço</td><td class='text-left'>Quantidade</td><td class='text-left'>Total</td></tr></thead><tbody>";
-		return cabeca;
+	
+	private String pegaCabecalho() {
+	
+		return "<!DOCTYPE html> <html> <head> <title>Orcamento gift4us</title> <style> html, body { min-height: 100%; } body, div, form, input, p { padding: 0; margin: 0; outline: none; font-family: Roboto, Arial, sans-serif; font-size: 14px; color: #666; line-height: 22px; } h1 { font-weight: 400; } .testbox { display: flex; justify-content: center; align-items: center; height: inherit; padding: 3px; } form { width: 100%; padding: 20px; background: #fff; box-shadow: 0 2px 5px #ccc; } input { width: calc(100% - 10px); padding: 5px; border: 1px solid #ccc; border-radius: 3px; vertical-align: middle; } input:hover, textarea:hover { outline: none; border: 1px solid #095484; } th, td { width: 28%; padding: 15px 0; border-bottom: 1px solid #ccc; text-align: center; vertical-align: unset; line-height: 18px; font-weight: 400; word-break: break-all; } .first-col { width: 16%; text-align: left; } textarea:hover { outline: none; border: 1px solid #1c87c9; } table { width: 100%; } textarea { width: calc(100% - 6px); } .question { padding: 15px 0 5px; color: #095484; } .question-answer label { display: block; padding: 0 20px 10px 0; } .question-answer input { width: auto; } .btn-block { margin-top: 20px; text-align: center; } button { width: 150px; padding: 10px; border: none; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: #095484; font-size: 16px; color: #fff; cursor: pointer; } button:hover { background-color: #0666a3; } @media (min-width: 568px) { th, td { word-break: keep-all; } } </style> </head> <body> <div class='testbox'> <form action='/'> <h1>Orçamento gift4us</h1> <p class='question'>Solicitação de preços do Cliente </p>";
+		
 	}
-	
-	
-	private String rodapeOrcamento() {
-		String rodape = "</tbody></table></div></div></div></div></body></html>";
-		return rodape;
+
+
+	private StringBuilder pegaInicio() {
+		StringBuilder texto = new StringBuilder();
+		texto.append("<table><tr><th class='first-col'></th><th>Produto</th><th>Preço</th><th>Quantidade</th><th>Total</th></tr>");
+		return texto;
 	}
-	
-	
-	
+
+	private StringBuilder pegaCorpo() {
+		StringBuilder texto = new StringBuilder();
+		texto.append("<table class='table align-items-center table-flush'> <thead class='thead-light'> <tr> <th scope='col'>Produto</th> <th scope='col'>Preço</th> <th scope='col'>Quantidade</th> <th scope='col'>Total</th> <th scope='col'></th> </tr> </thead> <tbody> <tr> <th scope='row'> <div class='media align-items-center'> <a href='#' class='avatar rounded-circle mr-3'> <img alt='Image placeholder' src='../assets/img/theme/bootstrap.jpg'> </a> <div class='media-body'> <span class='mb-0 text-sm'>Argon Design System</span> </div> </div> </th> <td> $2,500 USD </td> <td> <span class='badge badge-dot mr-4'> <i class='bg-warning'></i> pending </span> </td> <td> <div class='avatar-group'> ddd </div> </td> <td class='text-right'> <div class='dropdown'> <a class='btn btn-sm btn-icon-only text-light' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i> </a> <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> </div> </div> </td> </tr> <tr> <th scope='row'> <div class='media align-items-center'> <a href='#' class='avatar rounded-circle mr-3'> <img alt='Image placeholder' src='../assets/img/theme/angular.jpg'> </a> <div class='media-body'> <span class='mb-0 text-sm'>Angular Now UI Kit PRO</span> </div> </div> </th> <td> $1,800 USD </td> <td> <span class='badge badge-dot'> <i class='bg-success'></i> completed </span> </td> <td> <div class='avatar-group'> mmm </div> </td> <td class='text-right'> <div class='dropdown'> <a class='btn btn-sm btn-icon-only text-light' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i> </a> <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> </div> </div> </td> </tr> <tr> <th scope='row'> <div class='media align-items-center'> <a href='#' class='avatar rounded-circle mr-3'> <img alt='Image placeholder' src='../assets/img/theme/sketch.jpg'> </a> <div class='media-body'> <span class='mb-0 text-sm'>Black Dashboard</span> </div> </div> </th> <td> $3,150 USD </td> <td> <span class='badge badge-dot mr-4'> <i class='bg-danger'></i> delayed </span> </td> <td> <div class='avatar-group'> xxx </div> </td> <td class='text-right'> <div class='dropdown'> <a class='btn btn-sm btn-icon-only text-light' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i> </a> <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> </div> </div> </td> </tr> </tbody> </table>");
+		return texto;
+		
+	}
+
+	private StringBuilder pegaRodape() {
+		
+		StringBuilder texto = new StringBuilder();
+		texto.append("</div> <div class='card-footer py-4'> <nav aria-label='...'> </nav> </div> </div> </div> </div> <footer class='footer'> <div class='row align-items-center justify-content-xl-between'> <div class='col-xl-6'> <div class='copyright text-center text-xl-left text-muted'> &copy; 2018 <a href='https://www.creative-tim.com' class='font-weight-bold ml-1' target='_blank'>Creative Tim</a> </div> </div> <div class='col-xl-6'> <ul class='nav nav-footer justify-content-center justify-content-xl-end'> <li class='nav-item'> <a href='https://www.creative-tim.com' class='nav-link' target='_blank'>Creative Tim</a> </li> <li class='nav-item'> <a href='https://www.creative-tim.com/presentation' class='nav-link' target='_blank'>About Us</a> </li> <li class='nav-item'> <a href='http://blog.creative-tim.com' class='nav-link' target='_blank'>Blog</a> </li> <li class='nav-item'> <a href='https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md' class='nav-link' target='_blank'>MIT License</a> </li> </ul> </div> </div> </footer> </div> </div>  </body>  </html>");
+		return texto;
+	}
+
 }

@@ -21,7 +21,6 @@ import br.com.gift4us.produto.ProdutoDAO;
 import br.com.gift4us.produto.ProdutoModel;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.Propriedades;
-import br.com.gift4us.util.Util;
 
 @Controller
 public class ProdutosController {

@@ -1,7 +1,7 @@
 package br.com.gift4us.orcamento;
 
 public enum OrcamentoEnum {
-	NOVO(1), RESPONDIDO(2), INATIVO(3);
+	NOVO(0), RESPONDIDO(1), INATIVO(2);
 
 	private final int valor;
 

@@ -119,10 +119,10 @@ public class LoginController {
 					nome = usuarioDoBanco.getNome();
 				}
 				
+				String corpoEmail = "";
 				String assunto = "Esqueci a senha | gift4Us";
 				String urlalterasenha ="https://gift4us.com.br/admin/alterarasenha";
-				String corpoEmail = "Prezado(a) " + nome + ", <br><br> para definir uma nova senha, utilize o código " + codigo
-						+ " <br><br> através da url abaixo: <br><br>" + urlalterasenha + "<br><br>Equipe gift4Us";
+				corpoEmail = "Prezado(a) " + nome + ", <br><br> para definir uma nova senha, utilize o código " + codigo + " <br><br> através da url abaixo: <br><br>" + urlalterasenha + "<br><br>Equipe gift4Us";
 				
 				if (enviaEmail(ambiente, TipoDeEmail.SENHA, assunto, corpoEmail, destinatario)) {
 					msg = "Email enviado com sucesso para " + usuarioDoBanco.getEmail();
@@ -287,8 +287,8 @@ public class LoginController {
 
 		String destinatario = "andrep.person@gmail.com";
 		String assunto = "Fale Conosco | gift4Us";
-		
-		String corpoEmail = "Fale Conosco | gift4Us" + 
+		String corpoEmail = "";
+		corpoEmail = "Fale Conosco | gift4Us" + 
 				"<br> nome:" + nome + "<br> email: " + email +
 				"<br> celular: " + celular + "<br> mensagem: " + mensagem + 
 				"<br> melhor pedíodo: " + periodo + "<br> entrar em contato por " + contato;
@@ -304,5 +304,7 @@ public class LoginController {
 
 		return "administracao/login/faleconosco";
 	}
+	
+	
 
 }
