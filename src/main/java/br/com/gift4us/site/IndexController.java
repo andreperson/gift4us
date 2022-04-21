@@ -255,6 +255,8 @@ public class IndexController {
 		
 		enviaEmailOrcamento(orcamento, lstCart, lstProdutos);	
 		
+		enviaEmailOrcamentoCliente(orcamento, lstProdutos);
+		
 		//limpa o carrinho
 		
 		model.addAttribute("lstProdutos", lstProdutos);
@@ -355,6 +357,38 @@ public class IndexController {
 		return cookie;
 	}
 
+	private Boolean enviaEmailOrcamentoCliente(OrcamentoModel orcamento, List<ProdutoModel> lstProdutos) {
+		boolean enviaPara=false;
+		
+		String ambiente = System.getenv("AMBIENTE");
+
+		String destinatario = orcamento.getEmail();
+		String assunto = "Orcamento Solicitado | gift4us";
+		
+		MailConfig config = new MailConfig();
+		Properties props = new Properties();
+		config = config.setConfigeProperties(configuracoesDAO);
+		props = setProps(config);
+		
+		String emailfrom = config.getEmailfrom();
+		String emailsenha = config.getSenha();
+		
+		StringBuilder corpo = new StringBuilder();
+		
+		corpo.append(pegaCabecalho(orcamento).append(pegaInicio().append(pegaCorpo(lstProdutos, true).append(pegaRodape()))));
+
+		if (ambiente.equals("producao")) {
+			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+					null);	
+		}
+		else {
+			System.out.println("email" + corpo);
+		}
+
+		return enviaPara;
+	}
+	
+	
 	private Boolean enviaEmailOrcamento(OrcamentoModel orcamento, List<Cart> lstCart, List<ProdutoModel> lstProdutos) {
 		boolean enviaPara=false;
 		
@@ -383,7 +417,7 @@ public class IndexController {
 			lstPrdAnunciante = new ArrayList<ProdutoModel>();
 			lstPrdAnunciante = produtoDAO.listaProdutosDoCarrinhoPorAnunciante(extracaoProdutosIds(lstCart), anu);
 			
-				corpo.append(pegaCabecalho(orcamento).append(pegaInicio().append(pegaCorpo(lstPrdAnunciante).append(pegaRodape()))));
+				corpo.append(pegaCabecalho(orcamento).append(pegaInicio().append(pegaCorpo(lstPrdAnunciante, false).append(pegaRodape()))));
 				
 				if (ambiente.equals("producao")) {
 					enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
@@ -423,8 +457,9 @@ public class IndexController {
 		texto.append("<table class='table align-items-center table-flush'> <thead class='thead-light'> <tr style='background:#999; color:#fff'> <th scope='col'>Produto</th> <th scope='col'>Preço</th> <th scope='col'>Quantidade</th> <th scope='col'>Total</th> <th scope='col'></th> </tr> </thead>");
 		return texto;
 	}
-
-	private StringBuilder pegaCorpo(List<ProdutoModel> lstProdutos) {
+	
+	
+	private StringBuilder pegaCorpo(List<ProdutoModel> lstProdutos, Boolean cliente) {
 		Double precocomdesconto = null;
 		Double precoxqtde= (double) 0;
 		Double totalgeral= (double) 0;
@@ -445,7 +480,12 @@ public class IndexController {
 
 			texto.append("<tr style='background:#f7f7f7'><td class='first-col'><a href='../../site/produtos/produto/'" + prd.getId() + "'>");
 			texto.append("<img src='https://gift4us.com.br/' alt='' width='40px;' class='img-thumbnail' /></a> &nbsp;&nbsp;&nbsp;");
-			texto.append("<small>" + prd.getTitulo() + "</small></td>");
+			if(cliente) {
+				texto.append("<small>" + prd.getTitulo() + " - de: " + prd.getAnunciante().getFantasia() + "</small></td>");
+			}
+			else {
+				texto.append("<small>" + prd.getTitulo() + "</small></td>");	
+			}
 			texto.append("<td>" + precocomdesconto + "</td>");
 			texto.append("<td>" + prd.getQtdademin() + "</td>");
 			texto.append("<td>" + precoxqtde + "</td></tr>");
@@ -460,7 +500,7 @@ public class IndexController {
 		return texto;
 		
 	}
-
+	
 	private StringBuilder pegaRodape() {
 		
 		StringBuilder texto = new StringBuilder();
