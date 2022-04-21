@@ -1,12 +1,17 @@
 package br.com.gift4us.site;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Currency;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -194,7 +199,7 @@ public class IndexController {
 		if (cookie != null) {
 			if(cookie.getValue() != ""){
 				lstCart = extracaoProdutosDoCookie(cookie.getValue());
-				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoIds(lstCart));
+				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoProdutosIds(lstCart));
 				insereQtdes(lstProdutos, lstCart);
 			}
 
@@ -217,13 +222,11 @@ public class IndexController {
 		if (cookie != null) {
 			if(cookie.getValue() != ""){
 				lstCart = extracaoProdutosDoCookie(cookie.getValue());
-				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoIds(lstCart));
+				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoProdutosIds(lstCart));
 				insereQtdes(lstProdutos, lstCart);
 			}
 
 		}
-		
-		//enviaEmailOrcamento();
 		
 		OrcamentoModel orcamento = new OrcamentoModel();
 		model.addAttribute("orcamento", orcamento);
@@ -243,14 +246,14 @@ public class IndexController {
 		if (cookie != null) {
 			if(cookie.getValue() != ""){
 				lstCart = extracaoProdutosDoCookie(cookie.getValue());
-				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoIds(lstCart));
+				lstProdutos = produtoDAO.listaProdutosDoCarrinho(extracaoProdutosIds(lstCart));
 				insereQtdes(lstProdutos, lstCart);
 			}
 		}
 		
 		gravaOrcamento(lstProdutos, orcamento);
 		
-		enviaEmailOrcamento(lstProdutos);	
+		enviaEmailOrcamento(orcamento, lstCart, lstProdutos);	
 		
 		//limpa o carrinho
 		
@@ -292,7 +295,7 @@ public class IndexController {
 		return lstProdutos;
 	}
 
-	private List<Long> extracaoIds(List<Cart> lst) {
+	private List<Long> extracaoProdutosIds(List<Cart> lst) {
 		List<Long> lstIds = new ArrayList<Long>();
 		Long id;
 
@@ -304,6 +307,22 @@ public class IndexController {
 		return lstIds;
 	}
 
+	private List<AnuncianteModel> extracaoAnuncianteIds(List<ProdutoModel> lst) {
+		List<AnuncianteModel> lstAnunciante = new ArrayList<AnuncianteModel>();
+		Set<AnuncianteModel> set = new HashSet<AnuncianteModel>();
+		AnuncianteModel anunciante = new AnuncianteModel();
+
+		for (ProdutoModel prd: lst) {
+			anunciante = new AnuncianteModel();
+			anunciante = prd.getAnunciante();
+			set.add(anunciante);
+		}
+		
+		lstAnunciante.addAll(set);
+
+		return lstAnunciante;
+	}
+	
 	private List<Cart> extracaoProdutosDoCookie(String cookie) {
 
 		String[] arrayCookie = cookie.split("-");
@@ -336,17 +355,13 @@ public class IndexController {
 		return cookie;
 	}
 
-	private Boolean enviaEmailOrcamento(List<ProdutoModel> lstProdutos) {
+	private Boolean enviaEmailOrcamento(OrcamentoModel orcamento, List<Cart> lstCart, List<ProdutoModel> lstProdutos) {
 		boolean enviaPara=false;
 		
-		
-		String cabecalho = pegaCabecalho();
-		String rodape = "</table><p>&nbsp;</p><hr>";
-		String corpo = "";
 		String ambiente = System.getenv("AMBIENTE");
 
 		String destinatario = "andrep.person@gmail.com";
-		String assunto = "Orçamento | gift4Us";
+		String assunto = "Orcamento | gift4us";
 		
 		MailConfig config = new MailConfig();
 		Properties props = new Properties();
@@ -355,48 +370,21 @@ public class IndexController {
 		
 		String emailfrom = config.getEmailfrom();
 		String emailsenha = config.getSenha();
-		
-			System.out.println("vai enviar email");
-			
-			Long ultimoAnunciante =0l;
-			Boolean enviou = false;
-			Double precocomdesconto = null;
-			Double precoxqtde= null;
-			for (ProdutoModel prd : lstProdutos) {
-				if (prd.getAnunciante().getId() != ultimoAnunciante && (ultimoAnunciante != 0)) {
-					//manda email
-					corpo = cabecalho + corpo + rodape;
-					if (ambiente.equals("producao")) {
-						enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
-								null);	
-					}
-					else {
-						System.out.println("email" + corpo);
-					}
-					corpo=cabecalho;
-					enviou = true;
-				}
-				
-				if(prd.getDesconto() != null) {
-					precocomdesconto = prd.getPreco() - (prd.getPreco() * prd.getDesconto());
-				}
-				else {
-					precocomdesconto = prd.getPreco();
-				}
-				
-				precoxqtde = prd.getQtdademin() * precocomdesconto;
-				corpo += "<tr><td class='first-col'><a href='../../site/produtos/produto/'" + prd.getId() + "'>"
-						+ "<img src='https://gift4us.com.br/' alt='' width='40px;' class='img-thumbnail' /></a> &nbsp;&nbsp;&nbsp;"
-						+ "<small>" + prd.getTitulo() + "</small></td>"
-						+ "<td>" + precocomdesconto + "</td>"
-						+ "<td>" + prd.getQtdademin() + "</td>"
-						+ "<td>" + precoxqtde + "</td></tr>";
 
-				ultimoAnunciante = prd.getAnunciante().getId();
-				enviou = false;
-			}
-			if(!enviou) {
-				corpo = cabecalho + corpo + rodape;
+		
+		List<ProdutoModel> lstPrdAnunciante = new ArrayList<ProdutoModel>();
+		List<AnuncianteModel> lstAnunciante = new ArrayList<AnuncianteModel>();
+		lstAnunciante = extracaoAnuncianteIds(lstProdutos);
+		
+		StringBuilder corpo = new StringBuilder();
+		
+		
+		for (AnuncianteModel anu : lstAnunciante) {
+			lstPrdAnunciante = new ArrayList<ProdutoModel>();
+			lstPrdAnunciante = produtoDAO.listaProdutosDoCarrinhoPorAnunciante(extracaoProdutosIds(lstCart), anu);
+			
+				corpo.append(pegaCabecalho(orcamento).append(pegaInicio().append(pegaCorpo(lstPrdAnunciante).append(pegaRodape()))));
+				
 				if (ambiente.equals("producao")) {
 					enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
 							null);	
@@ -404,8 +392,7 @@ public class IndexController {
 				else {
 					System.out.println("email" + corpo);
 				}
-			}
-			
+		}
 		return enviaPara;
 	}
 	
@@ -421,22 +408,55 @@ public class IndexController {
 	}
 	
 	
-	private String pegaCabecalho() {
-	
-		return "<!DOCTYPE html> <html> <head> <title>Orcamento gift4us</title> <style> html, body { min-height: 100%; } body, div, form, input, p { padding: 0; margin: 0; outline: none; font-family: Roboto, Arial, sans-serif; font-size: 14px; color: #666; line-height: 22px; } h1 { font-weight: 400; } .testbox { display: flex; justify-content: center; align-items: center; height: inherit; padding: 3px; } form { width: 100%; padding: 20px; background: #fff; box-shadow: 0 2px 5px #ccc; } input { width: calc(100% - 10px); padding: 5px; border: 1px solid #ccc; border-radius: 3px; vertical-align: middle; } input:hover, textarea:hover { outline: none; border: 1px solid #095484; } th, td { width: 28%; padding: 15px 0; border-bottom: 1px solid #ccc; text-align: center; vertical-align: unset; line-height: 18px; font-weight: 400; word-break: break-all; } .first-col { width: 16%; text-align: left; } textarea:hover { outline: none; border: 1px solid #1c87c9; } table { width: 100%; } textarea { width: calc(100% - 6px); } .question { padding: 15px 0 5px; color: #095484; } .question-answer label { display: block; padding: 0 20px 10px 0; } .question-answer input { width: auto; } .btn-block { margin-top: 20px; text-align: center; } button { width: 150px; padding: 10px; border: none; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: #095484; font-size: 16px; color: #fff; cursor: pointer; } button:hover { background-color: #0666a3; } @media (min-width: 568px) { th, td { word-break: keep-all; } } </style> </head> <body> <div class='testbox'> <form action='/'> <h1>Orçamento gift4us</h1> <p class='question'>Solicitação de preços do Cliente </p>";
-		
+	private StringBuilder pegaCabecalho(OrcamentoModel orcamento) {
+		StringBuilder texto = new StringBuilder();
+		texto.append("<!DOCTYPE html> <html> <head> <title>Orcamento gift4us</title> <style> html, body { min-height: 100%; } body, div, form, input, p { padding: 0; margin: 0; outline: none; font-family: Roboto, Arial, sans-serif; font-size: 14px; color: #666; line-height: 22px; } h1 { font-weight: 400; } .testbox { display: flex; justify-content: center; align-items: center; height: inherit; padding: 3px; } form { width: 100%; padding: 20px; background: #fff; box-shadow: 0 2px 5px #ccc; } input { width: calc(100% - 10px); padding: 5px; border: 1px solid #ccc; border-radius: 3px; vertical-align: middle; } input:hover, textarea:hover { outline: none; border: 1px solid #095484; } th, td { width: 28%; padding: 15px 0; border-bottom: 1px solid #ccc; text-align: center; vertical-align: unset; line-height: 18px; font-weight: 400; word-break: break-all; } .first-col { width: 16%; text-align: left; } textarea:hover { outline: none; border: 1px solid #1c87c9; } table { width: 100%; } textarea { width: calc(100% - 6px); } .question { padding: 15px 0 5px; color: #095484; } .question-answer label { display: block; padding: 0 20px 10px 0; } .question-answer input { width: auto; } .btn-block { margin-top: 20px; text-align: center; } button { width: 150px; padding: 10px; border: none; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; background-color: #095484; font-size: 16px; color: #fff; cursor: pointer; } button:hover { background-color: #0666a3; } @media (min-width: 568px) { th, td { word-break: keep-all; } } </style> </head> <body> <div class='testbox'> <form action='/'> <h1>Orçamento gift4us</h1> <p class='question'>");
+		texto.append("Solicitação de preços<br><br> ");
+		texto.append("Cliente <br>" + orcamento.getNome() + " <br> " + orcamento.getEmail() + "<br>" + orcamento.getDdd() + " " + orcamento.getCelular() + "</p>");
+		return texto;
 	}
 
 
 	private StringBuilder pegaInicio() {
 		StringBuilder texto = new StringBuilder();
-		texto.append("<table><tr><th class='first-col'></th><th>Produto</th><th>Preço</th><th>Quantidade</th><th>Total</th></tr>");
+		texto.append("<br><br>");
+		texto.append("<table class='table align-items-center table-flush'> <thead class='thead-light'> <tr style='background:#999; color:#fff'> <th scope='col'>Produto</th> <th scope='col'>Preço</th> <th scope='col'>Quantidade</th> <th scope='col'>Total</th> <th scope='col'></th> </tr> </thead>");
 		return texto;
 	}
 
-	private StringBuilder pegaCorpo() {
+	private StringBuilder pegaCorpo(List<ProdutoModel> lstProdutos) {
+		Double precocomdesconto = null;
+		Double precoxqtde= (double) 0;
+		Double totalgeral= (double) 0;
 		StringBuilder texto = new StringBuilder();
-		texto.append("<table class='table align-items-center table-flush'> <thead class='thead-light'> <tr> <th scope='col'>Produto</th> <th scope='col'>Preço</th> <th scope='col'>Quantidade</th> <th scope='col'>Total</th> <th scope='col'></th> </tr> </thead> <tbody> <tr> <th scope='row'> <div class='media align-items-center'> <a href='#' class='avatar rounded-circle mr-3'> <img alt='Image placeholder' src='../assets/img/theme/bootstrap.jpg'> </a> <div class='media-body'> <span class='mb-0 text-sm'>Argon Design System</span> </div> </div> </th> <td> $2,500 USD </td> <td> <span class='badge badge-dot mr-4'> <i class='bg-warning'></i> pending </span> </td> <td> <div class='avatar-group'> ddd </div> </td> <td class='text-right'> <div class='dropdown'> <a class='btn btn-sm btn-icon-only text-light' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i> </a> <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> </div> </div> </td> </tr> <tr> <th scope='row'> <div class='media align-items-center'> <a href='#' class='avatar rounded-circle mr-3'> <img alt='Image placeholder' src='../assets/img/theme/angular.jpg'> </a> <div class='media-body'> <span class='mb-0 text-sm'>Angular Now UI Kit PRO</span> </div> </div> </th> <td> $1,800 USD </td> <td> <span class='badge badge-dot'> <i class='bg-success'></i> completed </span> </td> <td> <div class='avatar-group'> mmm </div> </td> <td class='text-right'> <div class='dropdown'> <a class='btn btn-sm btn-icon-only text-light' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i> </a> <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> </div> </div> </td> </tr> <tr> <th scope='row'> <div class='media align-items-center'> <a href='#' class='avatar rounded-circle mr-3'> <img alt='Image placeholder' src='../assets/img/theme/sketch.jpg'> </a> <div class='media-body'> <span class='mb-0 text-sm'>Black Dashboard</span> </div> </div> </th> <td> $3,150 USD </td> <td> <span class='badge badge-dot mr-4'> <i class='bg-danger'></i> delayed </span> </td> <td> <div class='avatar-group'> xxx </div> </td> <td class='text-right'> <div class='dropdown'> <a class='btn btn-sm btn-icon-only text-light' href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i> </a> <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'> <a class='dropdown-item' href='#'>Action</a> <a class='dropdown-item' href='#'>Another action</a> <a class='dropdown-item' href='#'>Something else here</a> </div> </div> </td> </tr> </tbody> </table>");
+		texto.append("<tbody>");
+		
+		for (ProdutoModel prd : lstProdutos) {
+			
+			if(prd.getDesconto() != null) {
+				precocomdesconto = prd.getPreco() - (prd.getPreco() * prd.getDesconto());
+			}
+			else {
+				precocomdesconto = prd.getPreco();
+			}
+			
+			precoxqtde = prd.getQtdademin() * precocomdesconto;
+			totalgeral += precoxqtde; 
+
+			texto.append("<tr style='background:#f7f7f7'><td class='first-col'><a href='../../site/produtos/produto/'" + prd.getId() + "'>");
+			texto.append("<img src='https://gift4us.com.br/' alt='' width='40px;' class='img-thumbnail' /></a> &nbsp;&nbsp;&nbsp;");
+			texto.append("<small>" + prd.getTitulo() + "</small></td>");
+			texto.append("<td>" + precocomdesconto + "</td>");
+			texto.append("<td>" + prd.getQtdademin() + "</td>");
+			texto.append("<td>" + precoxqtde + "</td></tr>");
+		}
+		
+	texto.append("<tr style='background:#f7f7f7; color:blue'><td>&nbsp;</td>");
+		texto.append("<td></td>");
+		texto.append("<td>Total: </td>");
+		texto.append("<td>" + totalgeral + "</td></tr>");
+		texto.append("</tbody></table>");
+		
 		return texto;
 		
 	}
@@ -444,8 +464,18 @@ public class IndexController {
 	private StringBuilder pegaRodape() {
 		
 		StringBuilder texto = new StringBuilder();
-		texto.append("</div> <div class='card-footer py-4'> <nav aria-label='...'> </nav> </div> </div> </div> </div> <footer class='footer'> <div class='row align-items-center justify-content-xl-between'> <div class='col-xl-6'> <div class='copyright text-center text-xl-left text-muted'> &copy; 2018 <a href='https://www.creative-tim.com' class='font-weight-bold ml-1' target='_blank'>Creative Tim</a> </div> </div> <div class='col-xl-6'> <ul class='nav nav-footer justify-content-center justify-content-xl-end'> <li class='nav-item'> <a href='https://www.creative-tim.com' class='nav-link' target='_blank'>Creative Tim</a> </li> <li class='nav-item'> <a href='https://www.creative-tim.com/presentation' class='nav-link' target='_blank'>About Us</a> </li> <li class='nav-item'> <a href='http://blog.creative-tim.com' class='nav-link' target='_blank'>Blog</a> </li> <li class='nav-item'> <a href='https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md' class='nav-link' target='_blank'>MIT License</a> </li> </ul> </div> </div> </footer> </div> </div>  </body>  </html>");
+		texto.append(" <br><br><div class='card-footer py-4'> <nav aria-label='...'> </nav> </div> ");
+		texto.append("<footer class='footer'> <div class='row align-items-center justify-content-xl-between'> <div class='col-xl-6'> <hr>" + pegaDataAtual() + "</div>  </div> </footer>  </body>  </html>");
 		return texto;
 	}
+	
+	
+	private String pegaDataAtual() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date).toString();
+		
+	}
+	
 
 }

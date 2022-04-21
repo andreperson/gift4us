@@ -93,6 +93,16 @@ public class ProdutoDAO {
 		return lst;
 	}
 	
+	public List<ProdutoModel> listaProdutosDoCarrinhoPorAnunciante(List<Long> ids, AnuncianteModel anunciante) {
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.id IN :ids and p.anunciante = :anunciante order by p.anunciante";
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+		query.setParameter("ids", ids);
+		query.setParameter("anunciante", anunciante);
+		List<ProdutoModel> lst = query.getResultList();
+		
+		return lst;
+	}
+	
 	
 	public List<ProdutoShow> buscaProdutosParaCarrinho(String ids) {
 

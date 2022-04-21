@@ -17,7 +17,7 @@ public class Mail {
 	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	public static boolean EnviarEmail(Properties props, final String emailfrom, final String password,
-			String mensagemHtml, String assunto, String to, String attachFile, String[] copias) {
+			StringBuilder mensagemHtml, String assunto, String to, String attachFile, String[] copias) {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
