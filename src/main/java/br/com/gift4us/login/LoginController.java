@@ -155,7 +155,7 @@ public class LoginController {
 		String emailsenha = config.getSenha();
 
 		if (ambiente.equals("producao")) {
-			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo.toString(), assunto, destinatario, null,
 					null);	
 		}
 		else {

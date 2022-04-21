@@ -376,7 +376,7 @@ public class IndexController {
 		corpo.append(pegaCabecalho(orcamento).append(pegaInicio().append(pegaCorpo(lstProdutos, true).append(pegaRodape()))));
 
 		if (ambiente.equals("producao")) {
-			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo.toString(), assunto, destinatario, null,
 					null);	
 		}
 		else {
@@ -419,7 +419,7 @@ public class IndexController {
 				corpo.append(pegaCabecalho(orcamento).append(pegaInicio().append(pegaCorpo(lstPrdAnunciante, false).append(pegaRodape()))));
 				
 				if (ambiente.equals("producao")) {
-					enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+					enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo.toString(), assunto, destinatario, null,
 							null);	
 				}
 				else {
