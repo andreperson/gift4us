@@ -58,5 +58,16 @@ public class Propriedades {
 	public String getValor(String chave) {
 		return this.props.getProperty(chave);
 	}
+	
+	public Properties setProps(MailConfig config ) {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", config.getAuth());
+		props.put("mail.smtp.ssl.trust", config.getTrust());
+		props.put("mail.smtp.host", config.getSmtp());
+		props.put("mail.MailTransport.protocol", config.getProtocol());
+		props.put("mail.smtp.port", config.getPort());
+		
+		return props;
+	}
 
 }

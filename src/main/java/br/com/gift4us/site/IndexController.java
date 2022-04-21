@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,9 +32,7 @@ import br.com.gift4us.campanha.CampanhaDAO;
 import br.com.gift4us.campanha.CampanhaModel;
 import br.com.gift4us.cart.Cart;
 import br.com.gift4us.categoria.CategoriaDAO;
-import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
-import br.com.gift4us.enuns.TipoDeEmail;
 import br.com.gift4us.linha.LinhaDAO;
 import br.com.gift4us.linha.LinhaModel;
 import br.com.gift4us.mail.Mail;
@@ -43,12 +40,12 @@ import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Sucesso;
 import br.com.gift4us.orcamento.OrcamentoDAO;
-import br.com.gift4us.orcamento.OrcamentoEnum;
 import br.com.gift4us.orcamento.OrcamentoModel;
 import br.com.gift4us.produto.ProdutoDAO;
 import br.com.gift4us.produto.ProdutoModel;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.MailConfig;
+import br.com.gift4us.util.OrcamentoEnum;
 import br.com.gift4us.util.Propriedades;
 
 @Controller
@@ -365,10 +362,11 @@ public class IndexController {
 		String destinatario = orcamento.getEmail();
 		String assunto = "Orcamento Solicitado | gift4us";
 		
+		Propriedades util = new Propriedades();
 		MailConfig config = new MailConfig();
 		Properties props = new Properties();
 		config = config.setConfigeProperties(configuracoesDAO);
-		props = setProps(config);
+		props = util.setProps(config);
 		
 		String emailfrom = config.getEmailfrom();
 		String emailsenha = config.getSenha();
@@ -397,10 +395,11 @@ public class IndexController {
 		String destinatario = "andrep.person@gmail.com";
 		String assunto = "Orcamento | gift4us";
 		
+		Propriedades util = new Propriedades();
 		MailConfig config = new MailConfig();
 		Properties props = new Properties();
 		config = config.setConfigeProperties(configuracoesDAO);
-		props = setProps(config);
+		props = util.setProps(config);
 		
 		String emailfrom = config.getEmailfrom();
 		String emailsenha = config.getSenha();
@@ -429,18 +428,6 @@ public class IndexController {
 		}
 		return enviaPara;
 	}
-	
-	private Properties setProps(MailConfig config ) {
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", config.getAuth());
-		props.put("mail.smtp.ssl.trust", config.getTrust());
-		props.put("mail.smtp.host", config.getSmtp());
-		props.put("mail.MailTransport.protocol", config.getProtocol());
-		props.put("mail.smtp.port", config.getPort());
-		
-		return props;
-	}
-	
 	
 	private StringBuilder pegaCabecalho(OrcamentoModel orcamento) {
 		StringBuilder texto = new StringBuilder();

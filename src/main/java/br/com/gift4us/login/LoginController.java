@@ -23,6 +23,8 @@ import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.usuario.UsuarioAdaptador;
 import br.com.gift4us.usuario.UsuarioDAO;
 import br.com.gift4us.usuario.UsuarioModel;
+import br.com.gift4us.util.MailConfig;
+import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.anunciante.AnuncianteModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.enuns.TipoDeEmail;
@@ -119,12 +121,12 @@ public class LoginController {
 					nome = usuarioDoBanco.getNome();
 				}
 				
-				String corpoEmail = "";
+				StringBuilder corpo = new StringBuilder();
 				String assunto = "Esqueci a senha | gift4Us";
 				String urlalterasenha ="https://gift4us.com.br/admin/alterarasenha";
-				corpoEmail = "Prezado(a) " + nome + ", <br><br> para definir uma nova senha, utilize o código " + codigo + " <br><br> através da url abaixo: <br><br>" + urlalterasenha + "<br><br>Equipe gift4Us";
+				corpo.append("Prezado(a) " + nome + ", <br><br> para definir uma nova senha, utilize o código " + codigo + " <br><br> através da url abaixo: <br><br>" + urlalterasenha + "<br><br>Equipe gift4Us");
 				
-				if (enviaEmail(ambiente, TipoDeEmail.SENHA, assunto, corpoEmail, destinatario)) {
+				if (enviaEmail(ambiente, TipoDeEmail.SENHA, assunto, corpo, destinatario)) {
 					msg = "Email enviado com sucesso para " + usuarioDoBanco.getEmail();
 				}
 				else {
@@ -140,43 +142,27 @@ public class LoginController {
 		return "administracao/login/esqueciasenha";
 	}
 
-	private Boolean enviaEmail(String ambiente, TipoDeEmail tipodeemail, String assunto, String corpo, String destinatario) {
+	private Boolean enviaEmail(String ambiente, TipoDeEmail tipodeemail, String assunto, StringBuilder corpo, String destinatario) {
 
-		String mail_emailfrom = configuracoesDAO.buscarPeloNomeDaPropriedade("mailfrom").getValor();
-		String mail_senha = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsenha").getValor();
-		String mail_porta = configuracoesDAO.buscarPeloNomeDaPropriedade("mailporta").getValor();
-		String mail_smtp = configuracoesDAO.buscarPeloNomeDaPropriedade("mailsmtp").getValor();
-		String mail_auth = configuracoesDAO.buscarPeloNomeDaPropriedade("mailauth").getValor();
-		String mail_trust = configuracoesDAO.buscarPeloNomeDaPropriedade("mailtrust").getValor();
-		String mail_protocol = configuracoesDAO.buscarPeloNomeDaPropriedade("mailprotocol").getValor();
-
-		System.out.println("from: " + mail_emailfrom);
-		System.out.println("senha: " + mail_senha);
-		System.out.println("porta: " + mail_porta);
-		System.out.println("smtp: " + mail_smtp);
-		System.out.println("auth: " + mail_auth);
-		System.out.println("trust: " + mail_trust);
-		System.out.println("protocol: " + mail_protocol);
-		
-		
+		Boolean enviaPara = false;
+		Propriedades util = new Propriedades();
+		MailConfig config = new MailConfig();
 		Properties props = new Properties();
-		props.put("mail.smtp.auth", mail_auth);
-		props.put("mail.smtp.ssl.trust", mail_trust);
-		props.put("mail.smtp.host", mail_smtp);
-		props.put("mail.MailTransport.protocol", mail_protocol);
-		props.put("mail.smtp.port", mail_porta);
+		config = config.setConfigeProperties(configuracoesDAO);
+		props = util.setProps(config);
+		
+		String emailfrom = config.getEmailfrom();
+		String emailsenha = config.getSenha();
 
-		boolean enviaPara=false;
-		
-		System.out.println("Ambiente: " + ambiente);
-		
 		if (ambiente.equals("producao")) {
-		
-			System.out.println("Entrou para enviar email");
-			
-			enviaPara = Mail.EnviarEmail(props, mail_emailfrom, mail_senha, corpo, assunto, destinatario, null,
-				null);
+			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo, assunto, destinatario, null,
+					null);	
 		}
+		else {
+			System.out.println("email" + corpo);
+		}
+		
+		
 		return enviaPara;
 	}
 
@@ -287,13 +273,13 @@ public class LoginController {
 
 		String destinatario = "andrep.person@gmail.com";
 		String assunto = "Fale Conosco | gift4Us";
-		String corpoEmail = "";
-		corpoEmail = "Fale Conosco | gift4Us" + 
-				"<br> nome:" + nome + "<br> email: " + email +
-				"<br> celular: " + celular + "<br> mensagem: " + mensagem + 
-				"<br> melhor pedíodo: " + periodo + "<br> entrar em contato por " + contato;
+		StringBuilder corpo = new StringBuilder();
+		corpo.append("Fale Conosco | gift4Us"); 
+		corpo.append("<br> nome:" + nome + "<br> email: " + email);
+		corpo.append("<br> celular: " + celular + "<br> mensagem: " + mensagem); 
+		corpo.append("<br> melhor pedíodo: " + periodo + "<br> entrar em contato por " + contato);
 		
-		if (enviaEmail(ambiente, TipoDeEmail.FALECONOSCO, assunto, corpoEmail, destinatario)) {
+		if (enviaEmail(ambiente, TipoDeEmail.FALECONOSCO, assunto, corpo, destinatario)) {
 			msg = "Seu email foi enviado com sucesso! <br> Respondemos rapidinho, obrigado pelo contato!";
 		}
 		else {
