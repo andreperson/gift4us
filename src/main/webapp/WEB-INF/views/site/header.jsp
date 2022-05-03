@@ -57,11 +57,13 @@
 				<!-- Mini Cart Start-->
 				<div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<div id="cart">
-						<button type="button" data-toggle="dropdown"
-							data-loading-text="Loading..." class="heading dropdown-toggle">
-							<span class="cart-icon pull-left flip"></span> <span
-								id="cart-total">2 item(s) - $1,132.00</span>
-						</button>
+						<a href="${url }/cart">
+							<button type="button" data-toggle="dropdown"
+								data-loading-text="Loading..." class="heading dropdown-toggle">
+								<span class="cart-icon pull-left flip"></span> <span
+									id="cart-total"><span id="somacarrinho"></span> item(s)</span>
+							</button>
+						</a>
 						<ul class="dropdown-menu">
 							<li>
 								<table class="table">

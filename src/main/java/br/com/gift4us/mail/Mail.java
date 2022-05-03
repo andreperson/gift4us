@@ -42,7 +42,8 @@ public class Mail {
 				multipart.addBodyPart(attachPart);
 			}
 
-			message.setContent(multipart);
+			message.setContent(mensagemHtml, "text/html; charset=utf-8");
+			//message.setContent(multipart);
 
 			message.setFrom(new InternetAddress(emailfrom));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));

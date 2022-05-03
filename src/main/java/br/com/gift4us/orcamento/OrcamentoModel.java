@@ -49,6 +49,23 @@ public class OrcamentoModel implements Serializable  {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataIncl;
+	
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioOrcamentoNome")
+	@Column(length = 100)
+	private String nome;
+	
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioOrcamentoEmail")
+	@Column(length = 100)
+	private String email;
+	
+	@Column(length = 2)
+	private String ddd;
+	
+	@Column(length = 10)
+	private String celular;
+
+	@Column(length = 1)
+	private Integer status;
 
 	@ManyToOne
 	private ProdutoModel produto;
@@ -62,13 +79,17 @@ public class OrcamentoModel implements Serializable  {
 	public OrcamentoModel(){
 	}
 
-	public OrcamentoModel(Long id, Integer quantidade, Calendar dataIncl, ProdutoModel produto, List<AnuncianteModel> listaDeAnunciante, AnuncianteModel anunciante) {
+	public OrcamentoModel(Long id, Integer quantidade, Calendar dataIncl, ProdutoModel produto, List<AnuncianteModel> listaDeAnunciante, AnuncianteModel anunciante, String nome, String email, String ddd, String celular) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.dataIncl = dataIncl;
 		this.produto = produto;
 		this.listaDeAnunciante = listaDeAnunciante;
 		this.anunciante = anunciante;
+		this.nome = nome;
+		this.email = email;
+		this.ddd = ddd;
+		this.celular = celular;
 	}
 
 	public Long getId() {
@@ -94,6 +115,38 @@ public class OrcamentoModel implements Serializable  {
 	public void setDataIncl(Calendar dataIncl) {
 		this.dataIncl = dataIncl;
 	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getDdd() {
+		return ddd;
+	}
+
+	public void setDdd(String ddd) {
+		this.ddd = ddd;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
 
 	public ProdutoModel getProduto() {
 		return produto;
@@ -109,6 +162,14 @@ public class OrcamentoModel implements Serializable  {
 
 	public void setAnunciante(AnuncianteModel anunciante) {
 		this.anunciante = anunciante;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public List<AnuncianteModel> getListaDeAnunciante() {

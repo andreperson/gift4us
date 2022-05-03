@@ -5,6 +5,8 @@ public class ListaDeURLs {
 	public final static String INDEX = "/site/index";
 	public final static String HOME = "/administracao/home";
 	public final static String HOME_SITE = "/site/index";
+	public final static String CART = "/site/index/cart";
+	public final static String CHECKOUT = "/site/index/checkout";
 	public final static String LOGOUT = "/logout";
 	public final static String LOGIN = "/login";
 	public final static String ESQUECI_A_SENHA = "/esqueciasenha";
@@ -13,6 +15,11 @@ public class ListaDeURLs {
 	public final static String FALECONOSCO = "/faleconosco";
 	public final static String FALOUCONOSCO = "/falouconosco";
 
+	
+	
+	//site
+	public final static String SITE_LOGIN = "/site/login";
+	
 	public final static String SERVICO_DE_TOTALDEPRODUTOS = "/administracao/service/produtototal";
 	
 	public final static String PRODUTOS_LISTA = "/site/produtos/lista";

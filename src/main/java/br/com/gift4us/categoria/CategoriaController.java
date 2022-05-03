@@ -6,36 +6,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.core.io.FileSystemResource;
 import javax.validation.Valid;
 import org.springframework.ui.Model;
 
 import java.util.Calendar;
 import java.util.List;
-import java.lang.reflect.Method;
-import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
-import br.com.gift4us.util.AbrirOuBaixarArquivo;
 import br.com.gift4us.util.FileUploader;
 import br.com.gift4us.util.Propriedades;
-import br.com.gift4us.util.UploadDeArquivo;
-import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Alerta;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
 import br.com.gift4us.status.StatusEnum;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
 import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
-import br.com.gift4us.mensagensdosistema.MensagensDoSistemaModel;
 
 @Controller
 public class CategoriaController {

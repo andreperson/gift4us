@@ -84,31 +84,64 @@ public class ProdutoDAO {
 		return query.getResultList();
 	}
 	
-	public List<ProdutoShow> ConvertModelToShow(List<ProdutoModel> lstmodel) {
+	public List<ProdutoModel> listaProdutosDoCarrinho(List<Long> ids) {
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.id IN :ids order by p.anunciante";
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+		query.setParameter("ids", ids);
+		List<ProdutoModel> lst = query.getResultList();
+		
+		return lst;
+	}
+	
+	public List<ProdutoModel> listaProdutosDoCarrinhoPorAnunciante(List<Long> ids, AnuncianteModel anunciante) {
+		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.id IN :ids and p.anunciante = :anunciante order by p.anunciante";
+		TypedQuery<ProdutoModel> query = manager.createQuery(jpql, ProdutoModel.class);
+		query.setParameter("ids", ids);
+		query.setParameter("anunciante", anunciante);
+		List<ProdutoModel> lst = query.getResultList();
+		
+		return lst;
+	}
+	
+	
+	public List<ProdutoShow> buscaProdutosParaCarrinho(String ids) {
+
+		String sql = "SELECT id, titulo, imagem, preco FROM Produto WHERE id in (" + ids + ")";
+		List<Object> produtos = manager.createNativeQuery(sql).getResultList();
+		List<ProdutoShow> lstProdutos = new ArrayList<ProdutoShow>();		
+		lstProdutos = ConvertModelToShow(produtos);
+		return lstProdutos;
+	}
+	
+	
+	
+	public List<ProdutoShow> ConvertModelToShow(List<Object> lstProdutos) {
 		List<ProdutoShow> lstShow = new ArrayList<ProdutoShow>();
 		ProdutoShow obj = new ProdutoShow();
 		
-		for (ProdutoModel model : lstmodel) {
+		
+		
+		 for (Object prd : lstProdutos) {
 			obj = new ProdutoShow();
-			obj.setAnunciante(model.getAnunciante());
-			obj.setBrevedescricao(model.getBrevedescricao());
-			obj.setCategoria(model.getCategoria());
-			obj.setCodigo(model.getCodigo());
-			obj.setDataAlt(model.getDataAlt());
-			obj.setDataIncl(model.getDataIncl());
-			obj.setDescricaocompleta(model.getDescricaocompleta());
-			obj.setEstoque(model.getEstoque());
-			obj.setFaixaDePreco(model.getFaixaDePreco());
-			obj.setId(model.getId());
-			obj.setImagem(model.getImagem());
-			obj.setPreco(model.getPreco());
-			obj.setQtdademin(model.getQtdademin());
-			obj.setStatus(model.getStatus());
-			obj.setSubCategoria(model.getSubCategoria());
-			obj.setTag(model.getTag());
-			obj.setTitulo(model.getTitulo());
-			obj.setUrlanunciante(model.getUrlanunciante());
+			//obj.setBrevedescricao(prd[0]);
+//			obj.setCategoria(model.getCategoria());
+//			obj.setCodigo(model.getCodigo());
+//			obj.setDataAlt(model.getDataAlt());
+//			obj.setDataIncl(model.getDataIncl());
+//			obj.setDescricaocompleta(model.getDescricaocompleta());
+//			obj.setEstoque(model.getEstoque());
+//			obj.setFaixaDePreco(model.getFaixaDePreco());
+//			obj.setId(model.getId());
+//			obj.setImagem(model.getImagem());
+//			obj.setPreco(model.getPreco());
+//			obj.setQtdademin(model.getQtdademin());
+//			obj.setStatus(model.getStatus());
+//			obj.setSubCategoria(model.getSubCategoria());
+//			obj.setTag(model.getTag());
+//			obj.setTitulo(model.getTitulo());
+//			obj.setUrlanunciante(model.getUrlanunciante());
 			lstShow.add(obj);
+			
 		}
 		
 		return lstShow;
@@ -172,6 +205,9 @@ public class ProdutoDAO {
 		return gson.fromJson(gson.toJson(encontrado), ProdutoModel.class);
 	}
 
+	
+	
+	
 	public List<ProdutoModel> buscaPorCodigo(String codigo) {
 
 		String jpql = "SELECT p FROM " + TABELA + " p WHERE p.codigo LIKE  :codigo ";

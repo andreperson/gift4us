@@ -42,6 +42,6 @@
 	<security:global-method-security secured-annotations="enabled" />
 	<tx:annotation-driven />
 	<mvc:interceptors>
-		<bean class="br.com.gift4us.interceptadores.CacheInterceptor" />
+	 	<bean class="br.com.gift4us.interceptadores.CacheInterceptor" />
 	</mvc:interceptors>
 </beans>
