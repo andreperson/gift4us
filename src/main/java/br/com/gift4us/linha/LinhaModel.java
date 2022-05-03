@@ -5,6 +5,7 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import java.io.Serializable;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -28,6 +29,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import br.com.gift4us.campanha.CampanhaModel;
+import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.status.StatusEnum;
 
 
@@ -58,6 +60,7 @@ public class LinhaModel implements Serializable  {
 	private StatusEnum status;
 
 	@ManyToOne
+	@JoinColumn(name = "campanha_id")
 	private CampanhaModel campanha;
 	
 	public LinhaModel(){

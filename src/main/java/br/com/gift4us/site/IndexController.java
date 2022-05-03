@@ -110,7 +110,11 @@ public class IndexController {
 				model.addAttribute("Linha1", lstLinha);
 				for (LinhaModel linha : lstLinha) {
 					lstProd = new ArrayList<ProdutoModel>();
-					lstProd = buscaProduto(linha);
+					if(linha != null) {
+						if (linha.getNome() != null) {
+							lstProd = buscaProduto(linha);
+						}
+					}
 					model.addAttribute("Produto".concat(p.toString()), lstProd);
 					p += 1;
 				}
@@ -131,7 +135,11 @@ public class IndexController {
 
 				model.addAttribute("Linha2", linha);
 				lstProd = new ArrayList<ProdutoModel>();
-				lstProd = buscaProduto(linha);
+				if(linha != null) {
+					if (linha.getNome() != null) {
+						lstProd = buscaProduto(linha);
+					}
+				}
 				model.addAttribute("ProdutoCampanha2", lstProd);
 			}
 		}
@@ -475,7 +483,7 @@ public class IndexController {
 			precoxqtde = prd.getQtdademin() * precocomdesconto;
 			totalgeral += precoxqtde; 
 
-			texto.append("<tr style='background:#f7f7f7'><td class='first-col'><a href='https://gift4us.com.br/site/produtos/produto/'" + prd.getId() + "'>");
+			texto.append("<tr style='background:#f7f7f7'><td class='first-col'><a href='https://gift4us.com.br/gift4us/site/produtos/produto/" + prd.getId() + "'>");
 			texto.append("<img src='" + urlprodutomontada + "' alt='' width='40px;' class='img-thumbnail' /></a> &nbsp;&nbsp;&nbsp;");
 			if(cliente) {
 				texto.append("<small>" + prd.getTitulo() + " - de: " + prd.getAnunciante().getFantasia() + "</small></td>");
