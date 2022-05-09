@@ -165,160 +165,27 @@
 					<li class="dropdown"><a href="category.html">Categorias</a>
 						<div class="dropdown-menu">
 							<ul>
-								<li><a href="category.html">Men <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories New </a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">Women</a></li>
-								<li><a href="category.html">Girls<span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories New</a></li>
-											<li><a href="category.html">Sub Categories New</a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">Boys</a></li>
-								<li><a href="category.html">Baby</a></li>
-								<li><a href="category.html">Accessories <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories</a></li>
-										</ul>
-									</div></li>
+								<c:forEach items="${listaMenuCategoria}" var="categoria">
+									<li><a href="category.html">${categoria.nome}</a></li>
+								</c:forEach>
 							</ul>
 						</div></li>
 					<li class="dropdown"><a href="category.html">Linhas</a>
 						<div class="dropdown-menu">
 							<ul>
-								<li><a href="category.html">Laptops <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories </a></li>
-											<li><a href="category.html">New Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories New </a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">Desktops <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories New </a></li>
-											<li><a href="category.html">Sub Categories New </a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">Cameras <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories</a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">Mobile Phones <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories</a></li>
-											<li><a href="category.html">New Sub Categories</a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">TV &amp; Home Audio <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories New </a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">MP3 Players</a></li>
+								<c:forEach items="${listaMenuCampanhaLinha}" var="linha1">
+									<li><a href="category.html">${linha1.nome}</a></li>
+								</c:forEach>
 							</ul>
 						</div></li>
 					<li class="dropdown"><a href="category.html">Datas Especiais</a>
 						<div class="dropdown-menu">
 							<ul>
-								<li><a href="category.html">Men</a></li>
-								<li><a href="category.html">Women <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories </a></li>
-											<li><a href="category.html">Sub Categories </a></li>
-										</ul>
-									</div></li>
-								<li><a href="category.html">Girls</a></li>
-								<li><a href="category.html">Boys</a></li>
-								<li><a href="category.html">Baby</a></li>
-								<li><a href="category.html">Accessories <span>&rsaquo;</span></a>
-									<div class="dropdown-menu">
-										<ul>
-											<li><a href="category.html">New Sub Categories</a></li>
-											<li><a href="category.html">New Sub Categories</a></li>
-											<li><a href="category.html">Sub Categories</a></li>
-										</ul>
-									</div></li>
+								<c:forEach items="${listaMenuCampanhaEspecial}" var="especial">
+									<li><a href="category.html">${especial.nome}</a></li>
+								</c:forEach>	
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Novidades</a>
-						<div class="dropdown-menu">
-							<ul>
-								<li><a href="category.html">Men's Watches</a></li>
-								<li><a href="category.html">Women's Watches</a></li>
-								<li><a href="category.html">Kids' Watches</a></li>
-								<li><a href="category.html">Accessories</a></li>
-							</ul>
-						</div></li>
-					<li class="menu_brands dropdown"><a href="#">Mais Vendidos</a>
-						<div class="dropdown-menu">
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/apple_logo-60x60.jpg"
-									title="Apple" alt="Apple" /></a><a href="#">Apple</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/canon_logo-60x60.jpg"
-									title="Canon" alt="Canon" /></a><a href="#">Canon</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/hp_logo-60x60.jpg"
-									title="Hewlett-Packard" alt="Hewlett-Packard" /></a><a href="#">Hewlett-Packard</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/htc_logo-60x60.jpg"
-									title="HTC" alt="HTC" /></a><a href="#">HTC</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/palm_logo-60x60.jpg"
-									title="Palm" alt="Palm" /></a><a href="#">Palm</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/sony_logo-60x60.jpg"
-									title="Sony" alt="Sony" /></a><a href="#">Sony</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/canon_logo-60x60.jpg"
-									title="test" alt="test" /></a><a href="#">test</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/apple_logo-60x60.jpg"
-									title="test 3" alt="test 3" /></a><a href="#">test 3</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/canon_logo-60x60.jpg"
-									title="test 5" alt="test 5" /></a><a href="#">test 5</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/canon_logo-60x60.jpg"
-									title="test 6" alt="test 6" /></a><a href="#">test 6</a>
-							</div>
-							<div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-								<a href="#"><img src="image/product/apple_logo-60x60.jpg"
-									title="test 7" alt="test 7" /></a><a href="#">test 7</a>
-							</div>
-
-
-						</div></li>
-					
 					<li class="custom-link-right"><a href="#" target="_blank">Anuncie!</a></li>
 				</ul>
 			</div>

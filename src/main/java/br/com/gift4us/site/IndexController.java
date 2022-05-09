@@ -32,6 +32,7 @@ import br.com.gift4us.campanha.CampanhaDAO;
 import br.com.gift4us.campanha.CampanhaModel;
 import br.com.gift4us.cart.Cart;
 import br.com.gift4us.categoria.CategoriaDAO;
+import br.com.gift4us.categoria.CategoriaModel;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.linha.LinhaDAO;
 import br.com.gift4us.linha.LinhaModel;
@@ -93,9 +94,30 @@ public class IndexController {
 		montaCampanha1(model);
 		montaCampanha2(model);
 
+		model.addAttribute("listaMenuCategoria", montaMenuCategoria());
+		model.addAttribute("listaMenuCampanhaLinha", buscaLinha(buscaCampanhaPorOrdem(2)));
+		model.addAttribute("listaMenuCampanhaEspecial", buscaLinha(buscaCampanhaPorOrdem(1)));
+		
+
+		
 		return "site/index/index";
 	}
 
+	private List<CategoriaModel> montaMenuCategoria() {
+		List<CategoriaModel> lst = new ArrayList<CategoriaModel>();
+		lst = categoriaDAO.listaTudo();
+		
+		return lst;
+	}
+
+	private List<LinhaModel> montaMenuLinha(CampanhaModel campanha) {
+		List<LinhaModel> lst = new ArrayList<LinhaModel>();
+		lst = linhaDAO.buscaPorCampanha(campanha);
+		
+		return lst;
+	}
+
+	
 	private void montaCampanha1(Model model) {
 
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
@@ -255,12 +277,25 @@ public class IndexController {
 		enviaEmailOrcamentoCliente(orcamento, lstProdutos);
 		
 		//limpa o carrinho
+		cookie.setMaxAge(-1);
 		
 		model.addAttribute("lstProdutos", lstProdutos);
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		
-		return "site/index/checkout";
+		return "site/index/checkout-limpa";
 	}
+	
+	
+	@RequestMapping(value = ListaDeURLs.CHECKOUT_LIMPA, method = RequestMethod.GET)
+	public String checkoutlimpa(BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response, HttpServletRequest request) {
+
+
+		
+		
+		return "site/index/checkout-limpa";
+	}
+	
+	
 	
 	private void gravaOrcamento(List<ProdutoModel> lstProdutos, OrcamentoModel orcamento) {
 		OrcamentoModel orcaSalva = new OrcamentoModel();
@@ -270,6 +305,7 @@ public class IndexController {
 			orcaSalva.setAnunciante(prd.getAnunciante());
 			orcaSalva.setCelular(orcamento.getCelular());
 			orcaSalva.setDataIncl(Calendar.getInstance());
+			orcaSalva.setDataAlt(Calendar.getInstance());
 			orcaSalva.setDdd(orcamento.getDdd());
 			orcaSalva.setEmail(orcamento.getEmail());
 			orcaSalva.setNome(orcamento.getNome());

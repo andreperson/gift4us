@@ -50,6 +50,11 @@ public class OrcamentoModel implements Serializable  {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataIncl;
 	
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioOrcamentoDataIncl")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Calendar dataAlt;
+	
 	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioOrcamentoNome")
 	@Column(length = 100)
 	private String nome;
@@ -79,10 +84,11 @@ public class OrcamentoModel implements Serializable  {
 	public OrcamentoModel(){
 	}
 
-	public OrcamentoModel(Long id, Integer quantidade, Calendar dataIncl, ProdutoModel produto, List<AnuncianteModel> listaDeAnunciante, AnuncianteModel anunciante, String nome, String email, String ddd, String celular) {
+	public OrcamentoModel(Long id, Integer quantidade, Calendar dataIncl, Calendar dataAlt, ProdutoModel produto, List<AnuncianteModel> listaDeAnunciante, AnuncianteModel anunciante, String nome, String email, String ddd, String celular) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.dataIncl = dataIncl;
+		this.dataAlt = dataAlt;
 		this.produto = produto;
 		this.listaDeAnunciante = listaDeAnunciante;
 		this.anunciante = anunciante;
@@ -114,6 +120,14 @@ public class OrcamentoModel implements Serializable  {
 
 	public void setDataIncl(Calendar dataIncl) {
 		this.dataIncl = dataIncl;
+	}
+	
+	public Calendar getDataAlt() {
+		return dataAlt;
+	}
+
+	public void setDataAlt(Calendar dataAlt) {
+		this.dataAlt = dataAlt;
 	}
 	
 	public String getNome() {
