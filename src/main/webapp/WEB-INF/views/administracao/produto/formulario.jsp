@@ -49,7 +49,7 @@
 					
 					 -->
 					
-					<form id="ata-cadastro"
+					<form class="msbc-validator-form" id="formulario-form" name="formulario"
 							action="${url}?${_csrf.parameterName}=${_csrf.token}"
 							enctype="multipart/form-data" method="post">
 					
@@ -124,7 +124,7 @@
 							
 							<div class="div-msbc-validator mb-3">
 								<label class="col-form-label" for="faixadepreco">${mensagens.get('ProdutoFormularioFaixadepreco').valor}:</label>
-								<select class="form-select msbc-validator"
+								<select class="form-control msbc-validator"
 									name="faixadepreco.id" id="faixadepreco"
 									data-selecionado='${produto.getFaixaDePreco().getId()}'
 									data-msbc-required="Campo obrigatório"
