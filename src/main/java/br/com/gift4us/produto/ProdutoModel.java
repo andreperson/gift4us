@@ -61,6 +61,7 @@ public class ProdutoModel implements Serializable  {
 	private Integer qtdademin;
 	
 	@Column(length = 5)
+	@NotNull(message = "Desconto")
 	private Integer desconto;
 
 	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoPreco")
@@ -70,7 +71,6 @@ public class ProdutoModel implements Serializable  {
 	@Column(length = 255)
 	private String imagem;
 
-	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoUrlanunciante")
 	@Column(length = 100)
 	private String urlanunciante;
 
@@ -83,6 +83,7 @@ public class ProdutoModel implements Serializable  {
 	private Calendar dataAlt;
 
 	@ManyToOne
+	@NotNull(message = "ValidacaoErroPreenchimentoObrigatorioProdutoUrlanunciante")
 	@JoinColumn(name = "categoria_id")
 	private CategoriaModel categoria;
 	
