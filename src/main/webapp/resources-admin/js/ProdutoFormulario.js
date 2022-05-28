@@ -246,12 +246,7 @@ $(document).ready(function() {
 		width : '100%'
 	});
 	
-	$('#status').select2({
-		theme : 'bootstrap4',
-		language : 'pt-BR',
-		width : '100%'
-	});
-
+	
 	$('#linha').select2({
 		theme : 'bootstrap4',
 		language : 'pt-BR',
@@ -265,7 +260,20 @@ $(document).ready(function() {
 	carregaDadosDoAnunciante();
 	carregaDadosDaFaixaDePreco();
 	carregaDadosDaLinha();
-	carregaDadosDoStatus();
+	//carregaDadosDoStatus();
+	
+	
 });
+
+$("#formproduto").submit(function(event) {
+	
+	//alert('xxx');
+	
+   // event.preventDefault();
+    // ...
+});
+
+
+
 
 

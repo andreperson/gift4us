@@ -107,6 +107,23 @@ public class StatusDAO {
 
 		return query.getResultList();
 	}
+	
+	public StatusModel buscaIdDoStatus(String nome) {
+
+		String jpql = "SELECT s FROM " + TABELA + " s WHERE s.nome = :nome ";
+
+		TypedQuery<StatusModel> query = manager.createQuery(jpql, StatusModel.class);
+
+		query.setParameter("nome", nome);
+
+		List<StatusModel> resultado = query.getResultList();
+
+		if(resultado.size() == 0){
+			return new StatusModel();
+		}else{
+			return resultado.get(0);
+		}
+	}
 
 	public List<StatusModel> buscaPorDataIncl(Calendar dataIncl) {
 
