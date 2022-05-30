@@ -174,7 +174,7 @@ public class ProdutoController {
 
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
-		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
+		return "redirect:" + ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/" + produtoid;
 	}
 
 	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
