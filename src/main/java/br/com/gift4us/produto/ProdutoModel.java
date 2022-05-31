@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -103,7 +104,7 @@ public class ProdutoModel implements Serializable  {
 	@JoinColumn(name = "status_id")
 	private StatusModel status;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "linha_id")
 	private LinhaModel linha;
 	
