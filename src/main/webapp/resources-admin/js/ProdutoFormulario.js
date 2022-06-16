@@ -10,6 +10,10 @@ function subcategoria_click(){
 	$("#subcategoriaid").val(subid);
 }
 
+function linha_click(){
+	var lid = $("#linha").val();
+	$("#linhaid").val(lid);
+}
 
 function faixadepreco_click(){
 	var faixaid = $("#faixadepreco").val();

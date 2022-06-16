@@ -107,14 +107,12 @@
 								<div class="div-msbc-validator col-md-4 mb-3">
 									<c:set var="urlmodeloproduto" scope="application"
 										value="${urlmodelo}/modelo-220x330.jpg" />
-									<label class="col-form-label" for="arquivo">${mensagens.get('ProdutoFormularioImagem').valor}
+									<label class="col-form-label" for="imagem">${mensagens.get('ProdutoFormularioImagem').valor}
 										<a href="${urlmodeloproduto}" title="Pegar modelo"
 										target="_blank">(220x330)</a>: ${produto.imagem}
 									</label> <input class="form-control texto-html" name="arquivo"
 										id="arquivo" type="file"
 										data-msbc-required="Campo obrigatório">
-
-
 								</div>
 							</div>
 

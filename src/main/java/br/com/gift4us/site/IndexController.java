@@ -87,7 +87,14 @@ public class IndexController {
 
 	@RequestMapping(value = ListaDeURLs.INDEX, method = RequestMethod.GET)
 	public String index(Model model, HttpServletResponse response) {
-		model.addAttribute("listaDeProduto", produtoDAO.listaNovidades(10));
+		
+		List<ProdutoModel> lstNovidades = new ArrayList<ProdutoModel>();
+		
+		lstNovidades = produtoDAO.listaNovidades(10);
+		
+		model.addAttribute("listaDeProduto",lstNovidades);
+		
+		
 		model.addAttribute("listaDeCategoria", categoriaDAO.listaMaisVendidos());
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 

@@ -51,6 +51,7 @@ import br.com.gift4us.status.StatusModel;
 import br.com.gift4us.subcategoria.SubCategoriaDAO;
 import br.com.gift4us.subcategoria.SubCategoriaModel;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
+import br.com.gift4us.linha.LinhaDAO;
 import br.com.gift4us.linha.LinhaModel;
 import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
 
@@ -69,6 +70,9 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoDAO produtoDAO;
 
+	@Autowired
+	private LinhaDAO linhaDAO;
+	
 	@Autowired
 	private ImagemDAO imagemDAO;
 
@@ -161,9 +165,13 @@ public class ProdutoController {
 		produto.setStatus(status);
 		produto.setSubCategoria(buscaSubCategoria(subcategoriaid));
 		produto.setFaixaDePreco(buscaFaixaDePreco(faixadeprecoid));
+		produto.setLinha(buscaLinha(produto.getLinha().getId()));
 		produto.setAnunciante(buscaAnunciantePeloUsuarioLogado());
 		produto.setDataIncl(Calendar.getInstance());
 		produto.setDataAlt(Calendar.getInstance());
+		if (arquivo.getSize() > 0) {
+			produto.setImagem(arquivo.getOriginalFilename());
+		}
 		Long produtoid = produtoDAO.saveorupdate(produto);
 		ProdutoModel encontrado = produtoDAO.buscaPorId(produto.getId());
 		historico.inserir(encontrado, "Produto");
@@ -374,6 +382,10 @@ public class ProdutoController {
 
 	private FaixaDePrecoModel buscaFaixaDePreco(Long id) {
 		return faixadeprecoDAO.buscaPorId(id);
+	}
+	
+	private LinhaModel buscaLinha(Long id) {
+		return linhaDAO.buscaPorId(id);
 	}
 
 }

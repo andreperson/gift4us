@@ -95,6 +95,9 @@
 								<c:forEach items="${listaDeProduto}" var="produto">
 									<c:set var="urlprodutomontada" scope="application"
 										value="${urlmodelo}/modelo-220x330.jpg" />
+										
+										==> ${produto.imagem }
+										
 									<c:if test="${not empty produto.imagem}">
 										<c:set var="urlprodutomontada" scope="application"
 											value="${urlproduto}/${produto.anunciante.id}/${produto.id}/${produto.imagem}" />
