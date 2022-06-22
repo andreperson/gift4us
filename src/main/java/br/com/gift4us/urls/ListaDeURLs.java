@@ -5,6 +5,8 @@ public class ListaDeURLs {
 	public final static String INDEX = "/site/index";
 	public final static String HOME = "/administracao/home";
 	public final static String HOME_SITE = "/site/index";
+	public final static String URL_CATEGORIA_SITE = "/site/produtos/listaCategoria/";
+	public final static String URL_LINHA_SITE = "/site/produtos/listaLinha/";
 	public final static String CART = "/site/index/cart";
 	public final static String CHECKOUT = "/site/index/checkout";
 	public final static String CHECKOUT_LIMPA = "/site/index/checkout-limpa";
@@ -23,7 +25,8 @@ public class ListaDeURLs {
 	
 	public final static String SERVICO_DE_TOTALDEPRODUTOS = "/administracao/service/produtototal";
 	
-	public final static String PRODUTOS_LISTA = "/site/produtos/lista";
+	public final static String PRODUTOS_LISTACATEG = "/site/produtos/listaCategoria";
+	public final static String PRODUTOS_LISTALINHA = "/site/produtos/listaLinha";
 	public final static String PRODUTO_DETALHE = "/site/produtos/produto";
 	public final static String SERVICO_DE_INDEXPRODUTOPORLINHA = "/site/service/produtobylinha";
 	public final static String SERVICO_DE_INDEXADDPRODUTONOCARRINHO = "/site/service/addprodutonocarrinho";

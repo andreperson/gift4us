@@ -5,6 +5,8 @@
 	prefix="sec"%>
 <%@ page import="br.com.gift4us.urls.ListaDeURLs"%>
 <c:url value="<%=ListaDeURLs.HOME_SITE%>" var="url" />
+<c:url value="<%=ListaDeURLs.URL_CATEGORIA_SITE%>" var="url_categ" />
+<c:url value="<%=ListaDeURLs.URL_LINHA_SITE%>" var="url_linha" />
 <div id="header">
 	<!-- Top Bar Start-->
 	<nav id="top" class="htop">
@@ -16,10 +18,7 @@
 					<div class="links">
 						<ul>
 							<!--- <li class="mobile"><i class="fa fa-phone"></i>+91 9898777656</li>  --->
-							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="login.html"><i
-									class="fas fa-user-circle"></i> login
-							</a>
-							</li>
+						
 							<li>|</li>
 							<li class="wrap_custom_block hidden-sm hidden-xs"><a href="anuncie.html"><i
 									class="far fa-newspaper"></i> anuncie conosco
@@ -162,27 +161,27 @@
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
 					<li><a class="home_link" title="Home" href="${url }">Home</a></li>
-					<li class="dropdown"><a href="category.html">Categorias</a>
+					<li class="dropdown"><a href="##">Categorias</a>
 						<div class="dropdown-menu">
 							<ul>
 								<c:forEach items="${listaMenuCategoria}" var="categoria">
-									<li><a href="category.html">${categoria.nome}</a></li>
+									<li><a href="${url_categ}${categoria.id}">${categoria.nome}</a></li>
 								</c:forEach>
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Linhas</a>
+					<li class="dropdown"><a href="##">Linhas</a>
 						<div class="dropdown-menu">
 							<ul>
 								<c:forEach items="${listaMenuCampanhaLinha}" var="linha1">
-									<li><a href="category.html">${linha1.nome}</a></li>
+									<li><a href="${url_linha}${linha1.id}">${linha1.nome}</a></li>
 								</c:forEach>
 							</ul>
 						</div></li>
-					<li class="dropdown"><a href="category.html">Datas Especiais</a>
+					<li class="dropdown"><a href="##">Datas Especiais</a>
 						<div class="dropdown-menu">
 							<ul>
 								<c:forEach items="${listaMenuCampanhaEspecial}" var="especial">
-									<li><a href="category.html">${especial.nome}</a></li>
+									<li><a href="${url_linha}${especial.id}">${especial.nome}</a></li>
 								</c:forEach>	
 							</ul>
 						</div></li>

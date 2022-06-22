@@ -144,7 +144,30 @@ public class IndexController {
 		}
 	}
 
+	
 	private void montaCampanha2(Model model) {
+
+		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
+		CampanhaModel campanha = buscaCampanhaPorOrdem(2);
+		Integer p = 0;
+		model.addAttribute("Campanha2", campanha);
+		List<LinhaModel> lstLinha = new ArrayList<LinhaModel>();
+
+		if (campanha != null) {
+			if (campanha.getId() != null) {
+				lstLinha = buscaLinha(campanha);
+				model.addAttribute("Linha2", lstLinha);
+				for (LinhaModel linha : lstLinha) {
+					lstProd = new ArrayList<ProdutoModel>();
+					lstProd = buscaProduto(linha);
+					model.addAttribute("Produto2".concat(p.toString()), lstProd);
+					p += 1;
+				}
+			}
+		}
+	}
+	
+	private void montaCampanha2old(Model model) {
 
 		List<ProdutoModel> lstProd = new ArrayList<ProdutoModel>();
 
