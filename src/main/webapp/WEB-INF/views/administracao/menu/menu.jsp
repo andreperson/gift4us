@@ -17,7 +17,7 @@
 <!-- Navigation -->
 <ul class="navbar-nav"
 	style="font-size: 0.9em; margin-top: 10px; margin-left: -70px;">
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_CONFIGURACOES')">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL', 'ROLE_ANUNCIANTE')">
 		<li class="ms-3 ms-sm-0"><c:url
 				value="<%=ListaDeURLs.LISTA_DE_PRODUTO%>" var="url" /> <a
 			href="${url}" class="nav-link"> <c:url
@@ -28,7 +28,7 @@
 	</sec:authorize>
 
 	<sec:authorize
-		access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL', 'ROLE_ANUNCIANTE')">
+		access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 		<li class="ms-3 ms-sm-0"><c:url
 				value="<%=ListaDeURLs.LISTA_DE_ORCAMENTO%>" var="url" /> <a
 			href="${url}" class="nav-link"><c:url

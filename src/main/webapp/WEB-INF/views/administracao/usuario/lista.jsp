@@ -22,7 +22,7 @@
 								value="<%=ListaDeURLs.FORMULARIO_INSERCAO_DE_USUARIO%>" />
 							<div class="col-8">
 								<h3 class="mb-0">${mensagens.get('UsuarioListaTituloDaPagina').valor}
-									<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
+									<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 										<a class="btn btn-warning btn-sm" title="Incluir"
 											href="${url}"><i class="fa fa-plus"></i></a>
 									</sec:authorize>
@@ -63,7 +63,7 @@
 															</c:forEach></td>
 														<td>${usuario.anunciante.razaosocial}</td>
 														<td class="text-center text-nowrap"><sec:authorize
-																access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
+																access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 																<a
 																	class="btn btn-warning text-white btn-sm modal-redefinir-senha-link"
 																	data-id="${usuario.id}"
@@ -71,11 +71,11 @@
 																	class="fas fa-key"></i></a>
 															</sec:authorize> <c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_USUARIO%>" />
-															<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
+															<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${usuario.id}"><i
 																	class="fas fa-pencil-alt"></i></a>
-															</sec:authorize> <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
+															</sec:authorize> <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${usuario.id}"
@@ -98,13 +98,13 @@
 	</div>
 <br>
 
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_USUARIO%>" />
 		<my:modal-excluir url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 	</sec:authorize>
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL')">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL')">
 		<c:url var="url" value="<%=ListaDeURLs.REDEFINIR_SENHA%>" />
 		<my:modal-redefinir-senha url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"

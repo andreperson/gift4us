@@ -53,7 +53,7 @@
 		<!-- Header -->
 			
 			<span class="mask bg-gradient-default opacity-8">
-				<c:import url="../perfilTopo.jsp" />
+			xxx	<c:import url="../perfilTopo.jsp" />
 			</span>
 			
 			
@@ -92,7 +92,7 @@
 							<div class="media align-items-center">
 								<span class="avatar avatar-sm rounded-circle"> <img
 									alt="Image placeholder"
-									src="../resources-admin/assets/img/theme/team-1-800x800.jpg">
+									src="${urlRecursos}resources-admin/assets/img/theme/team-1-800x800.jpg">
 								</span>
 							</div>
 					</a>
@@ -100,16 +100,16 @@
 							<div class=" dropdown-header noti-title">
 								<h6 class="text-overflow m-0">Welcome!</h6>
 							</div>
-							<a href="../resources-admin/examples/profile.html"
+							<a href="${urlRecursos}resources-admin/examples/profile.html"
 								class="dropdown-item"> <i class="ni ni-single-02"></i> <span>My
 									profile</span>
-							</a> <a href="../resources-admin/examples/profile.html"
+							</a> <a href="${urlRecursos}resources-admin/examples/profile.html"
 								class="dropdown-item"> <i class="ni ni-settings-gear-65"></i>
 								<span>Settings</span>
-							</a> <a href="../resources-admin/examples/profile.html"
+							</a> <a href="${urlRecursos}resources-admin/examples/profile.html"
 								class="dropdown-item"> <i class="ni ni-calendar-grid-58"></i>
 								<span>Activity</span>
-							</a> <a href="../resources-admin/examples/profile.html"
+							</a> <a href="${urlRecursos}resources-admin/examples/profile.html"
 								class="dropdown-item"> <i class="ni ni-support-16"></i> <span>Support</span>
 							</a>
 							<div class="dropdown-divider"></div>
@@ -124,8 +124,8 @@
 					<div class="navbar-collapse-header d-md-none">
 						<div class="row">
 							<div class="col-6 collapse-brand">
-								<a href="../resources-admin/index.html"> <img
-									src="../resources-admin/assets/img/brand/blue.png">
+								<a href="${urlRecursos}resources-admin/index.html"> <img
+									src="${urlRecursos}resources-admin/assets/img/brand/blue.png">
 								</a>
 							</div>
 							<div class="col-6 collapse-close">

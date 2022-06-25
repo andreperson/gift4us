@@ -112,12 +112,12 @@ public class GrupoDAO {
 	@Transactional
 	public void insertsParaSeremUtilizadosNoPostConstruct() {
 		List<GrupoModel> lista = listaTudo();
-		criaSeNaoExistir(lista, "ROLE_USUARIO_LOGADO");
-		criaSeNaoExistir(lista, "ROLE_ADMIN");
-		criaSeNaoExistir(lista, "ROLE_ANUNCIANTE");
-		criaSeNaoExistir(lista, "ROLE_GERENCIAL");
-		criaSeNaoExistir(lista, "ROLE_CONFIGURACOES");
-		criaSeNaoExistir(lista, "ROLE_REDEFINIR_SENHA");
+		criaSeNaoExistir(lista, "ROLE_USUARIO_LOGADO", "NENHUM MENU - APENAS LOGA");
+		criaSeNaoExistir(lista, "ROLE_ADMIN", "ACESSA TUDO");
+		criaSeNaoExistir(lista, "ROLE_ANUNCIANTE", "MENU PRODUTOS");
+		criaSeNaoExistir(lista, "ROLE_ANUNCIANTE_GERENCIAL", "MENU PRODUTOS E MENU ORÇAMENTOS");
+		criaSeNaoExistir(lista, "ROLE_CONFIGURACOES", "MENU CONFIGURAÇÕES");
+		criaSeNaoExistir(lista, "ROLE_REDEFINIR_SENHA", "ACESSA REDIFINIÇÃO DE SENHA");
 	}
 
 	@Transactional
@@ -127,7 +127,7 @@ public class GrupoDAO {
 		manager.createNativeQuery(sql).executeUpdate();
 	}
 
-	private void criaSeNaoExistir(List<GrupoModel> lista, String role) {
+	private void criaSeNaoExistir(List<GrupoModel> lista, String role, String permissoes) {
 		boolean existe = false;
 		for (GrupoModel grupo : lista) {
 			if (grupo.getNome().equals(role)) {
@@ -136,7 +136,7 @@ public class GrupoDAO {
 			}
 		}
 		if (!existe) {
-			GrupoModel grupo = new GrupoModel(null, role);
+			GrupoModel grupo = new GrupoModel(null, role, permissoes);
 			manager.persist(grupo);
 		}
 }

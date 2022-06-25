@@ -43,16 +43,18 @@ public class GrupoModel implements Serializable , GrantedAuthority {
 	@Column(length = 100)
 	private String nome;
 
+	@Column(length = 500)
+	private String permissoes;
 
 
 	public GrupoModel(){
 		
 	}
 
-	public GrupoModel(Long id, String nome) {
+	public GrupoModel(Long id, String nome, String permissoes) {
 		this.id = id;
 		this.nome = nome;
-
+		this.permissoes = permissoes;
 	}
 
 	public Long getId() {
@@ -71,7 +73,13 @@ public class GrupoModel implements Serializable , GrantedAuthority {
 		this.nome = nome;
 	}
 
+	public String getPermissoes() {
+		return permissoes;
+	}
 
+	public void setPermissoes(String permissoes) {
+		this.permissoes = permissoes;
+	}
 
 	@Override
 	public String getAuthority() {

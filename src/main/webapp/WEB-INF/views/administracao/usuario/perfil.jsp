@@ -9,7 +9,7 @@
 <c:set var="cssFiles"
 	value="../css/bootstrap/bootstrap-toggle.min.css,../css/bootstrap/select2.min.css,../css/bootstrap/select2-bootstrap4.min.css" />
 <c:set var="jsFiles"
-	value="/js/UsuarioPerfil.js,/js/jquery/bootstrap-toggle.min.js,js/jquery/select2.min.js,/js/jquery/select2-pt-BR.js" />
+	value="js/UsuarioPerfil.js,js/jquery/bootstrap-toggle.min.js,js/jquery/select2.min.js,js/jquery/select2-pt-BR.js" />
 <my:template fluido="false"
 	title="${mensagens.get('UsuarioFormularioTituloDaPagina').valor}"
 	cssFiles="${cssFiles}" jsFiles="${jsFiles}">
@@ -99,8 +99,9 @@
 												<label class="form-control-label" for="input-first-name">Senha</label>
 												<input type="password" id="senha" name="senha"
 													class="form-control msbc-validator" data-msbc-required="Campo obrigatório" 
-													placeholder="" value="" onblur="confirmaSenha();">
+													placeholder="" value="" >
 											</div>
+											<span style="font-size: 11px; color:gray">Política de senhas. Utilize o mínimo de 6 cacteres contendo número(s), caractere especial, maiúscula(s) e minúscula(s) </span>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
@@ -132,7 +133,7 @@
 											<div class="form-group">
 												<label class="form-control-label" for="input-last-name">Celular</label>
 												<input type="text" id="dddcelular" name="dddcelular"
-													class="form-control msbc-validator" data-msbc-required="Campo obrigatório" 
+													class="form-control msbc-validator" maxlength="2" data-msbc-required="Campo obrigatório" 
 													placeholder="" value="${usuario.dddcelular}">
 											</div>
 										</div>
@@ -140,14 +141,14 @@
 											<div class="form-group">
 												<label class="form-control-label" for="input-last-name">&nbsp;</label>
 												<input type="text" id="celular" name="celular"
-													class="form-control msbc-validator" data-msbc-required="Campo obrigatório" 
+													class="form-control msbc-validator" maxlength="9" data-msbc-required="Campo obrigatório" 
 													placeholder="" value="${usuario.celular}">
 											</div>
 										</div>
 										<div class="col-lg-1">
 											<div class="form-group">
 												<label class="form-control-label" for="input-last-name">Telefone</label>
-												<input type="text" id="dddtelefone" name="dddtelefone"
+												<input type="text" id="dddtelefone" maxlength="2" name="dddtelefone"
 													class="form-control form-control-alternative"
 													placeholder="" value="${usuario.dddtelefone}">
 											</div>
@@ -155,7 +156,7 @@
 										<div class="col-lg-5">
 											<div class="form-group">
 												<label class="form-control-label" for="input-last-name">&nbsp;</label>
-												<input type="text" id="telefone" name="telefone"
+												<input type="text" id="telefone" name="telefone" maxlength="9"
 													class="form-control form-control-alternative"
 													placeholder="" value="${usuario.telefone}">
 											</div>

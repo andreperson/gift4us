@@ -18,23 +18,35 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.core.io.FileSystemResource;
 import javax.validation.Valid;
 import org.springframework.ui.Model;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.lang.reflect.Method;
 import java.io.File;
 import br.com.gift4us.urls.ListaDeURLs;
 import br.com.gift4us.util.AbrirOuBaixarArquivo;
+import br.com.gift4us.util.MailConfig;
+import br.com.gift4us.util.Propriedades;
 import br.com.gift4us.util.UploadDeArquivo;
 import br.com.gift4us.anunciante.AnuncianteDAO;
 import br.com.gift4us.anunciante.AnuncianteModel;
+import br.com.gift4us.cart.Cart;
 import br.com.gift4us.configuracoesdosistema.ConfiguracoesDoSistemaDAO;
 import br.com.gift4us.mensagensdosistema.Erros;
 import br.com.gift4us.mensagensdosistema.Sucesso;
+import br.com.gift4us.orcamento.OrcamentoModel;
+import br.com.gift4us.produto.ProdutoModel;
 import br.com.gift4us.historicodosistema.GerenciadorDeHistorico;
+import br.com.gift4us.mail.Mail;
 import br.com.gift4us.mensagensdosistema.MensagensDoSistemaDAO;
 
 @Controller
 public class UsuarioController {
 
+	@Autowired
+	private ConfiguracoesDoSistemaDAO configuracoesDAO;
+	
 	@Autowired
 	private Erros erros;
 
@@ -104,8 +116,9 @@ public class UsuarioController {
 			return "administracao/usuario/formulario";
 		}
 
-		usuario.setSenha("123456");
+		usuario.setSenha("gift4us");
 		usuarioDAO.insere(usuario);
+		enviaEmailCriaLogin(usuario);
 		UsuarioModel encontrado = usuarioDAO.buscaPorId(usuario.getId());
 		historico.inserir(encontrado, "Usuário");
 		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAdicionadoComSucesso").getValor());
@@ -198,6 +211,41 @@ public class UsuarioController {
 		historico.excluir(encontrado, "Usuário");
 		sucesso.setMensagem(redirectAttributes, mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
 		return "redirect:"+ListaDeURLs.LISTA_DE_USUARIO;
+	}
+	
+	private Boolean enviaEmailCriaLogin(UsuarioModel usuario) {
+		boolean enviaPara = false;
+
+		String ambiente = System.getenv("AMBIENTE");
+
+		String destinatario = usuario.getEmail();
+		String assunto = "Login | gift4us";
+
+		Propriedades util = new Propriedades();
+		MailConfig config = new MailConfig();
+		Properties props = new Properties();
+		config = config.setConfigeProperties(configuracoesDAO);
+		props = util.setProps(config);
+
+		String emailfrom = config.getEmailfrom();
+		String emailsenha = config.getSenha();
+
+		StringBuilder corpo = new StringBuilder();
+
+		corpo.append("Prezado(a) " + usuario.getNome() + ", <br>");
+		corpo.append("Seu login foi criado com sucesso!<br> Segue abaixo as informações para o primeiro acesso. <br>Em seu primeiro acesso, será solicitado a alteração desta senha.");
+		corpo.append("Login" + usuario.getLogin() + ", <br>");
+		corpo.append("Senha " + usuario.getSenha() + ", <br><br>");
+		corpo.append("Qualquer problema, estamos a disposição!<br>");
+		corpo.append("Equipe gift4us");
+
+		if (ambiente.equals("producao")) {
+			enviaPara = Mail.EnviarEmail(props, emailfrom, emailsenha, corpo.toString(), assunto, destinatario,
+					null, null);
+		} else {
+			System.out.println("email" + corpo);
+		}
+		return enviaPara;
 	}
 
 }

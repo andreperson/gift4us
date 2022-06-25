@@ -91,7 +91,7 @@ public class HomeController {
 	@RequestMapping(value = ListaDeURLs.REDEFINIR_SENHA, method = RequestMethod.POST)
 	public String redefinicaoDeSenha(Long id, RedirectAttributes redirectAttributes) {
 		UsuarioModel usuario = usuarioDAO.buscaPorId(id);
-		usuario.setSenha("123456");
+		usuario.setSenha("gift4us");
 		usuarioDAO.altera(usuario);
 		sucesso.setMensagem(redirectAttributes,
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemAlteradoComSucesso").getValor());
@@ -107,7 +107,7 @@ public class HomeController {
 	private boolean comparaSenhas(String senhaatual) {
 		Boolean precisamudar = false;
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();  
-		if (encoder.matches("123456", senhaatual)) {
+		if (encoder.matches("gift4us", senhaatual)) {
 			precisamudar=true;
 		}
 			return precisamudar;

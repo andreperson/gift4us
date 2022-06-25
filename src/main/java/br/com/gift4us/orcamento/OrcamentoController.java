@@ -48,20 +48,20 @@ public class OrcamentoController {
 	@Autowired
 	private GerenciadorDeHistorico historico;
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.LISTA_DE_ORCAMENTO, method = RequestMethod.GET)
 	public String lista(Model model) {
 		model.addAttribute("listaDeOrcamento", orcamentoDAO.listaTudo());
 		return "administracao/orcamento/lista";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_ORCAMENTO, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
 		return "administracao/orcamento/formulario";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_EDICAO_DE_ORCAMENTO + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaEdicao(@PathVariable Long id, Model model) {
 		OrcamentoModel orcamento = orcamentoDAO.buscaPorId(id);
@@ -69,7 +69,7 @@ public class OrcamentoController {
 		return "administracao/orcamento/formulario";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_ORCAMENTO, method = RequestMethod.POST)
 	public String insere(@Valid OrcamentoModel orcamento, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
@@ -90,7 +90,7 @@ public class OrcamentoController {
 		return "redirect:"+ListaDeURLs.LISTA_DE_ORCAMENTO;
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_ORCAMENTO, method = RequestMethod.POST)
 	public String altera(@Valid OrcamentoModel orcamento, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
@@ -113,7 +113,7 @@ public class OrcamentoController {
 		return "redirect:"+ListaDeURLs.LISTA_DE_ORCAMENTO;
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_ORCAMENTO, method = RequestMethod.POST)
 	public String exclui(@Valid OrcamentoModel orcamento, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 

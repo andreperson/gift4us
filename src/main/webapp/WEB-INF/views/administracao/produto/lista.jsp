@@ -22,7 +22,7 @@
 							<div class="col-8">
 								<h3 class="mb-0">${mensagens.get('ProdutoListaTituloDaPagina').valor}
 									<sec:authorize
-										access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL','ROLE_ANUNCIANTE')">
+										access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL','ROLE_ANUNCIANTE')">
 										<a class="btn btn-warning btn-sm" title="Incluir"
 											href="${url}"><i class="fa fa-plus"></i></a>
 									</sec:authorize>
@@ -67,12 +67,12 @@
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_PRODUTO%>" />
 															<sec:authorize
-																access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+																access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_ANUNCIANTE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a class="btn btn-primary btn-sm"
 																	href="${url}/${produto.id}"><i
 																	class="fas fa-pencil-alt"></i></a>
 															</sec:authorize> <sec:authorize
-																access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+																access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_ANUNCIANTE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 																<a
 																	class="btn btn-danger text-white btn-sm modal-excluir-link"
 																	href="#" data-id="${produto.id}"
@@ -95,7 +95,7 @@
 	</div>
 	<br>
 	<sec:authorize
-		access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+		access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_ANUNCIANTE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 		<c:url var="url" value="<%=ListaDeURLs.EXCLUSAO_DE_PRODUTO%>" />
 		<my:modal-excluir url="${url}" name="id" />
 		<input type="hidden" name="${_csrf.parameterName}"

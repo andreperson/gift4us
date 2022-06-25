@@ -22,7 +22,7 @@
 								value="<%=ListaDeURLs.FORMULARIO_INSERCAO_DE_ORCAMENTO%>" />
 							<div class="col-8">
 								<h3 class="mb-0">${mensagens.get('OrcamentoListaTituloDaPagina').valor}
-									<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_GERENCIAL','ROLE_ANUNCIANTE')">
+									<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_ANUNCIANTE_GERENCIAL','ROLE_ANUNCIANTE')">
 										<a class="btn btn-warning btn-sm" title="Incluir"
 											href="${url}"><i class="fa fa-plus"></i></a>
 									</sec:authorize>

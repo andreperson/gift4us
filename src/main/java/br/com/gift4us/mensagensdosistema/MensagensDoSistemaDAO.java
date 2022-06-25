@@ -505,7 +505,9 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "GrupoFormularioId", "Código", "Formulário de Grupo");
 		criaSeNaoExistir(lista, "GrupoListaId", "Código", "Lista de Grupo");
 		criaSeNaoExistir(lista, "GrupoFormularioNome", "Nome", "Formulário de Grupo");
+		criaSeNaoExistir(lista, "GrupoFormularioPermissoes", "Permissões", "Formulário de Grupo");
 		criaSeNaoExistir(lista, "GrupoListaNome", "Nome", "Lista de Grupo");
+		criaSeNaoExistir(lista, "GrupoListaPermissoes", "Permissões", "Lista de Grupo");
 		criaSeNaoExistir(lista, "GrupoMenuPrincipal", "Grupo", "Menu");
 		criaSeNaoExistir(lista, "GrupoMenuInsere", "Insere", "Menu");
 		criaSeNaoExistir(lista, "GrupoMenuLista", "Lista", "Menu");
@@ -599,7 +601,7 @@ public class MensagensDoSistemaDAO {
 		criaSeNaoExistir(lista, "MensagemAdicionadoComSucesso", "Inserido com sucesso!", "Todas as telas de inserção");
 		criaSeNaoExistir(lista, "ModalRedefinirSenhaTitulo", "Confirmar redefinição de senha", "Modal de redefinição de senha");
 		criaSeNaoExistir(lista, "ModalRedefinirSenhaMensagemInicio", "Deseja mesmo redefinir a senha de ", "Modal de redefinição de senha");
-		criaSeNaoExistir(lista, "ModalRedefinirSenhaMensagemFim", "? A nova senha será 123456!", "Modal de redefinição de senha");
+		criaSeNaoExistir(lista, "ModalRedefinirSenhaMensagemFim", "? A nova senha será gift4us!", "Modal de redefinição de senha");
 		criaSeNaoExistir(lista, "ModalRedefinirSenhaBotaoSim", "Sim, redefinir!", "Modal de redefinição de senha");
 		criaSeNaoExistir(lista, "ModalRedefinirSenhaBotaoNao", "Não, Fechar!", "Modal de redefinição de senha");
 		criaSeNaoExistir(lista, "MensagemAlteradoComSucesso", "Alterado com sucesso!", "Todas as telas de alteração");

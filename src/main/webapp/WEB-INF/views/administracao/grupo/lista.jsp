@@ -51,6 +51,7 @@
 												<tr>
 													<th>${mensagens.get('GrupoListaId').valor}</th>
 													<th>${mensagens.get('GrupoListaNome').valor}</th>
+													<th>${mensagens.get('GrupoListaPermissoes').valor}</th>
 													<th class="text-center">${mensagens.get('GrupoListaAcoes').valor}</th>
 												</tr>
 											</thead>
@@ -59,6 +60,7 @@
 													<tr>
 														<td>${grupo.id}</td>
 														<td>${grupo.nome}</td>
+														<td>${grupo.permissoes }
 														<td class="text-center text-nowrap"><c:url var="url"
 																value="<%=ListaDeURLs.FORMULARIO_EDICAO_DE_GRUPO%>" />
 															<sec:authorize access="hasRole('ROLE_ADMIN')">

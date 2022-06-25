@@ -103,21 +103,21 @@ public class ProdutoController {
 	@Autowired
 	private UsuarioDAO usuarioDAO;
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.LISTA_DE_PRODUTO, method = RequestMethod.GET)
 	public String lista(Model model) {
 		model.addAttribute("listaDeProduto", produtoDAO.listaTudo());
 		return "administracao/produto/lista";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_PRODUTO, method = RequestMethod.GET)
 	public String carregaFormularioParaInsercao(Model model) {
 		model.addAttribute("urlpadrao", propriedades.getValor("arquivo.diretorio.arquivos"));
 		return "administracao/produto/formulario";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_EDICAO_DE_PRODUTO + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaEdicao(@PathVariable Long id, Model model) {
 		ProdutoModel produto = produtoDAO.buscaPorId(id);
@@ -126,7 +126,7 @@ public class ProdutoController {
 		return "administracao/produto/formulario";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/{id}", method = RequestMethod.GET)
 	public String carregaFormularioParaImagens(@PathVariable Long id, Model model) {
 		ProdutoModel produto = produtoDAO.buscaPorId(id);
@@ -138,7 +138,7 @@ public class ProdutoController {
 		return "administracao/produto/imagens";
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@Transactional
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_PRODUTO, method = RequestMethod.POST)
 	public String insere(@RequestParam("subcategoriaid") Long subcategoriaid,
@@ -185,7 +185,7 @@ public class ProdutoController {
 		return "redirect:" + ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/" + produtoid;
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.EDICAO_DE_PRODUTO, method = RequestMethod.POST)
 	public String altera(@RequestParam("subcategoriaid") Long subcategoriaid,
 			@RequestParam("faixadeprecoid") Long faixadeprecoid, @Valid ProdutoModel produto,
@@ -230,7 +230,7 @@ public class ProdutoController {
 		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@Transactional
 	@RequestMapping(value = ListaDeURLs.INSERCAO_DE_IMAGEM, method = RequestMethod.POST)
 	public String insereimagens(@Valid ImagemModel imagem, @RequestParam("anuncianteid") Long anuncianteid,
@@ -253,7 +253,7 @@ public class ProdutoController {
 		return "redirect:" + ListaDeURLs.FORMULARIO_INSERCAO_DE_IMAGEM + "/" + produtoid;
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_PRODUTO, method = RequestMethod.POST)
 	public String exclui(@Valid ProdutoModel produto, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttributes) {
@@ -273,7 +273,7 @@ public class ProdutoController {
 		return "redirect:" + ListaDeURLs.LISTA_DE_PRODUTO;
 	}
 
-	@Secured({ "ROLE_ADMIN", "ROLE_GERENCIAL", "ROLE_ANUNCIANTE" })
+	@Secured({ "ROLE_ADMIN", "ROLE_ANUNCIANTE_GERENCIAL", "ROLE_ANUNCIANTE" })
 	@RequestMapping(value = ListaDeURLs.EXCLUSAO_DE_IMAGEM + "/{id}", method = RequestMethod.GET)
 	public String excluiimagens(@PathVariable Long id, Model model) {
 

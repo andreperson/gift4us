@@ -109,7 +109,7 @@
 												<td><img src="${urlprodutomontada}" width="35"
 													class="img-responsive" /></td>
 												<td class="text-center text-nowrap"><sec:authorize
-														access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
+														access="hasAnyRole('ROLE_ANUNCIANTE', 'ROLE_ANUNCIANTE_GERENCIAL', 'ROLE_CONFIGURACOES', 'ROLE_ADMIN')">
 														<a href="${urlexclui}/${img.id}"><i
 															class="fas fa-times"></i> Excluir Imagem</a>
 													</sec:authorize></td>

@@ -119,7 +119,7 @@ public class GrupoController {
 
 		// verifica se ja existe um cadastro com esse nome
 		List<GrupoModel> lst = grupoDAO.buscaPorNomeExato(grupo.getNome());
-		if (lst.size() > 0) {
+		if (estaDuplicando(lst,grupo.getId())) {
 			String msg = mensagensDoSistemaDAO.buscaPorPropriedade("RegistroDuplicado").getValor();
 
 			model.addAttribute("grupo", grupo);
@@ -157,5 +157,21 @@ public class GrupoController {
 				mensagensDoSistemaDAO.buscaPorPropriedade("MensagemExcluidoComSucesso").getValor());
 		return "redirect:" + ListaDeURLs.LISTA_DE_GRUPO;
 	}
+	
+	
+	private Boolean estaDuplicando(List<GrupoModel> lst, Long idalterando){
+		
+		Boolean retorno = false;
+		
+		for (GrupoModel gp : lst) {
+			if (gp.getId() != idalterando) {
+				retorno = true;
+			}
+		}
+		
+		return retorno;
+		
+	}
+	
 
 }
